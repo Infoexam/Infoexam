@@ -1,0 +1,189 @@
+<?php namespace App\Commands\Admin;
+
+use App\Commands\Command;
+
+use App\Commands\CreateSsn;
+use App\Infoexam\Account\Account;
+use App\Infoexam\Exam\ExamConfig;
+use App\Infoexam\Admin\TestList;
+use App\Infoexam\Student\TestApply;
+use App\Infoexam\Account\UserDatum;
+use Carbon\Carbon;
+use Illuminate\Contracts\Bus\SelfHandling;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
+class ApplyTest extends Command implements SelfHandling {
+
+    protected $request, $ssn;
+    
+    public function __construct($request, $ssn)
+    {
+        $this->request = $request;
+        $this->ssn = $ssn;
+    }
+
+    /**
+     * Execute the command.
+     *
+     * @return boolean
+     */
+    public function handle()
+    {
+        try
+        {
+            /*
+             * 初始化資料
+             */
+            $now = Carbon::now();
+            $exam_configs = ExamConfig::firstOrFail();
+
+            /*
+             * 取得測驗資料
+             */
+            $test_data = TestList::where('ssn', '=', $this->ssn)
+                ->where('test_enable', '=', true)
+                ->where('apply_type', 'like', '1_%')
+                ->firstOrFail();
+
+            /*
+             * 檢查測驗是否結束
+             */
+            if ($now > $test_data->end_time)
+            {
+                flash()->error(trans('test-applies.error.too_late_to_apply'));
+
+                return false;
+            }
+
+            /*
+             * 取得學生資料
+             */
+            if (strlen($this->request->input('personal')))
+            {
+
+                $students = [
+                    Account::where('username', '=', $this->request->input('personal'))->firstOrFail()->user_data
+                ];
+            }
+            else
+            {
+                $students = UserDatum::where('grade', '=', 2)
+                    ->where('department_id', '=', $this->request->input('department'))
+                    ->where('class', '=', $this->request->input('class'))
+                    ->get();
+            }
+
+            foreach ($students as $student) {
+
+                /*
+                 * 檢查目前學生是否已通過測驗
+                 */
+                if (ends_with($test_data->test_type, '1'))
+                {
+                    if ($student->account->accredited_data->acad_score >= $exam_configs->acad_passed_score)
+                    {
+                        continue;
+                    }
+                }
+                else if (ends_with($test_data->test_type, '2'))
+                {
+                    if ($student->account->accredited_data->tech_score >= $exam_configs->tech_passed_score)
+                    {
+                        continue;
+                    }
+                }
+
+                /*
+                 * 檢查是否為資工系學生，如是，則檢查是否預約電腦軟體能力類型測驗
+                 */
+                if ('4104' === $student->department->code && ! starts_with($test_data->test_type, '2'))
+                {
+                    //flash()->info('test-applies.error.admin.is_csie', ['name' => $student->name, 'username' => $student->account->username]);
+
+                    continue;
+                }
+
+                /*
+                 * 檢查是否重複預約
+                 */
+                if ( ! is_null(TestApply::where('account_id', '=', $student->account->id)->where('test_list_id', '=', $test_data->id)->first(['id'])))
+                {
+                    //flash()->info('test-applies.error.admin.apply_the_same_test', ['name' => $student->name, 'username' => $student->account->username]);
+
+                    continue;
+                }
+
+                /*
+                 * 檢查當週是否已預約過測驗
+                 */
+                $check_time_interval_start = $test_data->start_time;
+                $check_time_interval_end = $test_data->start_time;
+
+                $already_apply = TestApply::where('account_id', '=', $student->account->id)
+                    ->leftJoin('test_lists', 'test_applies.test_list_id', '=', 'test_lists.id')
+                    ->where('test_applies.test_list_id', '!=', $test_data->id)
+                    ->whereBetween('test_lists.start_time', [$check_time_interval_start->startOfWeek(), $check_time_interval_end->endOfWeek()])
+                    ->count();
+
+                if ($already_apply)
+                {
+                    //flash()->info('test-applies.error.admin.already_apply_test_in_same_week', ['name' => $student->name, 'username' => $student->account->username]);
+
+                    continue;
+                }
+
+                /*
+                 * 取得 ssn
+                 */
+                $ssn = \Bus::dispatch(new CreateSsn(new TestApply()));
+
+                if (false === $ssn)
+                {
+                    //flash()->warning('伺服器過載，請稍候再試');
+
+                    continue;
+                }
+
+                $apply['ssn'] = $ssn;
+                $apply['account_id'] = $student->account->id;
+                $apply['test_list_id'] = $test_data->id;
+                $apply['apply_time'] = Carbon::now();
+
+                /*
+                 * 檢查是否有免費測驗的額度
+                 */
+                if (ends_with($test_data->test_type, '1') && ($student->account->accredited_data->free_acad > 0))
+                {
+                    $apply['paid_at'] = $now;
+                }
+                else if (ends_with($test_data->test_type, '2') && ($student->account->accredited_data->free_tech > 0))
+                {
+                    $apply['paid_at'] = $now;
+                }
+                else
+                {
+                    $apply['paid_at'] = null;
+                }
+
+                /*
+                 * 檢測完畢，新增此預約
+                 */
+                TestApply::create($apply);
+
+                /*
+                 * 將該測驗目前人數加 1
+                 */
+                $test_data->increment('std_apply_num');
+            }
+
+            return true;
+        }
+        catch (ModelNotFoundException $e)
+        {
+            flash()->error(trans('test-applies.error.test_not_found'));
+
+            return false;
+        }
+    }
+
+}

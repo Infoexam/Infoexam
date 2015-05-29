@@ -1,0 +1,54 @@
+@extends(env('IS_PJAX') ? 'student.layouts.pjax' : 'student.layouts.master')
+
+@section('heading')
+    <blockquote>
+        <div class="page-header">
+            <h2>{{ trans('test-applies.list') }}</h2>
+        </div>
+    </blockquote>
+@stop
+
+@section('main')
+    <div>
+        <div class="text-center">
+            {!! $test_lists->render() !!}
+        </div>
+        <div>
+            <table class="table table-bordered table-hover text-center">
+                <thead>
+                    <tr>
+                        <th>{{ trans('test-lists.ssn') }}</th>
+                        <th>{{ trans('test-lists.start_time') }}</th>
+                        <th>{{ trans('test-lists.test_time') }}</th>
+                        <th>{{ trans('test-lists.test_type') }}</th>
+                        <th>{{ trans('test-lists.apply_type') }}</th>
+                        <th>{{ trans('test-lists.std_apply_num') }}</th>
+                        <th>{{ trans('test-applies.apply') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($test_lists as $test_list)
+                        <tr>
+                            <td>{{ $test_list->ssn }}</td>
+                            <td>{{ $test_list->start_time }}</td>
+                            <td>{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
+                            <td>{{ trans('test-lists.test_types.'.($test_list->test_type)) }}</td>
+                            <td>{{ trans('test-lists.apply_types.'.($test_list->apply_type)) }}</td>
+                            <td>{{ $test_list->std_apply_num . ' / ' . $test_list->std_num_limit }}</td>
+                            <td>
+                                {!! Form::open(['route' => ['student.test-applies.store', $test_list->ssn], 'method' => 'POST']) !!}
+                                    {!! Form::button('<span class="glyphicon glyphicon-plus"></span>', [
+                                            'type' => 'submit',
+                                            'title' =>  trans('test-applies.apply'),
+                                            'class' => 'btn btn-default btn-lg'
+                                        ])
+                                    !!}
+                                {!! Form::close() !!}
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    </div>
+@stop
