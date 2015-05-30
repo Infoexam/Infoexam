@@ -12,26 +12,22 @@ class AnnouncementsRequest extends Request {
     public function rules()
     {
         $rules = [
-            'heading' => 'required',
-            'link' => 'url',
+            'heading' => 'required|max:255|unique:announcements,heading',
+            'link' => 'url|max:255',
             'content' => 'required',
         ];
 
-        $i = 0;
-
-        foreach ($this->file('image', []) as $image) {
-
-            if (is_null($image))
-            {
-                continue;
-            }
-
-            $rules['image.'.$i++] = 'image';
+        if ($this->isMethod('PATCH'))
+        {
+            $rules['heading'] .= ',' . last($this->segments());
         }
 
-        if ('PATCH' !== Request::method())
+        foreach ($this->file('image', []) as $key => &$image)
         {
-            $rules['heading'] .= '|unique:announcements';
+            if (null !== $image)
+            {
+                $rules['image.'.$key] = 'image';
+            }
         }
 
         return $rules;
@@ -41,9 +37,11 @@ class AnnouncementsRequest extends Request {
     {
         return [
             'heading.required' => trans('error.required', ['attribute' => trans('announcements.title')]),
+            'heading.max' => trans('error.max', ['attribute' => trans('announcements.title'), 'max' => 255]),
             'heading.unique' => trans('error.unique', ['attribute' => trans('announcements.title')]),
 
             'link.url' => trans('error.url', ['attribute' => trans('announcements.link')]),
+            'link.max' => trans('error.max', ['attribute' => trans('announcements.link'), 'max' => 255]),
 
             'content.required' => trans('error.required', ['attribute' => trans('announcements.content')]),
 

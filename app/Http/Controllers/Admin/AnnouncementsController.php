@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Infoexam\Website\Announcement;
 use App\Infoexam\Image;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
 class AnnouncementsController extends Controller {
 
@@ -108,9 +107,7 @@ class AnnouncementsController extends Controller {
 
             if (null !== $announcement->image_ssn)
             {
-                $images = $this->explode_image_ssn($announcement->image_ssn);
-
-                Image::whereIn('ssn', $images)->delete();
+                Image::whereIn('ssn', $this->explode_image_ssn($announcement->image_ssn))->delete();
 
                 $announcement->update(['image_ssn' => null]);
             }

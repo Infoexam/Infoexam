@@ -3,7 +3,8 @@
     {!!
         Form::text('heading', null, [
             'class' => 'form-control',
-            'required' => 'required'
+            'required' => 'required',
+            'maxlength' => 255
         ])
     !!}
 </div>
@@ -12,22 +13,23 @@
     {!! Form::label('link', trans('announcements.link')) !!}
     {!!
         Form::url('link', null, [
-            'class' => 'form-control'
+            'class' => 'form-control',
+            'maxlength' => 255
         ])
     !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('content', trans('announcements.content')) !!}
-    {!! Form::textarea('content', null, ['class' => 'form-control', 'rows' => 50, 'required' => 'required']) !!}
+    {!! Form::textarea('content', null, ['class' => 'form-control', 'required' => 'required', 'rows' => 50]) !!}
 </div>
 
 <div class="form-group">
-    @if(isset($announcement) && null !== $announcement->image_ssn)
+    @if(isset($announcement->image_ssn))
         @foreach($announcement->image_ssn as $image_ssn)
             @include('partials.image', ['image_ssn' => $image_ssn])
         @endforeach
-    @elseif( ! isset($announcement) || (isset($announcement) && null === $announcement->image_ssn))
+    @else
         @include('partials.form-image-field', ['name' => 'image[]', 'options' => ['accept' => 'image/*', 'multiple' => 'multiple']])
     @endif
 </div>

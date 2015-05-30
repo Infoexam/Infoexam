@@ -18,6 +18,7 @@ return [
     'exists' => ':attribute 欄位值不存在',
     'image' => ':attribute 欄位必須是圖片檔',
     'ip' => ':attribute 欄位必須是IP位址',
+    'max' => ':attribute 欄位的最大長度為 :max',
     'min' => ':attribute 欄位的最小長度必須為 :min',
     'required' => ':attribute 欄位是必要的',
     'unique' => ':attribute 欄位的值已存在於資料庫中',
