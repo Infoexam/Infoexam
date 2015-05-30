@@ -7,7 +7,7 @@
                     <span class="btn cursor-default">{{ \Auth::user()->username }}</span>
                 </li>
                 <li class="dropdown">
-                    <span class="btn cursor-default">{{ \Auth::user()->user_data->name }}</span>
+                    <span class="btn cursor-default">{{ \Auth::user()->userData->name }}</span>
                 </li>
             </ul>
         @endif

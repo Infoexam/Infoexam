@@ -1,72 +1,56 @@
 <?php namespace App\Infoexam\Account;
 
+use App\Infoexam\Core\Entity;
 use Auth;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Database\Eloquent\Model;
 
-class Account extends Model implements AuthenticatableContract {
+class Account extends Entity implements AuthenticatableContract {
 
     use Authenticatable;
 
-    /**
-     * Returns the relationship between account and user data.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function user_data()
+    // 取得使用者個人資料
+    public function userData()
     {
         return $this->hasOne('App\Infoexam\Account\UserDatum');
     }
 
-    /**
-     * Returns the relationship between account and accredited data.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function accredited_data()
+    // 取得使用者成績資料
+    public function accreditedData()
     {
         return $this->hasOne('App\Infoexam\Account\AccreditedDatum');
     }
 
-    /**
-     * Returns the relationship between accounts and groups.
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
-     */
+    // 取得使用者所屬群組
     public function groups()
     {
         return $this->belongsToMany('App\Infoexam\Account\Group', 'user_groups');
     }
 
+    // 取得使用者預約過的測驗
     public function applies()
     {
-        return $this->hasMany('App\Infoexam\Student\TestApply');
+        return $this->hasMany('App\Infoexam\Test\TestApply');
     }
 
     public function scopeUsername($query, $param)
     {
-        $query->where('accounts.username', 'like', '%'.$param.'%');
+        $query->where('username', 'like', '%' . $param . '%');
     }
 
     public function scopeName($query, $param)
     {
-        $query->where('user_data.name', 'like', '%'.$param.'%');
+        $query->where('name', 'like', '%' . $param . '%');
     }
 
     public function scopePassed($query, $param)
     {
-        $query->where('accredited_data.is_passed', '=', $param);
-    }
-
-    public function scopeStudent($query, $param)
-    {
-        //$query->where('accounts.user_type', (($param) ? '=' : '!='), 'student');
+        $query->where('is_passed', '=', $param);
     }
 
     public function scopeDepartment($query, $param)
     {
-        $query->where('user_data.department_id', '=', $param);
+        $query->where('department_id', '=', $param);
     }
 
     public function getGroupListAttribute()

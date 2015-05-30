@@ -1,12 +1,10 @@
 <?php namespace App\Commands\Admin;
 
 use App\Commands\Command;
-
-use App\Commands\CreateSsn;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Exam\ExamConfig;
-use App\Infoexam\Admin\TestList;
-use App\Infoexam\Student\TestApply;
+use App\Infoexam\Test\TestList;
+use App\Infoexam\Test\TestApply;
 use App\Infoexam\Account\UserDatum;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
@@ -62,7 +60,7 @@ class ApplyTest extends Command implements SelfHandling {
             {
 
                 $students = [
-                    Account::where('username', '=', $this->request->input('personal'))->firstOrFail()->user_data
+                    Account::where('username', '=', $this->request->input('personal'))->firstOrFail()->userData
                 ];
             }
             else
@@ -80,14 +78,14 @@ class ApplyTest extends Command implements SelfHandling {
                  */
                 if (ends_with($test_data->test_type, '1'))
                 {
-                    if ($student->account->accredited_data->acad_score >= $exam_configs->acad_passed_score)
+                    if ($student->account->accreditedData->acad_score >= $exam_configs->acad_passed_score)
                     {
                         continue;
                     }
                 }
                 else if (ends_with($test_data->test_type, '2'))
                 {
-                    if ($student->account->accredited_data->tech_score >= $exam_configs->tech_passed_score)
+                    if ($student->account->accreditedData->tech_score >= $exam_configs->tech_passed_score)
                     {
                         continue;
                     }
@@ -132,19 +130,6 @@ class ApplyTest extends Command implements SelfHandling {
                     continue;
                 }
 
-                /*
-                 * 取得 ssn
-                 */
-                $ssn = \Bus::dispatch(new CreateSsn(new TestApply()));
-
-                if (false === $ssn)
-                {
-                    //flash()->warning('伺服器過載，請稍候再試');
-
-                    continue;
-                }
-
-                $apply['ssn'] = $ssn;
                 $apply['account_id'] = $student->account->id;
                 $apply['test_list_id'] = $test_data->id;
                 $apply['apply_time'] = Carbon::now();
@@ -152,11 +137,11 @@ class ApplyTest extends Command implements SelfHandling {
                 /*
                  * 檢查是否有免費測驗的額度
                  */
-                if (ends_with($test_data->test_type, '1') && ($student->account->accredited_data->free_acad > 0))
+                if (ends_with($test_data->test_type, '1') && ($student->account->accreditedData->free_acad > 0))
                 {
                     $apply['paid_at'] = $now;
                 }
-                else if (ends_with($test_data->test_type, '2') && ($student->account->accredited_data->free_tech > 0))
+                else if (ends_with($test_data->test_type, '2') && ($student->account->accreditedData->free_tech > 0))
                 {
                     $apply['paid_at'] = $now;
                 }

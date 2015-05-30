@@ -13,6 +13,7 @@
                     <th>#</th>
                     <th>{{ trans('student-information.username') }}</th>
                     <th>{{ trans('student-information.name') }}</th>
+                    <th>{{ trans('student-information.department') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -22,12 +23,13 @@
                         <td>{{ ++$i }}</td>
                         <td>{!! HTML::linkRoute('admin.student-information.edit', $account->username, ['user' => $account->username]) !!}</td>
                         <td>{{ $account->name }}</td>
+                        <td>{{ $account->userData->department->name }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
     <div class="text-center">
-        {!! $accounts->appends(Input::query())->render() !!}
+        {!! $accounts->appends(Request::query())->render() !!}
     </div>
 @stop

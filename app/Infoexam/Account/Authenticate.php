@@ -284,7 +284,7 @@ class Authenticate {
         {
             $fail2ban['login'][$this->user_ip]['frequency'] -= intval($diff / 30);
 
-            $fail2ban['login'][$this->user_ip]['frequency'] = max($fail2ban['login'][$this->user_ip]['frequency'], 0);
+            $fail2ban['login'][$this->user_ip]['frequency'] = max($fail2ban['login'][$this->user_ip]['frequency'], 1);
         }
         else
         {

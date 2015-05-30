@@ -5,6 +5,7 @@ use App\Http\Controllers\Controller;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Department;
 use App\Infoexam\Account\Group;
+use App\Infoexam\Account\UserSearch;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
@@ -21,45 +22,14 @@ class StudentInformationController extends Controller {
 
     public function search(Request $request)
     {
-        $search = new Account();
+        $search = new UserSearch(new Account());
 
-        $search = $search->leftJoin('user_data', 'accounts.id', '=', 'user_data.account_id')
-            ->leftJoin('accredited_data', 'accounts.id', '=', 'accredited_data.account_id');
+        $accounts = $search->searchPaginated($request->all(), 15);
 
-        foreach ($request->all() as $key => &$value)
+        if (1 === $accounts->count())
         {
-            if ( ! strlen($value))
-            {
-                continue;
-            }
-
-            switch ($key)
-            {
-                case 'username':
-                    $search = $search->username($value);
-                    break;
-                case 'name':
-                    $search = $search->name($value);
-                    break;
-                case 'passed':
-                    $search = $search->passed(true);
-                    break;
-                case 'non_passed':
-                    $search = $search->passed(false);
-                    break;
-                case 'non_student':
-                    $search = $search->student(false);
-                    break;
-                case 'department':
-                    if (0 != $value)
-                    {
-                        $search = $search->department($value);
-                    }
-                    break;
-            }
+            return redirect()->route('admin.student-information.edit', ['user' => $accounts[0]->username]);
         }
-
-        $accounts = $search->orderBy('accounts.username', 'asc')->paginate(15);
 
         return view('admin.student-information.search', compact('accounts'));
     }
@@ -69,7 +39,7 @@ class StudentInformationController extends Controller {
         try
         {
             $account = Account::where('username', '=', $user)->firstOrFail();
-
+            
             $groups = Group::lists('name', 'id');
 
             return view('admin.student-information.edit', compact('account', 'groups'));
@@ -86,22 +56,20 @@ class StudentInformationController extends Controller {
         {
             $account = Account::where('username', '=', $user)->firstOrFail();
 
-            if (strlen($request->input('new_password')))
+            $inputs = $request->all();
+
+            if (strlen($inputs['new_password']))
             {
-                $account->password = bcrypt($request->input('new_password'));
+                $account->password = bcrypt($inputs['new_password']);
 
                 $account->save();
             }
 
-            $inputs = $request->all();
+            $account->userData->update($inputs);
 
-            $account->user_data->update($inputs);
-
-            $account->accredited_data->update($inputs);
+            $account->accreditedData->update($inputs);
 
             $account->groups()->sync($request->input('group_list'));
-
-            flash()->success(trans('general.update.success'));
 
             return redirect()->route('admin.student-information.edit', ['user' => $user]);
         }

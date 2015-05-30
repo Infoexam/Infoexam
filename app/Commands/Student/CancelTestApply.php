@@ -3,7 +3,7 @@
 use App\Commands\Command;
 
 use App\Infoexam\Exam\ExamConfig;
-use App\Infoexam\Student\TestApply;
+use App\Infoexam\Test\TestApply;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;

@@ -121,14 +121,14 @@ class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
             {
                 \DB::transaction(function() use ($account, $center_data, $department_id)
                 {
-                    $account->user_data->name = trim($center_data->name);
-                    $account->user_data->id_number = $center_data->id_num;
-                    $account->user_data->gender = $center_data->sex;
-                    $account->user_data->email = $center_data->email;
-                    $account->user_data->grade = $center_data->now_grade;
-                    $account->user_data->class = $center_data->now_class;
-                    $account->user_data->department_id = $department_id->id;
-                    $account->user_data->save();
+                    $account->userData->name = trim($center_data->name);
+                    $account->userData->id_number = $center_data->id_num;
+                    $account->userData->gender = $center_data->sex;
+                    $account->userData->email = $center_data->email;
+                    $account->userData->grade = $center_data->now_grade;
+                    $account->userData->class = $center_data->now_class;
+                    $account->userData->department_id = $department_id->id;
+                    $account->userData->save();
                 });
             }
 

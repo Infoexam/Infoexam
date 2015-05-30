@@ -28,64 +28,64 @@
 
 <div class="form-group">
     {!! Form::label('name', trans('student-information.name')) !!}
-    {!! Form::text('name', $account->user_data->name, ['class' => 'form-control']) !!}
+    {!! Form::text('name', $account->userData->name, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('email', trans('student-information.email')) !!}
-    {!! Form::email('email', $account->user_data->email, ['class' => 'form-control']) !!}
+    {!! Form::email('email', $account->userData->email, ['class' => 'form-control']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('gender', trans('student-information.gender')).'：' !!}
-    {{ ('M' === $account->user_data->gender) ? '男' : '女' }}
+    {{ ('M' === $account->userData->gender) ? '男' : '女' }}
 </div>
 
 <div class="form-group">
     {!! Form::label('department', trans('student-information.department')).'：' !!}
-    {{ $account->user_data->department->name }}
+    {{ $account->userData->department->name }}
 </div>
 
 <div class="form-group">
     {!! Form::label('grade', trans('student-information.grade')).'：' !!}
-    {{ $account->user_data->grade }}
+    {{ $account->userData->grade }}
 </div>
 
 <div class="form-group">
     {!! Form::label('class', trans('student-information.class')).'：' !!}
-    {{ $account->user_data->class }}
+    {{ $account->userData->class }}
 </div>
 
 <hr>
 
 <div class="form-group">
     {!! Form::label('free_acad', trans('student-information.free_acad')) !!}
-    {!! Form::input('number', 'free_acad', $account->accredited_data->free_acad, ['class' => 'form-control', 'min' => 0, 'max' => '127']) !!}
+    {!! Form::input('number', 'free_acad', $account->accreditedData->free_acad, ['class' => 'form-control', 'min' => 0, 'max' => '127']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('free_tech', trans('student-information.free_tech')) !!}
-    {!! Form::input('number', 'free_tech', $account->accredited_data->free_tech, ['class' => 'form-control', 'min' => 0, 'max' => '127']) !!}
+    {!! Form::input('number', 'free_tech', $account->accreditedData->free_tech, ['class' => 'form-control', 'min' => 0, 'max' => '127']) !!}
 </div>
 
 <div class="form-group">
     {!! Form::label('test_count', trans('student-information.test_count')).'：' !!}
-    {{ $account->accredited_data->test_count }}
+    {{ $account->accreditedData->test_count }}
 </div>
 
 <div class="form-group">
     {!! Form::label('academic_score', trans('student-information.acad_score')).'：' !!}
-    {{ (null === $account->accredited_data->acad_score) ? '無資料' : $account->accredited_data->acad_score }}
+    {{ (null === $account->accreditedData->acad_score) ? '無資料' : $account->accreditedData->acad_score }}
 </div>
 
 <div class="form-group">
     {!! Form::label('technical_score', trans('student-information.tech_score')).'：' !!}
-    {{ (null === $account->accredited_data->tech_score) ? '無資料' : $account->accredited_data->tech_score }}
+    {{ (null === $account->accreditedData->tech_score) ? '無資料' : $account->accreditedData->tech_score }}
 </div>
 
 <div class="form-group">
     {!! Form::label('pass_time', trans('student-information.pass_time')).'：' !!}
-    {{ (null === $account->accredited_data->passed_time) ? '無資料' : $account->accredited_data->passed_time }}
+    {{ (null === $account->accreditedData->passed_time) ? '無資料' : $account->accreditedData->passed_time }}
 </div>
 
 <div class="form-group">

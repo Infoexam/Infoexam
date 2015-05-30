@@ -4,8 +4,7 @@ use App\Commands\Student\ApplyTest;
 use App\Commands\Student\CancelTestApply;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
-
-use App\Infoexam\Admin\TestList;
+use App\Infoexam\Test\TestList;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 

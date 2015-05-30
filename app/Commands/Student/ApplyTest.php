@@ -1,11 +1,9 @@
 <?php namespace App\Commands\Student;
 
 use App\Commands\Command;
-
-use App\Commands\CreateSsn;
 use App\Infoexam\Exam\ExamConfig;
-use App\Infoexam\Admin\TestList;
-use App\Infoexam\Student\TestApply;
+use App\Infoexam\Test\TestList;
+use App\Infoexam\Test\TestApply;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -50,7 +48,7 @@ class ApplyTest extends Command implements SelfHandling {
              */
             if (ends_with($test_data->test_type, '1'))
             {
-                if ($this->account->accredited_data->acad_score >= $exam_configs->acad_passed_score)
+                if ($this->account->accreditedData->acad_score >= $exam_configs->acad_passed_score)
                 {
                     flash()->error(trans('test-applies.error.already_passed_acad'));
 
@@ -59,7 +57,7 @@ class ApplyTest extends Command implements SelfHandling {
             }
             else if (ends_with($test_data->test_type, '2'))
             {
-                if ($this->account->accredited_data->tech_score >= $exam_configs->tech_passed_score)
+                if ($this->account->accreditedData->tech_score >= $exam_configs->tech_passed_score)
                 {
                     flash()->error(trans('test-applies.error.already_passed_tech'));
 
@@ -89,7 +87,7 @@ class ApplyTest extends Command implements SelfHandling {
             /*
              * 檢查是否為資工系學生，如是，則檢查是否預約電腦軟體能力類型測驗
              */
-            if ('4104' === $this->account->user_data->department->code)
+            if ('4104' === $this->account->userData->department->code)
             {
                 if ( ! starts_with($test_data->test_type, '2'))
                 {
@@ -108,7 +106,7 @@ class ApplyTest extends Command implements SelfHandling {
             {
                 // 大四
                 case 2:
-                    if ($this->account->user_data->grade != 4)
+                    if ($this->account->userData->grade != 4)
                     {
                         flash()->error(trans('test-applies.error.specific_grade.4'));
 
@@ -118,7 +116,7 @@ class ApplyTest extends Command implements SelfHandling {
 
                 // 大二
                 case 3:
-                    if ($this->account->user_data->grade != 2)
+                    if ($this->account->userData->grade != 2)
                     {
                         flash()->error(trans('test-applies.error.specific_grade.2'));
 
@@ -172,19 +170,6 @@ class ApplyTest extends Command implements SelfHandling {
                 return false;
             }
 
-            /*
-             * 取得 ssn
-             */
-            $ssn = \Bus::dispatch(new CreateSsn(new TestApply()));
-
-            if (false === $ssn)
-            {
-                flash()->error('伺服器過載，請稍候再試');
-
-                return false;
-            }
-
-            $apply['ssn'] = $ssn;
             $apply['account_id'] = $this->account->id;
             $apply['test_list_id'] = $test_data->id;
             $apply['apply_time'] = Carbon::now();
@@ -192,11 +177,11 @@ class ApplyTest extends Command implements SelfHandling {
             /*
              * 檢查是否有免費測驗的額度
              */
-            if (ends_with($test_data->test_type, '1') && ($this->account->accredited_data->free_acad > 0))
+            if (ends_with($test_data->test_type, '1') && ($this->account->accreditedData->free_acad > 0))
             {
                 $apply['paid_at'] = $now;
             }
-            else if (ends_with($test_data->test_type, '2') && ($this->account->accredited_data->free_tech > 0))
+            else if (ends_with($test_data->test_type, '2') && ($this->account->accreditedData->free_tech > 0))
             {
                 $apply['paid_at'] = $now;
             }

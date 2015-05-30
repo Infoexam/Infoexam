@@ -1,4 +1,4 @@
-<?php namespace App\Infoexam\Admin;
+<?php namespace App\Infoexam\Test;
 
 use App\Commands\Admin\AutoGeneralPaper;
 use App\Infoexam\Core\Entity;
@@ -17,7 +17,7 @@ class TestList extends Entity {
 
     public function applies()
     {
-        return $this->hasMany('App\Infoexam\Student\TestApply');
+        return $this->hasMany('App\Infoexam\Test\TestApply');
     }
 
     public function scopeRoom($query, $param)

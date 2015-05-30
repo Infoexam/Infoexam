@@ -1,9 +1,9 @@
-<?php namespace App\Infoexam\Student;
+<?php namespace App\Infoexam\Test;
 
-use Illuminate\Database\Eloquent\Model;
+use App\Infoexam\Core\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TestApply extends Model {
+class TestApply extends Entity {
 
     use SoftDeletes;
 
@@ -11,19 +11,21 @@ class TestApply extends Model {
 
     protected $dates = ['deleted_at'];
 
+    protected $ssn = true;
+
     public function account()
     {
-        return $this->belongsTo('App\Infoexam\Account');
+        return $this->belongsTo('App\Infoexam\Account\Account');
     }
 
     public function test_list()
     {
-        return $this->belongsTo('App\Infoexam\Admin\TestList');
+        return $this->belongsTo('App\Infoexam\Test\TestList');
     }
 
     public function test_result()
     {
-        return $this->hasOne('App\Infoexam\Student\TestResult');
+        return $this->hasOne('App\Infoexam\Test\TestResult');
     }
 
 }

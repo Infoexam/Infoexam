@@ -23,7 +23,7 @@
                 @foreach($applies as $apply)
                     <tr>
                         <td>{{ $apply->account->username }}</td>
-                        <td>{{ $apply->account->user_data->name }}</td>
+                        <td>{{ $apply->account->userData->name }}</td>
                         <td>{{ $apply->apply_time }}</td>
                         <td>{!! HTML::true_or_false(null !== $apply->paid_at) !!}</td>
                         <td>

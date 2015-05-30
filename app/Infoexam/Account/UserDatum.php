@@ -8,7 +8,7 @@ class UserDatum extends Entity {
 
     public function account()
     {
-        return $this->belongsTo('App\Infoexam\Account');
+        return $this->belongsTo('App\Infoexam\Account\Account');
     }
 
     public function department()

@@ -1,11 +1,10 @@
 <?php namespace App\Infoexam\Exam;
 
 use App\Infoexam\Account\Authenticate;
-use App\Infoexam\Admin\TestList;
-use App\Infoexam\Student\TestApply;
-use App\Infoexam\Student\TestResult;
+use App\Infoexam\Test\TestList;
+use App\Infoexam\Test\TestApply;
+use App\Infoexam\Test\TestResult;
 use Auth;
-use Carbon\Carbon;
 
 class ExamAuth {
 
@@ -173,8 +172,6 @@ class ExamAuth {
      */
     public function initializeTestResult()
     {
-        return true;
-
         $test_result = TestResult::create(['test_apply_id' => $this->apply->id]);
 
         if ($test_result->exists)

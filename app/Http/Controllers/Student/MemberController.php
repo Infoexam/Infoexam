@@ -16,7 +16,7 @@ class MemberController extends Controller {
 
     public function info_update(Requests\Student\MemberInfoRequest $request)
     {
-        $request->user()->user_data->update(['email' => $request->input('email')]);
+        $request->user()->userData->update(['email' => $request->input('email')]);
 
         flash()->success(trans('general.update.success'));
 
