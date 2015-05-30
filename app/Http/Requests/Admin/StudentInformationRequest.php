@@ -4,11 +4,6 @@ use App\Http\Requests\Request;
 
 class StudentInformationRequest extends Request {
 
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -26,6 +21,11 @@ class StudentInformationRequest extends Request {
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

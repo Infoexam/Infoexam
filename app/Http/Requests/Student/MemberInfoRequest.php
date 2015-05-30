@@ -3,11 +3,6 @@
 use App\Http\Requests\Request;
 
 class MemberInfoRequest extends Request {
-    
-    public function authorize()
-    {
-        return true;
-    }
 
     /**
      * Get the validation rules that apply to the request.
@@ -18,10 +13,15 @@ class MemberInfoRequest extends Request {
     {
         return [
             'email' => 'required|email',
-            'g-recaptcha-response' => 'required|recaptcha'
+            'g-recaptcha-response' => 'required|recaptcha',
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

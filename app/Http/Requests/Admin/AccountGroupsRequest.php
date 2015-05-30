@@ -11,23 +11,30 @@ class AccountGroupsRequest extends Request {
      */
     public function rules()
     {
-        $this->boolean_parsing(['isStudent', 'isInvigilator', 'isAdmin', 'isNoLogin']);
-
-        $account_groups_id = $this->segments();
-
-        $this->merge(['permissions' => serialize([
-            'isStudent' => $this->input('isStudent'),
-            'isInvigilator' => $this->input('isInvigilator'),
-            'isAdmin' => $this->input('isAdmin'),
-            'isNoLogin' => $this->input('isNoLogin')
-        ])]);
+        $this->merge([
+            'permissions' => serialize([
+                'isStudent' => (bool) $this->input('isStudent'),
+                'isInvigilator' => (bool) $this->input('isInvigilator'),
+                'isAdmin' => (bool) $this->input('isAdmin'),
+                'isNoLogin' => (bool) $this->input('isNoLogin')
+            ])
+        ]);
 
         return [
-            'name' => 'required|unique:groups,name,' . end($account_groups_id),
-            'isStudent' => 'boolean',
-            'isInvigilator' => 'boolean',
-            'isAdmin' => 'boolean',
-            'isNoLogin' => 'boolean',
+            'name' => 'required|unique:groups,name,' . last($this->segments())
+        ];
+    }
+
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'name.required' => trans('error.required', ['attribute' => trans('account-groups.name')]),
+            'name.unique' => trans('error.unique', ['attribute' => trans('account-groups.name')]),
         ];
     }
 

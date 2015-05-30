@@ -25,7 +25,7 @@ class WebsiteIpsConfigsRequest extends Request {
             $this->merge(['ip_check' => $this->input('ip')]);
         }
 
-        $this->boolean_parsing(['student_page', 'exam_page', 'admin_page']);
+        $this->setBool(['student_page', 'exam_page', 'admin_page']);
 
         return [
             'ip' => 'required',
@@ -37,6 +37,11 @@ class WebsiteIpsConfigsRequest extends Request {
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

@@ -4,19 +4,34 @@ use Illuminate\Foundation\Http\FormRequest;
 
 abstract class Request extends FormRequest {
 
+    /**
+     * Determine if the request passes the authorization check.
+     *
+     * @return bool
+     */
     public function authorize()
     {
         return true;
     }
 
-    protected function boolean_parsing(array $lists = [])
+    /**
+     * Convert the input value to bool type.
+     *
+     * @param array $lists
+     * @return void
+     */
+    public function setBool(array $lists = [])
     {
-        if (is_array($lists) && count($lists))
+        if (count($lists))
         {
-            foreach ($lists as $list)
+            $replace = [];
+
+            foreach ($lists as &$list)
             {
-                $this->merge([$list => (boolean) $this->input($list, false)]);
+                $replace[$list] = (bool) $this->input($list, false);
             }
+
+            $this->merge($replace);
         }
     }
 

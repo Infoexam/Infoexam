@@ -23,6 +23,11 @@ class ExamConfigsRequest extends Request {
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

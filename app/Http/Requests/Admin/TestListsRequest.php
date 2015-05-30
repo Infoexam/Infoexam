@@ -5,11 +5,6 @@ use App\Infoexam\Exam\ExamConfig;
 
 class TestListsRequest extends Request {
 
-    public function authorize()
-    {
-        return true;
-    }
-
     /**
      * Get the validation rules that apply to the request.
      *
@@ -30,10 +25,15 @@ class TestListsRequest extends Request {
             'test_paper_auto' => 'required_if:test_paper_type,1|array',
             'test_paper_auto_number' => 'required_if:test_paper_type,1|digits_between:1,100',
             'test_paper_auto_level' => 'required_if:test_paper_type,1|digits_between:0,3',
-            'test_paper_specific' => 'required_if:test_paper_type,0|exists:paper_lists,ssn'
+            'test_paper_specific' => 'required_if:test_paper_type,0|exists:paper_lists,ssn',
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

@@ -11,7 +11,7 @@ class WebsiteConfigsRequest extends Request {
      */
     public function rules()
     {
-        $this->boolean_parsing(['student_page_maintain_mode', 'exam_page_maintain_mode']);
+        $this->setBool(['student_page_maintain_mode', 'exam_page_maintain_mode']);
 
         return [
             'student_page_maintain_mode' => 'boolean',
@@ -20,6 +20,11 @@ class WebsiteConfigsRequest extends Request {
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

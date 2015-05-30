@@ -4,9 +4,14 @@ use App\Http\Requests\Request;
 
 class ExamSetsRequest extends Request {
 
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
-        $this->boolean_parsing(['set_enable', 'open_practice']);
+        $this->setBool(['set_enable', 'open_practice']);
 
         return [
             'name' => 'required|between:3,32',
@@ -17,6 +22,11 @@ class ExamSetsRequest extends Request {
         ];
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

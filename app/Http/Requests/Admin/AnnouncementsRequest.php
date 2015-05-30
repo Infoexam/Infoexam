@@ -33,6 +33,11 @@ class AnnouncementsRequest extends Request {
         return $rules;
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

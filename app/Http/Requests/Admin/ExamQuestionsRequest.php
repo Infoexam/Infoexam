@@ -3,42 +3,48 @@
 use App\Http\Requests\Request;
 
 class ExamQuestionsRequest extends Request {
-    
+
+    /**
+     * Get the validation rules that apply to the request.
+     *
+     * @return array
+     */
     public function rules()
     {
-        $rule = [
+        $this->setBool(['multiple', 'open_practice']);
+
+        $rules = [
             'topic' => 'required|min:1',
             'topic_image' => 'image',
             'level' => 'required|digits_between:1,3',
             'multiple' => 'boolean',
-            'answer' => 'required|array'
+            'answer' => 'required|array',
         ];
 
-        $this->boolean_parsing(['multiple', 'open_practice']);
-
-        for ($i = 0; $i < 4; ++$i)
+        if ($this->isMethod('POST'))
         {
-            $c = 0;
+            $rules['exam_set_ssn'] = 'required';
+        }
 
-            foreach ($this->file('option_image.'.$i, []) as $image) {
-
-                if (null === $image)
+        foreach ($this->file('option_image', []) as $keys => &$values)
+        {
+            foreach ($values as $key => &$value)
+            {
+                if (null !== $value)
                 {
-                    continue;
+                    $rules['option_image.'.$keys.'.'.$key] = 'image';
                 }
-
-                $rule['option_image.'.$i.'.'.$c++] = 'image';
             }
         }
 
-        if ('PATCH' !== Request::method())
-        {
-            $rule['exam_set_ssn'] = 'required';
-        }
-
-        return $rule;
+        return $rules;
     }
 
+    /**
+     * Set custom messages for validator errors.
+     *
+     * @return array
+     */
     public function messages()
     {
         return [

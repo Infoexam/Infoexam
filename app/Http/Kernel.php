@@ -21,7 +21,7 @@ class Kernel extends HttpKernel {
         'App\Http\Middleware\UnserializeUserGroupsPermissions',
         'App\Http\Middleware\CheckUserAccessPermission',
         'App\Http\Middleware\PreprocessWebsiteInterface',
-        'App\Http\Middleware\CheckDeleteRequestValidation',
+        'App\Http\Middleware\CheckRequestValidation',
     ];
 
     /**
