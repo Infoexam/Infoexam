@@ -89,7 +89,7 @@ class AnnouncementsController extends Controller {
     {
         try
         {
-            Announcement::findOrFail($id)->update(['image_ssn' => null])->delete();
+            Announcement::findOrFail($id)->delete();
         }
         catch (ModelNotFoundException $e)
         {

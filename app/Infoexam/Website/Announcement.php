@@ -37,6 +37,8 @@ class Announcement extends Entity {
         if (null !== $this->image_ssn)
         {
             Image::whereIn('ssn', explode(',', $this->image_ssn))->delete();
+
+            $this->update(['image_ssn' => null]);
         }
 
         return parent::delete();
