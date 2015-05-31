@@ -1,13 +1,17 @@
 <header class="center-block">
     <img class="banner" src="/assets/images/banner.png" alt="banner">
     <nav class="toolbar">
-        @if (\App\Infoexam\Account\Account::isStudent())
+        @if(\App\Infoexam\Account\Account::isStudent())
             <ul class="list-inline pull-left">
                 <li class="dropdown">
-                    <span class="btn cursor-default">{{ \Auth::user()->username }}</span>
+                    <a href="{{ route('student.member.info') }}">
+                        <span class="btn">{{ \Auth::user()->username }}</span>
+                    </a>
                 </li>
                 <li class="dropdown">
-                    <span class="btn cursor-default">{{ \Auth::user()->userData->name }}</span>
+                    <a href="{{ route('student.member.info') }}">
+                        <span class="btn">{{ \Auth::user()->userData->name }}</span>
+                    </a>
                 </li>
             </ul>
         @endif
@@ -26,9 +30,9 @@
                 <li class="dropdown">
                     <span class="btn dropdown-toggle" data-toggle="dropdown">{{ trans('test-applies.title') }}{!! HTML::icon_menu_down() !!}</span>
                     <ul class="dropdown-menu">
+                        <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
                         <li>{!! HTML::linkRoute('student.test-applies.apply', trans('test-applies.apply_student')) !!}</li>
                         <li>{!! HTML::linkRoute('student.test-applies.manage-unite', trans('test-applies.manage_unite')) !!}</li>
-                        <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
                     </ul>
                 </li>
                 <li class="dropdown">
@@ -44,7 +48,7 @@
                     </a>
                 </li>
             @endif
-            @if ( ! \Auth::check())
+            @if( ! \Auth::check())
                 <li class="dropdown">
                     <a href="{{ route('student.login') }}" title="{{ trans('general.login') }}">
                         <span class="btn glyphicon glyphicon-log-in" aria-hidden="true"></span>

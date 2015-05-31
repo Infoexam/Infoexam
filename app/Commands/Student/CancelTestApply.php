@@ -82,6 +82,8 @@ class CancelTestApply extends Command implements SelfHandling {
              */
             $test_data->test_list->decrement('std_apply_num');
 
+            logging(['level' => 'info', 'action' => 'cancelApply', 'content' => ['ssn' => $this->ssn, 'test_list_id' => $test_data->test_list_id], 'remark' => null]);
+
             /*
              * 檢測完畢，刪除此預約
              */

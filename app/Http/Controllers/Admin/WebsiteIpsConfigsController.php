@@ -28,6 +28,8 @@ class WebsiteIpsConfigsController extends Controller {
     {
         IpRule::create($request->all());
 
+        $this->updateCache();
+
         return redirect()->route('admin.website-configs.ips.index');
     }
 
@@ -52,6 +54,8 @@ class WebsiteIpsConfigsController extends Controller {
         try
         {
             IpRule::findOrFail($id)->update($request->all());
+
+            $this->updateCache();
         }
         catch (ModelNotFoundException $e)
         {
@@ -66,6 +70,8 @@ class WebsiteIpsConfigsController extends Controller {
         try
         {
             IpRule::findOrFail($id)->delete();
+
+            $this->updateCache();
         }
         catch (ModelNotFoundException $e)
         {
@@ -73,6 +79,11 @@ class WebsiteIpsConfigsController extends Controller {
         }
 
         return redirect()->route('admin.website-configs.ips.index');
+    }
+
+    public function updateCache()
+    {
+        \Cache::forever('ip_rules', IpRule::all(['ip', 'student_page', 'exam_page', 'admin_page']));
     }
 
 }

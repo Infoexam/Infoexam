@@ -30,7 +30,7 @@ class WebsiteConfigsController extends Controller {
         {
             WebsiteConfig::firstOrFail()->update($request->all());
 
-            flash()->success(trans('general.update.success'));
+            \Cache::forever('website_maintain', WebsiteConfig::first());
 
             return redirect()->route('admin.website-configs.edit');
         }

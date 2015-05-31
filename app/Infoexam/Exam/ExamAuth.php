@@ -73,6 +73,10 @@ class ExamAuth {
 
                 return true;
             }
+
+            Auth::logout();
+
+            flash()->error(session()->pull('error_msg', trans('general.login.failed')));
         }
 
         return false;
@@ -87,7 +91,7 @@ class ExamAuth {
     {
         if (null === $this->account)
         {
-            flash()->error('Oops! There is no test now.');
+            session()->flash('error_msg', 'Oops! There is no test now.');
         }
         else
         {
@@ -99,7 +103,7 @@ class ExamAuth {
 
             if (1 !== $apply->count())
             {
-                flash()->error('Oops! Maybe you visit here at the wrong time.');
+                session()->flash('error_msg', 'Oops! Maybe you visit here at the wrong time.');
             }
             else
             {
@@ -124,7 +128,7 @@ class ExamAuth {
             return true;
         }
 
-        flash()->error('Oops! Maybe you had already signed in before.');
+        session()->flash('error_msg', 'Oops! Maybe you had already signed in before.');
 
         return false;
     }
@@ -183,7 +187,7 @@ class ExamAuth {
             return true;
         }
 
-        flash()->error('Oops! There is something wrong.');
+        session()->flash('error_msg', 'Oops! There is something wrong.');
 
         return false;
     }

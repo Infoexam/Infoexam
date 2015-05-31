@@ -16,9 +16,10 @@ class UnserializeUserGroupsPermissions {
         /*
          * 如果使用者已登入，則將使用者所屬群組之權限 unserialize
          */
-        if ( ! is_null($auth = \Auth::user()))
+        if (null !== ($auth = \Auth::user()))
         {
-            foreach ($auth->groups as $group) {
+            foreach ($auth->groups as $group)
+            {
                 $group->permissions = unserialize($group->permissions);
             }
         }

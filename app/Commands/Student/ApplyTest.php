@@ -251,12 +251,14 @@ class ApplyTest extends Command implements SelfHandling {
             /*
              * 檢測完畢，新增此預約
              */
-            TestApply::create($apply);
+            $result = TestApply::create($apply);
 
             /*
              * 將該測驗目前人數加 1
              */
             $test_data->increment('std_apply_num');
+
+            logging(['level' => 'info', 'action' => 'applyTest', 'content' => ['ssn' => $result->ssn, 'test_list_id' => $result->test_list_id], 'remark' => null]);
 
             return true;
         }

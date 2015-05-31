@@ -83,7 +83,7 @@ class Authenticate {
         $this->identity = $identity;
         $this->user_ip = \Request::ip();
 
-        $this->account = Account::where('username', '=', $this->username)->first();
+        $this->account = (null === $this->username) ? null : Account::where('username', '=', $this->username)->first();
     }
 
     /**
@@ -217,6 +217,8 @@ class Authenticate {
                 {
                     $this->logging();
                 }
+
+                flash()->success(trans('general.login.success'));
             }
             else
             {
@@ -304,7 +306,5 @@ class Authenticate {
     public function logging()
     {
         logging(['level' => 'info', 'action' => 'login', 'content' => null, 'remark' => null]);
-
-        flash()->success(trans('general.login.success'));
     }
 }

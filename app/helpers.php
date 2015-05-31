@@ -13,14 +13,6 @@ if ( ! function_exists('temp_path'))
     }
 }
 
-if ( ! function_exists('cache_forever'))
-{
-    function cache_forever($key = null, $value = null)
-    {
-        app('cache')->forever($key, $value);
-    }
-}
-
 if ( ! function_exists('logging'))
 {
     function logging($text = [], $userId = '')
