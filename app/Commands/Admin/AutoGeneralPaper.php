@@ -11,7 +11,10 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 class AutoGeneralPaper extends Command implements SelfHandling {
 
     protected $exam_sets, $level, $number;
-    
+
+    /**
+     * Create a new command instance.
+     */
     public function __construct(array $exam_sets = [], $level = 2, $number = 50)
     {
         $this->exam_sets = $exam_sets;

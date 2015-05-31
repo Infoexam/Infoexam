@@ -13,6 +13,9 @@ class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
 
     protected $override, $specific, $username;
 
+    /**
+     * Create a new command instance.
+     */
     public function __construct($override = false, $specific = false, $username = null)
     {
         $this->override = $override;

@@ -7,7 +7,7 @@ class TestApply extends Entity {
 
     use SoftDeletes;
 
-    protected $fillable = ['ssn', 'account_id', 'test_list_id', 'apply_time', 'paid_at'];
+    protected $fillable = ['account_id', 'test_list_id', 'apply_time', 'paid_at'];
 
     protected $dates = ['deleted_at'];
 

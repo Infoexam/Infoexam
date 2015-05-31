@@ -16,7 +16,7 @@ class Announcement extends Entity {
     {
         if (isset($attributes['image']))
         {
-            $attributes['image_ssn'] = upload_images($attributes['image']);
+            $attributes['image_ssn'] = upload_images($attributes['image'], true);
         }
 
         return parent::create($attributes);
@@ -26,7 +26,7 @@ class Announcement extends Entity {
     {
         if (isset($attributes['image']))
         {
-            $attributes['image_ssn'] = upload_images($attributes['image']);
+            $attributes['image_ssn'] = upload_images($attributes['image'], true);
         }
 
         return parent::update($attributes);

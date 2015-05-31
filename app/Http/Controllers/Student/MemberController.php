@@ -18,8 +18,6 @@ class MemberController extends Controller {
     {
         $request->user()->userData->update(['email' => $request->input('email')]);
 
-        flash()->success(trans('general.update.success'));
-
         return redirect()->route('student.member.info');
     }
 

@@ -4,11 +4,8 @@ use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\Website\Announcement;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AnnouncementsController extends Controller {
-
 
     public function index()
     {
@@ -22,14 +19,16 @@ class AnnouncementsController extends Controller {
         try
         {
             $announcement = Announcement::where('heading', '=', $heading)->firstOrFail();
-            $announcement->image_ssn = (is_null($announcement->image_ssn)) ? null : explode(',', $announcement->image_ssn);
+
+            $announcement->image_ssn = $this->explode_image_ssn($announcement->image_ssn);
+
             $title = trans('general.title').' :: '.$announcement->heading;
 
             return view('student.announcements.show', compact('title', 'announcement'));
         }
         catch (ModelNotFoundException $e)
         {
-            throw new NotFoundHttpException;
+            return http_404('student.announcements.index');
         }
     }
 

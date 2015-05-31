@@ -5,7 +5,8 @@ return [
     'title' => '預約系統',
     'list' => '測驗列表',
     'history' => '歷史測驗',
-    'manage' => '管理預約',
+    'manage' => '查詢預約',
+    'manage_unite' => '統一預約管理',
 
     'apply' => '預約',
     'applies' => '預約列表',
@@ -13,6 +14,9 @@ return [
     'apply.failed' => '預約失敗',
     'apply.cancel' => '取消預約',
     'apply.time' => '預約時間',
+
+    'transform' => '場次更換',
+    'transform.failed' => '更換失敗，超過更換期限或選擇了不同類別的測驗',
 
     'paid_status' => '繳費狀況',
     'scores' => '測驗成績',

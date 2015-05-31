@@ -18,9 +18,11 @@ Route::group(['namespace' => 'Student'], function()
     {
         Route::group(['prefix' => 'test-applies'], function()
         {
-            get('/', ['as' => 'student.test-applies.index', 'uses' => 'TestAppliesController@index']);
             get('apply', ['as' => 'student.test-applies.apply', 'uses' => 'TestAppliesController@apply']);
+            get('manage', ['as' => 'student.test-applies.manage', 'uses' => 'TestAppliesController@manage']);
+            get('manage-unite', ['as' => 'student.test-applies.manage-unite', 'uses' => 'TestAppliesController@manageUnite']);
             post('apply/{id}', ['as' => 'student.test-applies.store', 'uses' => 'TestAppliesController@store']);
+            patch('apply/{id}', ['as' => 'student.test-applies.update', 'uses' => 'TestAppliesController@update']);
             delete('apply/{id}', ['as' => 'student.test-applies.destroy', 'uses' => 'TestAppliesController@destroy']);
             get('history', ['as' => 'student.test-applies.history', 'uses' => 'TestAppliesController@history']);
         });

@@ -26,8 +26,9 @@
                 <li class="dropdown">
                     <span class="btn dropdown-toggle" data-toggle="dropdown">{{ trans('test-applies.title') }}{!! HTML::icon_menu_down() !!}</span>
                     <ul class="dropdown-menu">
-                        <li>{!! HTML::linkRoute('student.test-applies.index', trans('test-applies.manage')) !!}</li>
                         <li>{!! HTML::linkRoute('student.test-applies.apply', trans('test-applies.apply_student')) !!}</li>
+                        <li>{!! HTML::linkRoute('student.test-applies.manage-unite', trans('test-applies.manage_unite')) !!}</li>
+                        <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
                     </ul>
                 </li>
                 <li class="dropdown">

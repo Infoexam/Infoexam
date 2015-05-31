@@ -9,10 +9,11 @@ class AuthSsoController extends Controller {
 
     public function index(Request $request)
     {
-        $cid = $request->input('miXd');
-        $ticket = $request->input('ticket');
+        $cid = $request->input('miXd', '');
 
-        if ( ! (is_null($cid) || is_null($ticket) || strlen($cid) === 0 || strlen($ticket) === 0))
+        $ticket = $request->input('ticket', '');
+
+        if ( ! (strlen($cid) === 0 || strlen($ticket) === 0))
         {
             list($status, $person_id) = $this->auth_sso($cid, $ticket);
 
@@ -20,7 +21,7 @@ class AuthSsoController extends Controller {
             {
                 $id = Account::where('username', '=', $person_id)->first(['id']);
 
-                if ( ! is_null($id))
+                if (null !== $id)
                 {
                     \Auth::loginUsingId($id->id);
 
@@ -37,7 +38,7 @@ class AuthSsoController extends Controller {
     }
 
     public function auth_sso($mix_info, $ticket) {
-        if (is_null($sso_url = env('API_SSO_URL', null)))
+        if (null === ($sso_url = env('API_SSO_URL', null)))
         {
             return [0, null];
         }

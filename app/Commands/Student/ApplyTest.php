@@ -9,14 +9,32 @@ use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ApplyTest extends Command implements SelfHandling {
-    
-    protected $account, $ssn, $error_code;
-    
-    public function __construct($request, $ssn)
+
+    /**
+     * Account data.
+     *
+     * @var \App\Infoexam\Account\Account
+     */
+    protected $account;
+
+    /**
+     * Test ssn.
+     *
+     * @var string
+     */
+    protected $ssn;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param \App\Infoexam\Account\Account $account
+     * @param string $ssn
+     */
+    public function __construct($account, $ssn)
     {
-        $this->account = $request->user();
+        $this->account = $account;
+
         $this->ssn = $ssn;
-        $this->error_code = 0;
     }
 
     /**
@@ -28,45 +46,75 @@ class ApplyTest extends Command implements SelfHandling {
     {
         try
         {
-            /*
-             * 初始化資料
-             */
-            $now = Carbon::now();   // 目前時間
+            // 目前時間
+            $now = Carbon::now();
+
+            // 考試設定檔
             $exam_configs = ExamConfig::firstOrFail();
 
-            /*
-             * 取得測驗資料
-             */
+            // 測驗資料
             $test_data = TestList::where('ssn', '=', $this->ssn)
                 ->where('test_enable', '=', true)
                 ->where('allow_apply', '=', true)
-                ->where('apply_type', 'like', '1_%')
+                ->where('apply_type', 'like', '1\_%')
                 ->firstOrFail();
+
+            /**
+             * test_type：X_O
+             *
+             * X：1：電腦應用能力；2：電腦軟體能力
+             * O：1：學科；2：術科
+             */
+            $test_type = explode('_', $test_data->test_type);
+
+            array_walk($test_type, function(&$value)
+            {
+                $value = intval($value);
+            });
 
             /*
              * 檢查使用者是否已通過測驗
              */
-            if (ends_with($test_data->test_type, '1'))
+            switch ($test_type[1])
             {
-                if ($this->account->accreditedData->acad_score >= $exam_configs->acad_passed_score)
-                {
-                    flash()->error(trans('test-applies.error.already_passed_acad'));
+                // 學科
+                case 1:
+                    if ($this->account->accreditedData->acad_score >= $exam_configs->acad_passed_score)
+                    {
+                        flash()->error(trans('test-applies.error.already_passed_acad'));
 
-                    return false;
-                }
-            }
-            else if (ends_with($test_data->test_type, '2'))
-            {
-                if ($this->account->accreditedData->tech_score >= $exam_configs->tech_passed_score)
-                {
-                    flash()->error(trans('test-applies.error.already_passed_tech'));
+                        return false;
+                    }
+                    break;
 
-                    return false;
-                }
+                // 術科
+                case 2:
+                    if ($this->account->accreditedData->tech_score >= $exam_configs->tech_passed_score)
+                    {
+                        flash()->error(trans('test-applies.error.already_passed_tech'));
+
+                        return false;
+                    }
+                    break;
+
+                // 未知
+                default:
+                    throw new ModelNotFoundException;
+                    break;
             }
 
             /*
-             * 檢查是否在允許預約的時間範圍內
+             * 檢查是否為資工系學生，如是，則檢查是否預約電腦軟體能力類型測驗
+             */
+            if (('4104' === $this->account->userData->department->code) && (2 !== $test_type[0]))
+            {
+                flash()->error(trans('test-applies.error.is_csie'));
+
+                return false;
+            }
+
+            /*
+             * 檢查是否在允許預約的時間範圍內 (1天前)
              */
             if ((1 * 86400) > ($test_data->start_time->timestamp - Carbon::now()->startOfDay()->timestamp))
             {
@@ -84,26 +132,30 @@ class ApplyTest extends Command implements SelfHandling {
                 return false;
             }
 
-            /*
-             * 檢查是否為資工系學生，如是，則檢查是否預約電腦軟體能力類型測驗
+            /**
+             * apply_type：X_O
+             *
+             * X：
+             *  1：自行預約
+             *    O：
+             *      1：通用自行預約
+             *      2：大四專屬預約
+             *      3：大二專屬預約
+             *  2：統一預約
+             *    O：
+             *      1：科系統一預約
+             *      2：衝堂補考預約
              */
-            if ('4104' === $this->account->userData->department->code)
-            {
-                if ( ! starts_with($test_data->test_type, '2'))
-                {
-                    flash()->error(trans('test-applies.error.is_csie'));
-
-                    return false;
-                }
-            }
 
             /*
              * 檢查該測驗是否為特定年級專屬預約
              */
-            $specific_grade = explode('_', $test_data->apply_type);
-
-            switch ($specific_grade[1])
+            switch (intval(last(explode('_', $test_data->apply_type))))
             {
+                // 通用
+                case 1:
+                    break;
+
                 // 大四
                 case 2:
                     if ($this->account->userData->grade != 4)
@@ -123,12 +175,17 @@ class ApplyTest extends Command implements SelfHandling {
                         return false;
                     }
                     break;
+
+                // 未知
+                default:
+                    throw new ModelNotFoundException;
+                    break;
             }
 
             /*
              * 檢查是否重複預約
              */
-            if ( ! is_null(TestApply::where('account_id', '=', $this->account->id)->where('test_list_id', '=', $test_data->id)->first(['id'])))
+            if (TestApply::where('account_id', '=', $this->account->id)->where('test_list_id', '=', $test_data->id)->count(['id']))
             {
                 flash()->error(trans('test-applies.error.apply_the_same_test'));
 
@@ -139,6 +196,7 @@ class ApplyTest extends Command implements SelfHandling {
              * 檢查當週是否已預約過測驗
              */
             $check_time_interval_start = $test_data->start_time;
+
             $check_time_interval_end = $test_data->start_time;
 
             $already_apply = TestApply::where('account_id', '=', $this->account->id)
@@ -177,11 +235,11 @@ class ApplyTest extends Command implements SelfHandling {
             /*
              * 檢查是否有免費測驗的額度
              */
-            if (ends_with($test_data->test_type, '1') && ($this->account->accreditedData->free_acad > 0))
+            if ((1 === $test_type[1]) && ($this->account->accreditedData->free_acad > 0))
             {
                 $apply['paid_at'] = $now;
             }
-            else if (ends_with($test_data->test_type, '2') && ($this->account->accreditedData->free_tech > 0))
+            else if (2 === $test_type[1] && ($this->account->accreditedData->free_tech > 0))
             {
                 $apply['paid_at'] = $now;
             }

@@ -1,7 +1,6 @@
 <?php namespace App\Commands\Student;
 
 use App\Commands\Command;
-
 use App\Infoexam\Exam\ExamConfig;
 use App\Infoexam\Test\TestApply;
 use Carbon\Carbon;
@@ -10,11 +9,30 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class CancelTestApply extends Command implements SelfHandling {
 
-    protected $account, $ssn;
+    /**
+     * Account data.
+     *
+     * @var \App\Infoexam\Account\Account
+     */
+    protected $account;
 
-    public function __construct($request, $ssn)
+    /**
+     * Test ssn.
+     *
+     * @var string
+     */
+    protected $ssn;
+
+    /**
+     * Create a new command instance.
+     *
+     * @param \App\Infoexam\Account\Account $account
+     * @param string $ssn
+     */
+    public function __construct($account, $ssn)
     {
-        $this->account = $request->user();
+        $this->account = $account;
+
         $this->ssn = $ssn;
     }
 
@@ -27,15 +45,13 @@ class CancelTestApply extends Command implements SelfHandling {
     {
         try
         {
-            /*
-             * 初始化資料
-             */
-            $now = Carbon::now();   // 目前時間
+            // 目前時間
+            $now = Carbon::now();
+
+            // 考試設定檔
             $exam_configs = ExamConfig::firstOrFail();
 
-            /*
-             * 取得申請資料
-             */
+            // 報名資料
             $test_data = TestApply::where('ssn', '=', $this->ssn)
                 ->where('account_id', '=', $this->account->id)
                 ->whereNull('test_result_id')
@@ -45,16 +61,6 @@ class CancelTestApply extends Command implements SelfHandling {
              * 檢查測驗是否啟用
              */
             if ( ! $test_data->test_list->test_type)
-            {
-                flash()->error(trans('test-applies.error.invalid_apply'));
-
-                return false;
-            }
-
-            /*
-             * 檢查測驗是否已開始
-             */
-            if ($now >= $test_data->test_list->start_time)
             {
                 flash()->error(trans('test-applies.error.invalid_apply'));
 
@@ -72,14 +78,14 @@ class CancelTestApply extends Command implements SelfHandling {
             }
 
             /*
-             * 檢測完畢，刪除此預約
-             */
-            $test_data->delete();
-
-            /*
              * 將該測驗目前人數減 1
              */
             $test_data->test_list->decrement('std_apply_num');
+
+            /*
+             * 檢測完畢，刪除此預約
+             */
+            $test_data->delete();
 
             return true;
         }
