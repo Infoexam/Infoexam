@@ -77,7 +77,7 @@ class TransformTestApply extends Command implements SelfHandling {
 
             $apply = $test_applies->shift();
 
-            logging(['level' => 'info', 'action' => 'transformTestApply', 'content' => ['ssn' => $apply->ssn, 'from' => $apply->test_list_id, 'to' => $test_data->id], 'remark' => null]);
+            logging(['level' => 'info', 'action' => 'transformTestApply', 'content' => ['ssn' => $apply->ssn, 'from_test_list_id' => $apply->test_list_id, 'to_test_list_id' => $test_data->id], 'remark' => null]);
 
             $apply->test_list->decrement('std_apply_num');
 

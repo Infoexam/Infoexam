@@ -21,7 +21,7 @@ class TestListsController extends Controller {
         $tested = $request->input('tested', false);
 
         $test_lists = TestList::Tested($tested)
-            ->orderBy('start_time', 'desc')
+            ->orderBy('start_time', $tested ? 'desc' : 'asc')
             ->paginate(10);
 
         $test_list_ssn = implode(',', getTestListsSsn($test_lists));

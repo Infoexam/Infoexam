@@ -14,6 +14,10 @@ class AutoGeneralPaper extends Command implements SelfHandling {
 
     /**
      * Create a new command instance.
+     *
+     * @param array $exam_sets
+     * @param integer $level
+     * @param integer $number
      */
     public function __construct(array $exam_sets = [], $level = 2, $number = 50)
     {

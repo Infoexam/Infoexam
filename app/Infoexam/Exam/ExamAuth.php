@@ -74,9 +74,9 @@ class ExamAuth {
                 return true;
             }
 
-            Auth::logout();
+            $auth->fail2ban();
 
-            flash()->error(session()->pull('error_msg', trans('general.login.failed')));
+            Auth::logout();
         }
 
         return false;
@@ -91,7 +91,7 @@ class ExamAuth {
     {
         if (null === $this->account)
         {
-            session()->flash('error_msg', 'Oops! There is no test now.');
+            flash()->error(trans('exam.error.signInAtWrongTime'));
         }
         else
         {
@@ -103,7 +103,7 @@ class ExamAuth {
 
             if (1 !== $apply->count())
             {
-                session()->flash('error_msg', 'Oops! Maybe you visit here at the wrong time.');
+                flash()->error(trans('exam.error.signInAtWrongTime'));
             }
             else
             {
@@ -128,7 +128,7 @@ class ExamAuth {
             return true;
         }
 
-        session()->flash('error_msg', 'Oops! Maybe you had already signed in before.');
+        flash()->error(trans('exam.error.multiSignIn'));
 
         return false;
     }
@@ -187,7 +187,7 @@ class ExamAuth {
             return true;
         }
 
-        session()->flash('error_msg', 'Oops! There is something wrong.');
+        flash()->error(trans('exam.error.initializeFailed'));
 
         return false;
     }

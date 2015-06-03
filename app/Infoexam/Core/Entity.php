@@ -11,6 +11,13 @@ abstract class Entity extends Model
      */
     protected $ssn = false;
 
+    /**
+     * Indicates whether show the flash message.
+     *
+     * @var bool
+     */
+    protected $showRemind = true;
+
     public static function boot()
     {
         parent::boot();
@@ -35,7 +42,10 @@ abstract class Entity extends Model
 
         parent::created(function($model)
         {
-            flash()->success(trans('general.create.success'));
+            if (true === $model->showRemind)
+            {
+                flash()->success(trans('general.create.success'));
+            }
         });
 
         parent::updating(function($model)
@@ -45,12 +55,18 @@ abstract class Entity extends Model
 
         parent::updated(function($model)
         {
-            flash()->success(trans('general.update.success'));
+            if (true === $model->showRemind)
+            {
+                flash()->success(trans('general.update.success'));
+            }
         });
 
         parent::deleted(function($model)
         {
-            flash()->success(trans('general.delete.success'));
+            if (true === $model->showRemind)
+            {
+                flash()->success(trans('general.delete.success'));
+            }
         });
     }
 
@@ -81,6 +97,17 @@ abstract class Entity extends Model
         flash()->error(trans('error.ssn_attempts_failed'));
 
         return false;
+    }
+
+    /**
+     * Set $showRemind.
+     *
+     * @param bool $value
+     * @return void
+     */
+    public function setshowRemind($value = true)
+    {
+        $this->showRemind = (bool) $value;
     }
 
     /**

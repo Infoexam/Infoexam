@@ -12,7 +12,7 @@ return [
 
     'exam_sets' => '題庫',
     'topic' => '題目',
-    'explanation' => '答案說明',
+    'explanation' => '題目解析',
     'multiple' => '多選題',
     'answer' => '答案',
     'level' => '題目難度',

@@ -6,12 +6,25 @@ use App\Http\Controllers\Controller;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Authenticate;
 use Illuminate\Http\Request;
+use Spatie\Activitylog\Models\Activity;
 
 class HomeController extends Controller {
 
     public function index()
     {
-        return view('admin.index');
+        $logs = Activity::with('user')->where('text', 'not like', '%"login"%')->latest()->limit(10)->get()
+            ->transform(function($item)
+            {
+                $item->setAttribute('text', json_decode($item->text));
+
+                $content = (array) $item->text->content;
+
+                $item->text->{'content'} = implode(', ', array_map(function ($v, $k) { return sprintf("%s:'%s'", $k, $v); }, $content, array_keys($content)));
+
+                return $item;
+            });
+
+        return view('admin.index', compact('logs'));
     }
 
     public function login(Authenticate $auth)

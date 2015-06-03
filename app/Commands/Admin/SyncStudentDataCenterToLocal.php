@@ -8,6 +8,7 @@ use App\Infoexam\Account\Department;
 use App\Infoexam\Account\UserGroup;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
 
@@ -15,11 +16,15 @@ class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
 
     /**
      * Create a new command instance.
+     *
+     * @param bool $override
+     * @param bool $specific
+     * @param string|null $username
      */
     public function __construct($override = false, $specific = false, $username = null)
     {
-        $this->override = $override;
-        $this->specific = $specific;
+        $this->override = (bool) $override;
+        $this->specific = (bool) $specific;
         $this->username = $username;
     }
 
@@ -30,111 +35,128 @@ class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
      */
     public function handle()
     {
-        \DB::reconnect('mysql');
-        \DB::reconnect('pgsql_elearn');
-
-        $pg_connection = new Account();
-        $pg_connection->setConnection('pgsql_elearn');
-        $pg_connection->setTable('std_info');
-        $pg_connection->setKeyName('std_no');
-        $pg_connection = $pg_connection->leftJoin('std_login', 'std_info.std_no', '=', 'std_login.user_id')
+        $center = new Account();
+        $center->setConnection('pgsql_elearn');
+        $center->setTable('std_info');
+        $center->setKeyName('std_no');
+        $center = $center->leftJoin('std_login', 'std_info.std_no', '=', 'std_login.user_id')
             ->select('std_info.*', 'std_login.stat', 'std_login.pass_time', 'std_login.pass_grade', 'std_login.grade1', 'std_login.grade2', 'std_login.test_count', 'std_login.pass_y', 'std_login.pass_s');
 
-        if ($this->specific)
+        if ( ! $this->specific)
         {
-            $center_data = $pg_connection->where('std_info.std_no', '=', $this->username)
-                ->first();
-
-            if (is_null($center_data))
+            $data = $center->get();
+        }
+        else
+        {
+            if (null === ($datum = $center->where('std_info.std_no', '=', $this->username)->first()))
             {
                 return;
             }
 
-            $center_datas = [$center_data];
+            $data = [$datum];
         }
-        else
+
+        unset($center);
+
+        foreach ($data as &$datum)
         {
-            $center_datas = $pg_connection->get();
-        }
-
-        foreach ($center_datas as $center_data) {
-
-            $account = Account::where('username', '=', $center_data->std_no)->first();
-
-            $pass_or_not = ($center_data->stat == 'Y') ? true : false;
-
-            $department_id = Department::where('code', '=', $center_data->deptcd)->firstOrFail();
-
-            if (is_null($account))
+            try
             {
-                \DB::transaction(function() use ($center_data, $pass_or_not, $department_id)
+                $account = Account::where('username', '=', $datum->std_no)->first();
+
+                $pass_or_not = ('Y' == $datum->stat);
+
+                $department_id = Department::where('code', '=', $datum->deptcd)->firstOrFail();
+
+                if (null !== $account)
                 {
-                    $account = new Account();
-                    $account->username = $center_data->std_no;
-                    $account->password = bcrypt($center_data->user_pass);
-                    $account->save();
+                    $info = [
+                        'name' => trim($datum->name),
+                        'id_number' => $datum->id_num,
+                        'gender' => $datum->sex,
+                        'email' => $datum->email,
+                        'grade' => $datum->now_grade,
+                        'class' => $datum->now_class,
+                        'department_id' => $department_id->id,
+                    ];
 
-                    if (0 === $account->id)
+                    $account->userData->lockForUpdate();
+                    $account->userData->fill($info)->save();
+                }
+                else
+                {
+                    DB::transaction(function() use ($datum, $pass_or_not, $department_id)
                     {
-                        throw new ModelNotFoundException;
-                    }
+                        $info_acc = [
+                            'username' => $datum->std_no,
+                            'password' => bcrypt($datum->user_pass),
+                        ];
 
-                    $user_data = new UserDatum();
-                    $user_data->account_id = $account->id;
-                    $user_data->name = trim($center_data->name);
-                    $user_data->id_number = $center_data->id_num;
-                    $user_data->gender = $center_data->sex;
-                    $user_data->email = $center_data->email;
-                    $user_data->grade = $center_data->now_grade;
-                    $user_data->class = $center_data->now_class;
-                    $user_data->department_id = $department_id->id;
-                    $user_data->save();
+                        $info_user = [
+                            'name' => trim($datum->name),
+                            'id_number' => $datum->id_num,
+                            'gender' => $datum->sex,
+                            'email' => $datum->email,
+                            'grade' => $datum->now_grade,
+                            'class' => $datum->now_class,
+                            'department_id' => $department_id->id,
+                        ];
 
-                    if (0 === $user_data->id)
-                    {
-                        throw new ModelNotFoundException;
-                    }
+                        $info_accredited = [
+                            'free_acad' => ($datum->now_grade > 2) ? 0 : 1,
+                            'free_tech' => ($datum->now_grade > 2) ? 0 : 1,
+                            'is_passed' => $pass_or_not,
+                            'passed_score' => ($pass_or_not) ? $datum->pass_grade : null,
+                            'passed_year' => ($pass_or_not) ? $datum->pass_y : null,
+                            'passed_semester' => ($pass_or_not) ? $datum->pass_s : null,
+                            'passed_time' => ($pass_or_not) ? $datum->pass_time : null,
+                            'acad_score' => ($datum->grade1) ? $datum->grade1 : null,
+                            'tech_score' => ($datum->grade2) ? $datum->grade2 : null,
+                            'test_count' => ($datum->test_count) ? $datum->test_count : 0,
+                        ];
 
-                    $accredited_data = new AccreditedDatum();
-                    $accredited_data->account_id = $account->id;
-                    $accredited_data->free_acad = ($center_data->now_grade > 2) ? 0 : 1;
-                    $accredited_data->free_tech = ($center_data->now_grade > 2) ? 0 : 1;
-                    $accredited_data->is_passed = ($pass_or_not) ? true : false;
-                    $accredited_data->passed_score = ($pass_or_not) ? $center_data->pass_grade : null;
-                    $accredited_data->passed_year = ($pass_or_not) ? $center_data->pass_y : null;
-                    $accredited_data->passed_semester = ($pass_or_not) ? $center_data->pass_s : null;
-                    $accredited_data->passed_time = ($pass_or_not) ? $center_data->pass_time : null;
-                    $accredited_data->acad_score = ($center_data->grade1) ? $center_data->grade1 : null;
-                    $accredited_data->tech_score = ($center_data->grade2) ? $center_data->grade2 : null;
-                    $accredited_data->test_count = ($center_data->test_count) ? $center_data->test_count : 0;
-                    $accredited_data->save();
+                        $info_group = [
+                            'group_id' => 3
+                        ];
 
-                    if (0 === $accredited_data->id)
-                    {
-                        throw new ModelNotFoundException;
-                    }
+                        $account = new Account();
 
-                    $group = new UserGroup();
-                    $group->account_id = $account->id;
-                    $group->group_id = 3;
-                    $group->save();
-                });
+                        $account->fill($info_acc)->save();
+
+                        if ( ! $account->exists)
+                        {
+                            throw new ModelNotFoundException;
+                        }
+
+                        $user_data = new UserDatum();
+
+                        $accredited_data = new AccreditedDatum();
+
+                        $group = new UserGroup();
+
+                        $user_data->fill($info_user);
+
+                        $accredited_data->fill($info_accredited);
+
+                        $group->fill($info_group);
+
+                        $account->userData()->save($user_data);
+
+                        $account->accreditedData()->save($accredited_data);
+
+                        $account->groups()->save($group);
+
+                        if ( ! $account->userData->exists || ! $account->accreditedData->exists)
+                        {
+                            throw new ModelNotFoundException;
+                        }
+                    });
+                }
             }
-            else
+            catch (ModelNotFoundException $e)
             {
-                \DB::transaction(function() use ($account, $center_data, $department_id)
-                {
-                    $account->userData->name = trim($center_data->name);
-                    $account->userData->id_number = $center_data->id_num;
-                    $account->userData->gender = $center_data->sex;
-                    $account->userData->email = $center_data->email;
-                    $account->userData->grade = $center_data->now_grade;
-                    $account->userData->class = $center_data->now_class;
-                    $account->userData->department_id = $department_id->id;
-                    $account->userData->save();
-                });
+                logging(['level' => 'warning', 'action' => 'syncStudentDataFailed', 'content' => ['username' => $datum->std_no, 'name' => trim($datum->name)], 'remark' => 'CenterToLocal']);
             }
-
         }
     }
 

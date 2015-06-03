@@ -9,6 +9,8 @@ class Account extends Entity implements AuthenticatableContract {
 
     use Authenticatable;
 
+    protected $showRemind = false;
+
     // 取得使用者個人資料
     public function userData()
     {

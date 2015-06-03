@@ -27,6 +27,13 @@ Route::group(['namespace' => 'Student'], function()
             get('history', ['as' => 'student.test-applies.history', 'uses' => 'TestAppliesController@history']);
         });
 
+        Route::group(['prefix' => 'practice-exam'], function()
+        {
+            get('/', ['as' => 'student.practice-exam.index', 'uses' => 'PracticeExamController@index']);
+            get('testing/{exam_set_tag}', ['as' => 'student.practice-exam.testing', 'uses' => 'PracticeExamController@testing']);
+            post('result', ['as' => 'student.practice-exam.result', 'uses' => 'PracticeExamController@result']);
+        });
+
         Route::group(['prefix' => 'member'], function()
         {
             get('info', ['as' => 'student.member.info', 'uses' => 'MemberController@info']);

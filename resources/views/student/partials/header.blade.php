@@ -28,6 +28,11 @@
             </li>
             @if (\App\Infoexam\Account\Account::isStudent())
                 <li class="dropdown">
+                    <a href="{{ route('student.practice-exam.index') }}">
+                        <span class="btn">{{ trans('practice-exam.title') }}</span>
+                    </a>
+                </li>
+                <li class="dropdown">
                     <span class="btn dropdown-toggle" data-toggle="dropdown">{{ trans('test-applies.title') }}{!! HTML::icon_menu_down() !!}</span>
                     <ul class="dropdown-menu">
                         <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
