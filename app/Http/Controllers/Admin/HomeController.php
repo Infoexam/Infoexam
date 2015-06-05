@@ -19,7 +19,7 @@ class HomeController extends Controller {
 
                 $content = (array) $item->text->content;
 
-                $item->text->{'content'} = implode(', ', array_map(function ($v, $k) { return sprintf("%s:'%s'", $k, $v); }, $content, array_keys($content)));
+                $item->text->{'content'} = implode(', ', array_map(function ($v, $k) { return sprintf("%s:%s", $k, $v); }, $content, array_keys($content)));
 
                 return $item;
             });

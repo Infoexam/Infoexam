@@ -39,6 +39,8 @@ class PracticeExamController extends Controller {
 
             session()->flash('exam_practice', $exam_practice);
 
+            logging(['level' => 'info', 'action' => 'startPracticeExam', 'content' => null, 'remark' => null]);
+
             return view('student.practice-exam.testing', compact('questions'));
         }
         catch (ModelNotFoundException $e)
@@ -61,6 +63,8 @@ class PracticeExamController extends Controller {
         $questions = $exam_practice->getQuestions();
 
         session()->forget('exam_practice');
+
+        logging(['level' => 'info', 'action' => 'finishPracticeExam', 'content' => ['score' => $score], 'remark' => null]);
 
         return view('student.practice-exam.result', compact('score', 'questions'));
     }

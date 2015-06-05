@@ -21,7 +21,7 @@ class PreprocessWebsiteInterface {
         /*
          * 如 input 有 lan 變數及代表使用者手動切換介面語言，此時檢測是否為存在介面語言，如是則切換之，如否則使用預設語言
          */
-        if ( ! is_null($lan = $request->input('lan')))
+        if (null !== ($lan = $request->input('lan')))
         {
             $lan = (in_array($lan, $accept_languages)) ? $lan : 'zh-TW';
 
@@ -33,7 +33,7 @@ class PreprocessWebsiteInterface {
         /*
          * 檢查 session 是否存在 lan 變數，如是則代表已設置過介面語言，則直接採用之，如否，則偵測瀏覽器接受的介面語言並設定之
          */
-        if (is_null($lan))
+        if (null === $lan)
         {
             $languages = Agent::languages();
 

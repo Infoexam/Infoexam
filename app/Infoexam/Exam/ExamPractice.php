@@ -73,7 +73,7 @@ class ExamPractice {
 
         $this->checkExceedRange($questions);
 
-        $this->setOptionsImageSsnAttribute($questions);
+        $this->setAttributes($questions);
 
         $this->questions = $questions;
 
@@ -82,7 +82,7 @@ class ExamPractice {
     }
 
     /**
-     * Remove item if it exceed the limit.
+     * Remove excess items.
      *
      * @param \Illuminate\Support\Collection $questions
      */
@@ -100,22 +100,24 @@ class ExamPractice {
     }
 
     /**
-     * Set each question's options.
+     * Set each question's attributes.
      *
      * @param \Illuminate\Support\Collection $questions
      */
-    protected function setOptionsImageSsnAttribute(&$questions)
+    protected function setAttributes(&$questions)
     {
         $questions->transform(function($question)
         {
+            $question->setAttribute('answer', unserialize($question->answer));
+
             $answer = [];
 
-            foreach (unserialize($question->answer) as &$value)
+            foreach ($question->answer as $value)
             {
                 $answer[] = $question->options[$value-1]->ssn;
             }
 
-            $question->setAttribute('answer', $answer);
+            $question->setAttribute('answer_ssn', $answer);
 
             $question->options->transform(function($option)
             {
@@ -133,25 +135,47 @@ class ExamPractice {
         });
     }
 
+    /**
+     * Check the user's answers.
+     *
+     * @param array $answers
+     */
     public function checkAnswer(array $answers = [])
     {
         if (null !== $this->questions && $this->question_number > 0)
         {
             foreach ($this->questions as &$question)
             {
-                foreach ($question->answer as $answer)
+                if (isset($answers[$question->ssn]))
                 {
-                    if ($answer === $answers[$question->ssn])
+                    if ($question->multiple)
                     {
-                        ++$this->correct;
+                        $correct = count(array_diff($question->answer_ssn, $answers[$question->ssn]));
+
+                        $wrong = count(array_diff($answers[$question->ssn], $question->answer_ssn));
+
+                        $this->correct += 1 - 0.5 * ($correct + $wrong);
+                    }
+                    else
+                    {
+                        foreach ($question->answer_ssn as $answer)
+                        {
+                            if ($answer === $answers[$question->ssn])
+                            {
+                                ++$this->correct;
+                            }
+                        }
                     }
                 }
             }
 
-            $this->score = 100 * $this->correct / $this->question_number;
+            $this->score = max(100 * $this->correct / $this->question_number, 0);
         }
     }
 
+    /**
+     * Get this practice score.
+     */
     public function getScore()
     {
         return round($this->score, 3);

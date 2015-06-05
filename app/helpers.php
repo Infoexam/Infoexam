@@ -22,7 +22,7 @@ if ( ! function_exists('logging'))
             return false;
         }
 
-        return \Activity::log(json_encode($text), $userId);
+        return \Activity::log(json_encode(array_merge($text, ['agent' => Agent::getUserAgent()])), $userId);
     }
 }
 

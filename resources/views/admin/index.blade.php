@@ -11,6 +11,7 @@
                     <th>Action</th>
                     <th>Content</th>
                     <th>Remark</th>
+                    <th>Agent</th>
                     <th>IP Address</th>
                     <th>Time</th>
                 </tr>
@@ -23,6 +24,7 @@
                         <td>{{ $log->text->{'action'} }}</td>
                         <td>{{ $log->text->{'content'} }}</td>
                         <td>{{ $log->text->{'remark'} }}</td>
+                        <td title="{{ $log->text->{'agent'} or 'none' }}">show</td>
                         <td>{{ $log->ip_address }}</td>
                         <td>{{ $log->created_at }}</td>
                     </tr>

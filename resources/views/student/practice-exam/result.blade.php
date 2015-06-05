@@ -3,6 +3,12 @@
 @section('main')
     @include('partials.heading', ['heading' => trans('practice-exam.result')])
 
+    <div class="text-danger">
+        <p>{{ trans('general.attention') }}：</p>
+        <ul>
+            <li>{{ trans('practice-exam.questions_are_copyright') }}</li>
+        </ul>
+    </div>
     <div>
         {{ trans('practice-exam.score') . '：' . $score . ' '. trans('practice-exam.point') }}
     </div>
@@ -16,10 +22,15 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($questions as $question)
+                @foreach($questions as &$question)
                     <tr>
                         <td>{!! HTML::nl2br(str_limit($question->topic, 15, ' ...')) !!}</td>
-                        <td>{!! HTML::nl2br($question->content) !!}</td>
+                        <td>
+                            @foreach($question->answer as $answer)
+                                {!! HTML::nl2br($question->options[$answer-1]->content) !!}
+                                <br>
+                            @endforeach
+                        </td>
                         <td>{!! HTML::nl2br(str_limit($question->explanation, 15, ' ...')) !!}</td>
                     </tr>
                 @endforeach

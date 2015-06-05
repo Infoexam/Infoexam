@@ -1,8 +1,6 @@
 @extends(env('IS_PJAX') ? 'exam.layouts.pjax' : 'exam.layouts.master')
 
 @section('main')
-    <div id="timer">
-    </div>
     <div>
         {!! Form::open(['route' => 'student.practice-exam.result', 'method' => 'POST', 'data-no-pjax']) !!}
             <div>
@@ -12,10 +10,14 @@
                         @include('partials.image', ['image_ssn' => $queustion->image_ssn])
                     </div>
                     <div>
-                        @foreach ($queustion->options as $option)
-                            <div class="radio">
+                        @foreach($queustion->options as $option)
+                            <div class="radio checkbox">
                                 <label>
-                                    {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
+                                    @if($queustion->multiple)
+                                        {!! Form::checkbox($queustion->ssn . '[]', $option->ssn, null) !!}
+                                    @else
+                                        {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
+                                    @endif
                                     <span>{!! HTML::nl2br($option->content) !!}</span>
                                 </label>
                                 @if(null !== $option->image_ssn)
@@ -39,57 +41,9 @@
 
 @section('scripts')
     <script>
-        function dosomething() {
-            alert('time up');
-        }
-
-        function time(day, hour, minute, second)
-        {
-            $('#timer').text('剩餘時間：' + day + ' 天 ' + hour + ' 小時 ' + minute + ' 分 ' + second + ' 秒');
-
-            if ( ! (second || minute || hour || day))
-            {
-                dosomething();
-            }
-            else
-            {
-                --second;
-
-                if (second === -1)
-                {
-                    --minute;
-                    second = 59;
-
-                    if (minute === -1)
-                    {
-                        --hour;
-                        minute = 59;
-
-                        if (hour === -1)
-                        {
-                            --day;
-                            hour = 23;
-                        }
-                    }
-                }
-
-                setTimeout(function ()
-                {
-                    time(day , hour , minute , second);
-                }, 1000);
-            }
-        }
-
         $(function()
         {
-            var time_difference = 5400;
-
-            time(
-                    parseInt(time_difference / 86400),
-                    parseInt(time_difference / 3600 % 24),
-                    parseInt(time_difference / 60 % 60),
-                    parseInt(time_difference % 60)
-            );
+            //
         });
     </script>
 @stop
