@@ -31,7 +31,12 @@ class StudentInformationController extends Controller {
             return redirect()->route('admin.student-information.edit', ['user' => $accounts[0]->username]);
         }
 
-        return view('admin.student-information.search', compact('accounts'));
+        if ($request->has('page'))
+        {
+            return view('admin.student-information.search', compact('accounts'));
+        }
+
+        return response()->view('admin.student-information.search', compact('accounts'))->header('X-Pjax-Real-Url', $request->fullUrl());
     }
 
     public function edit($user)

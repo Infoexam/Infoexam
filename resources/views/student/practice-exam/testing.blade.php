@@ -43,7 +43,23 @@
     <script>
         $(function()
         {
-            //
+            $(window).bind('beforeunload', function()
+            {
+                $('form').submit();
+            });
+            
+            $(window).blur(function()
+            {
+                $('form').submit();
+            });
+
+            $(document).keydown(function(e)
+            {
+                if (e.ctrlKey || e.altKey || e.shiftKey)
+                {
+                    e.preventDefault();
+                }
+            });
         });
     </script>
 @stop

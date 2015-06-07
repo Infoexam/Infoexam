@@ -4,7 +4,7 @@
     <div id="timer">
     </div>
     <div>
-        {!! Form::open(['route' => 'exam.submit', 'method' => 'POST']) !!}
+        {!! Form::open(['route' => 'exam.submit', 'method' => 'POST', 'data-no-pjax']) !!}
             <div>
                 @foreach ($questions as $queustion)
                     <div>
@@ -12,13 +12,21 @@
                         @include('partials.image', ['image_ssn' => $queustion->image_ssn])
                     </div>
                     <div>
-                        @foreach ($queustion->options as $option)
-                            <div class="radio">
+                        @foreach($queustion->options as $option)
+                            <div class="radio checkbox">
                                 <label>
-                                    {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
+                                    @if($queustion->multiple)
+                                        {!! Form::checkbox($queustion->ssn . '[]', $option->ssn, null) !!}
+                                    @else
+                                        {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
+                                    @endif
                                     <span>{!! HTML::nl2br($option->content) !!}</span>
                                 </label>
-                                @include('partials.image', ['image_ssn' => $option->image_ssn])
+                                @if(null !== $option->image_ssn)
+                                    @foreach($option->image_ssn as $image_ssn)
+                                        @include('partials.image', ['image_ssn' => $image_ssn])
+                                    @endforeach
+                                @endif
                             </div>
                         @endforeach
                     </div>

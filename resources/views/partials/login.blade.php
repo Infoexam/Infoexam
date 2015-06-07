@@ -37,10 +37,12 @@
 </div>
 
 @section('scripts')
-    <script>
-        $(function()
-        {
-            load_or_reset_recaptcha();
-        });
-    </script>
+    @if($recaptcha)
+        <script>
+            $(function()
+            {
+                load_or_reset_recaptcha();
+            });
+        </script>
+    @endif
 @stop

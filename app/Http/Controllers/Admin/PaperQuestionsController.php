@@ -12,25 +12,16 @@ class PaperQuestionsController extends Controller {
     
     public function create(Request $request)
     {
-        try
+        if (null !== PaperList::where('ssn', '=', $request->input('ssn'))->first(['id']))
         {
             $title = trans('paper-questions.create');
 
-            PaperList::where('ssn', '=', $request->input('ssn'))->firstOrFail();
-
-            $exam_sets = ExamSet::where('set_enable', '=', true)->get(['id', 'ssn', 'name']);
-
-            foreach ($exam_sets as &$exam_set)
-            {
-                $exam_set->setAttribute('questions', $exam_set->questions);
-            }
+            $exam_sets = ExamSet::with('questions')->where('set_enable', '=', true)->get(['id', 'ssn', 'name']);
 
             return view('admin.paper-questions.create', compact('title', 'exam_sets'));
         }
-        catch (ModelNotFoundException $e)
-        {
-            return http_404('admin.paper-lists.index');
-        }
+
+        return http_404('admin.paper-lists.index');
     }
 
     public function store(Request $request)

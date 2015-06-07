@@ -5,11 +5,40 @@ if ( ! function_exists('temp_path'))
     /**
      * Get the path to the temp folder.
      *
+     * @param string $path
      * @return string
      */
     function temp_path($path = '')
     {
         return storage_path('temp') . ($path ? '/' . $path : $path);
+    }
+}
+
+if ( ! function_exists('image_path'))
+{
+    /**
+     * Get the path to the image folder.
+     *
+     * @param string $path
+     * @return string
+     */
+    function image_path($path = '')
+    {
+        return storage_path('app/images') . ($path ? '/' . $path : $path);
+    }
+}
+
+if ( ! function_exists('image_thumbnail_path'))
+{
+    /**
+     * Get the path to the image thumbnail folder.
+     *
+     * @param string $path
+     * @return string
+     */
+    function image_thumbnail_path($path = '')
+    {
+        return storage_path('app/images/thumbnails') . ($path ? '/' . $path : $path);
     }
 }
 

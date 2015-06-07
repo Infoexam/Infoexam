@@ -16,7 +16,7 @@
                         <span class="xbtn">{{ $exam_set->name }}</span>
                     </div>
                     <div class="questions-group">
-                        @foreach($exam_set->questions as $question)
+                        @foreach ($exam_set->questions as $question)
                             <div class="checkbox questions-pad">
                                 <label>
                                     {!! Form::checkbox('questions[]', $question->ssn) !!}

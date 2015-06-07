@@ -18,7 +18,7 @@
             <tbody>
                 @foreach($announcements as $announcement)
                     <tr>
-                        <td>{!! HTML::linkRoute('student.announcements.show', $announcement->heading, ['heading' => $announcement->heading]) !!}</td>
+                        <td class="text-left announcement-heading">{!! HTML::linkRoute('student.announcements.show', $announcement->heading, ['heading' => $announcement->heading]) !!}</td>
                         <td title="{{ $announcement->updated_at }}">{{ $announcement->updated_at->diffForHumans() }}</td>
                         <td title="{{ $announcement->created_at }}">{{ $announcement->created_at->diffForHumans() }}</td>
                     </tr>

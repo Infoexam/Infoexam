@@ -22,7 +22,7 @@ class CheckPjaxRequest {
 
             $response = $next($request);
 
-            if ($response->isRedirect() && ! $request->isMethodSafe())
+            if ($response->isRedirect())
             {
                 session()->flash('x_pjax_redirect', true);
             }

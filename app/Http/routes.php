@@ -129,3 +129,5 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function()
 {
     get('auth/sso', ['as' => 'api.auth.sso', 'uses' => 'AuthSsoController@index']);
 });
+
+get('noscript', ['as' => 'noscript', 'uses' => 'ExceptionHandleController@noscript']);

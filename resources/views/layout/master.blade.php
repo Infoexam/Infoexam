@@ -5,28 +5,29 @@
         <meta name=viewport content="width=device-width, initial-scale=1">
         @yield('title', '<title>' . trans('general.title') . '</title>')
         <link type="image/x-icon" rel="shortcut icon" href="{{ secure_asset('favicon.ico') }}">
+        <noscript><meta http-equiv="refresh" content="0;url={{ route('noscript') }}"></noscript>
         {!! HTML::style(secure_asset('assets/css/main.css')) !!}
         {!! HTML::script(secure_asset('assets/js/main.js')) !!}
         {!! HTML::script(secure_asset('assets/js/infoexam.js'), ['async']) !!}
     </head>
     <body>
-        <section class="main">
+        <div class="main">
         
             @yield('header')
 
-            <section class="substance">
+            <div class="substance">
                 @include('flash::message')
 
-                <ul class="form-error-msg alert alert-danger"></ul>
+                <ul class="form-error-msg alert alert-danger ul-li-margin-left"></ul>
 
                 @yield('main')
-            </section>
+            </div>
 
             @include('partials.footer')
 
             @include('partials.delete-confirm')
 
-        </section>
+        </div>
         @yield('scripts')
     </body>
 </html>

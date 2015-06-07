@@ -155,6 +155,8 @@ class ExamPractice {
                         $wrong = count(array_diff($answers[$question->ssn], $question->answer_ssn));
 
                         $this->correct += 1 - 0.5 * ($correct + $wrong);
+
+                        $question->setAttribute('correct', (0 === ($correct + $wrong)));
                     }
                     else
                     {
@@ -163,6 +165,8 @@ class ExamPractice {
                             if ($answer === $answers[$question->ssn])
                             {
                                 ++$this->correct;
+
+                                $question->setAttribute('correct', true);
                             }
                         }
                     }
