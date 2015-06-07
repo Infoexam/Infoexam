@@ -8,30 +8,11 @@ class Image extends Entity {
 
     use SoftDeletes;
 
-    protected $fillable = ['ssn', 'image_type', 'public', 'image', 'image_s'];
+    protected $fillable = ['ssn', 'image_type', 'public', 'original_path', 'thumbnail_path'];
 
     protected $dates = ['deleted_at'];
 
     protected $ssn = true;
-
-    public function uploadImage($file = null, $public = false)
-    {
-        if (null === $file)
-        {
-            return null;
-        }
-
-        $image['image'] = file_get_contents($file->getRealPath());
-        $image['image_s'] = file_get_contents($path = $this->createMiniature($file));
-        $image['image_type'] = $file->getMimeType();
-        $image['public'] = $public;
-
-        $model = $this->create($image);
-
-        unlink($path);
-
-        return $model;
-    }
 
     public function uploadImages(array $files = [], $public = false)
     {
@@ -44,55 +25,7 @@ class Image extends Entity {
 
         foreach ($files as &$file)
         {
-            if (null === $file)
-            {
-                continue;
-            }
-
-            $image['image'] = file_get_contents($file->getRealPath());
-            $image['image_s'] = file_get_contents($path = $this->createMiniature($file));
-            $image['image_type'] = $file->getMimeType();
-            $image['public'] = $public;
-
-            $model = $this->create($image);
-
-            unlink($path);
-
-            if ($model->exists)
-            {
-                $images[] = $model->attributes['ssn'];
-            }
-        }
-
-        return (count($images)) ? implode(',', $images) : null;
-    }
-
-    public function createMiniature($file)
-    {
-        $path = temp_path(str_random(5));
-
-        Imager::make($file->getRealPath())
-            ->resize(360, 240, function($constraint) {
-                $constraint->aspectRatio();
-                $constraint->upsize();
-            })
-            ->save($path);
-
-        return $path;
-    }
-
-    public function _uploadImages(array $files = [], $public = false)
-    {
-        if ( ! count($files))
-        {
-            return null;
-        }
-
-        $images = [];
-
-        foreach ($files as &$file)
-        {
-            $model = $this->_uploadImage($file, $public);
+            $model = $this->uploadImage($file, $public);
 
             if (null !== $model && $model->exists)
             {
@@ -103,7 +36,7 @@ class Image extends Entity {
         return (count($images)) ? implode(',', $images) : null;
     }
 
-    public function _uploadImage($file = null, $public = false)
+    public function uploadImage($file = null, $public = false)
     {
         if (null === $file || ! $file->isValid())
         {
@@ -115,7 +48,7 @@ class Image extends Entity {
             ;
         }
 
-        $thumbnail_path = $this->_createMiniature($file);
+        $thumbnail_path = $this->createMiniature($file);
 
         $image['original_path'] = $original_path;
         $image['thumbnail_path'] = $thumbnail_path;
@@ -127,7 +60,7 @@ class Image extends Entity {
         return $this->create($image);
     }
 
-    public function _createMiniature($file)
+    public function createMiniature($file)
     {
         while (\File::exists(image_thumbnail_path(($thumbnail_path = str_random(16)))))
         {

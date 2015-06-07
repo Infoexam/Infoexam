@@ -10,34 +10,6 @@ class ImageController extends Controller {
 
     public function show($ssn, $small = false)
     {
-        $columns = ['image_type', 'public'];
-
-        ($small) ? array_push($columns, 'image_s') : array_push($columns, 'image');
-
-        $image = Image::where('ssn', '=', $ssn)->first($columns);
-
-        if (null === $image)
-        {
-            throw new NotFoundHttpException;
-        }
-        else if ( ! $image->public)
-        {
-            if ( ! \Auth::check())
-            {
-                throw new AccessDeniedHttpException;
-            }
-        }
-
-        return response((($small) ? $image->image_s : $image->image))->header('Content-Type', $image->image_type);
-    }
-
-    public function show_s($ssn)
-    {
-        return $this->show($ssn, true);
-    }
-
-    public function _show($ssn, $small = false)
-    {
         $image = Image::where('ssn', '=', $ssn)->first();
 
         if (null === $image)
@@ -57,6 +29,11 @@ class ImageController extends Controller {
         }
 
         return response(File::get($path))->header('Content-Type', $image->image_type);
+    }
+
+    public function show_s($ssn)
+    {
+        return $this->show($ssn, true);
     }
 
 }

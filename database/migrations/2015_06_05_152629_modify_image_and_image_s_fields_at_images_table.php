@@ -16,10 +16,10 @@ class ModifyImageAndImageSFieldsAtImagesTable extends Migration {
         {
             $table->renameColumn('image', 'original_path');
             $table->renameColumn('image_s', 'thumbnail_path');
-
-            $table->char('original_path', 16)->change();
-            $table->char('thumbnail_path', 16)->change();
         });
+
+        DB::statement('ALTER TABLE `images` MODIFY `original_path` CHAR(16) NOT NULL');
+        DB::statement('ALTER TABLE `images` MODIFY `thumbnail_path` CHAR(16) NOT NULL');
     }
 
     /**
