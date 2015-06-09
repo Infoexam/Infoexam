@@ -1,6 +1,6 @@
 <?php namespace App\Infoexam\Test;
 
-use App\Commands\Admin\AutoGeneralPaper;
+use App\Jobs\Admin\AutoGeneralPaper;
 use App\Infoexam\Core\Entity;
 use App\Infoexam\Exam\ExamConfig;
 use App\Infoexam\Paper\PaperList;

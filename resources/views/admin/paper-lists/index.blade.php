@@ -26,7 +26,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($paper_lists as $paper)
+                @foreach ($paper_lists as $paper)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.paper-lists.show', $paper->name, ['paper_lists' => $paper->ssn]) !!}</td>
                         <td>{!! HTML::nl2br($paper->remark) !!}</td>

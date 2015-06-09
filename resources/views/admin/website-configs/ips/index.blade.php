@@ -28,7 +28,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($ips as $ip)
+                @foreach ($ips as $ip)
                     <tr>
                         <td>{{ $ip->id }}</td>
                         <td>{{ $ip->ip }}</td>

@@ -43,6 +43,7 @@ return [
     'related' => '相關資料將一並:action',
 
     'image' => '圖片',
+    'show_image' => '顯示圖片',
     'email' => '信箱',
 
 ];

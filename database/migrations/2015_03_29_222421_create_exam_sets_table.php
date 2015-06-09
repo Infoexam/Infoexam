@@ -26,8 +26,6 @@ class CreateExamSetsTable extends Migration {
             $table->softDeletes();
 
             $table->unique('ssn');
-
-            $table->index('ssn');
         });
     }
 

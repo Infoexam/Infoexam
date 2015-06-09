@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($logs as &$log)
+                @foreach ($logs as &$log)
                     <tr>
                         <td>{{ $log->text->{'level'} }}</td>
                         <td>{{ $log->user->getAttribute('username') }}</td>

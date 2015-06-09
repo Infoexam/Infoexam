@@ -4,7 +4,7 @@
     <br>
     @include('partials.form-image-field', ['name' => 'topic_image', 'options' => ['accept' => 'image/*']])
     <br>
-    @if(isset($question) && (null !== $question->image_ssn))
+    @if (isset($question) && (null !== $question->image_ssn))
         {!! Form::hidden('topic_image_ssn', $question->image_ssn) !!}
         @include('partials.image', ['image_ssn' => $question->image_ssn])
     @endif
@@ -12,7 +12,7 @@
 
 <hr>
 
-@for($i = 0; $i < 4; $i++)
+@for ($i = 0; $i < 4; $i++)
     <div class="form-group">
         {!! Form::label('option['.$i.']', trans('exam-questions.options.'.($i+1))) !!}
         {!! Form::textarea('option['.$i.']', ((isset($options) ? $options[$i]->content : null)), ['class' => 'form-control', 'rows' => 5]) !!}
@@ -22,8 +22,8 @@
         @if (isset($options))
             {!! Form::hidden('option_ssn['.$i.']', $options[$i]->ssn) !!}
             {!! Form::hidden('option_image_ssn['.$i.']', (null === $options[$i]->image_ssn) ? null : implode(',', $options[$i]->image_ssn)) !!}
-            @if(null !== $options[$i]->image_ssn)
-                @foreach($options[$i]->image_ssn as $image_ssn)
+            @if (null !== $options[$i]->image_ssn)
+                @foreach ($options[$i]->image_ssn as $image_ssn)
                     @include('partials.image', ['image_ssn' => $image_ssn, 'use_text' => true])
                 @endforeach
             @endif
@@ -60,7 +60,7 @@
 
 <div class="form-group">
     {!! Form::label('answer', trans('exam-questions.answer')).'：' !!}
-    @for($i = 1; $i <= 4; $i++)
+    @for ($i = 1; $i <= 4; $i++)
         <label class="checkbox-inline">
             {!! Form::checkbox('answer[]', $i) !!}
             {{ trans('exam-questions.options.'.($i)) }}

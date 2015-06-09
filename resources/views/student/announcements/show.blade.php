@@ -8,13 +8,13 @@
             {!! $announcement->content !!}
         </div>
 
-        @if(null !== $announcement->image_ssn)
-            @foreach($announcement->image_ssn as $image_ssn)
+        @if (null !== $announcement->image_ssn)
+            @foreach ($announcement->image_ssn as $image_ssn)
                 @include('partials.image', ['image_ssn' => $image_ssn])
             @endforeach
         @endif
 
-        @if(null !== $announcement->link)
+        @if (null !== $announcement->link)
             <span>
                 {{ trans('announcements.link').'：' }}
                 {!! HTML::link($announcement->link, null, ['target' => '_blank'])  !!}

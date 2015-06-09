@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Commands\Admin\ApplyTest;
+use App\Jobs\Admin\ApplyTest;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\ExamSet\ExamSet;

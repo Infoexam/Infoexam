@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($applies as $apply)
+                @foreach ($applies as $apply)
                     <tr>
                         <td>{{ $apply->account->username }}</td>
                         <td>{{ $apply->account->userData->name }}</td>

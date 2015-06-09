@@ -1,8 +1,11 @@
-<?php namespace App\Providers;
+<?php
+
+namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
-class MacroServiceProvider extends ServiceProvider {
+class MacroServiceProvider extends ServiceProvider
+{
 
     /**
      * Bootstrap the application services.
@@ -11,7 +14,7 @@ class MacroServiceProvider extends ServiceProvider {
      */
     public function boot()
     {
-        require base_path('resources/macros/blade_macros.php');
+        require base_path('resources/macros/html_macros.php');
     }
 
     /**

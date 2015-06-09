@@ -22,7 +22,7 @@
             !!}
         </div>
 
-        @if($recaptcha)
+        @if ($recaptcha)
             <div class="form-group">
                 {!! HTML::recaptcha() !!}
             </div>

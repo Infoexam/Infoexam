@@ -15,7 +15,7 @@ class StudentInformationController extends Controller {
     {
         $title = trans('student-information.search');
 
-        $department_lists = array_merge(['0' => trans('student-information.department')], Department::lists('name', 'id'));
+        $department_lists = ['0' => trans('student-information.department')] + Department::lists('name', 'id')->all();
 
         return view('admin.student-information.index', compact('title', 'department_lists'));
     }
@@ -44,7 +44,7 @@ class StudentInformationController extends Controller {
         try
         {
             $account = Account::where('username', '=', $user)->firstOrFail();
-            
+
             $groups = Group::lists('name', 'id');
 
             return view('admin.student-information.edit', compact('account', 'groups'));

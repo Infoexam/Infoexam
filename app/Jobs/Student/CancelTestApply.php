@@ -1,13 +1,16 @@
-<?php namespace App\Commands\Student;
+<?php
 
-use App\Commands\Command;
+namespace App\Jobs\Student;
+
+use App\Jobs\Job;
 use App\Infoexam\Exam\ExamConfig;
 use App\Infoexam\Test\TestApply;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class CancelTestApply extends Command implements SelfHandling {
+class CancelTestApply extends Job implements SelfHandling
+{
 
     /**
      * Account data.
@@ -24,7 +27,7 @@ class CancelTestApply extends Command implements SelfHandling {
     protected $ssn;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @param \App\Infoexam\Account\Account $account
      * @param string $ssn
@@ -37,7 +40,7 @@ class CancelTestApply extends Command implements SelfHandling {
     }
 
     /**
-     * Execute the command.
+     * Execute the job.
      *
      * @return boolean
      */

@@ -29,7 +29,6 @@ class CreateExamQuestionsTable extends Migration {
 
             $table->unique('ssn');
 
-            $table->index('ssn');
             $table->index('exam_set_id');
             $table->index('level');
             $table->index('multiple');

@@ -34,7 +34,6 @@ class CreateTestListsTable extends Migration {
 
             $table->unique('ssn');
 
-            $table->index('ssn');
             $table->index('start_time');
             $table->index('room');
             $table->index('apply_type');

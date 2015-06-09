@@ -1,14 +1,17 @@
-<?php namespace App\Commands\Student;
+<?php
 
-use App\Commands\Command;
+namespace App\Jobs\Student;
+
+use App\Jobs\Job;
 use App\Infoexam\Exam\ExamConfig;
-use App\Infoexam\Test\TestList;
 use App\Infoexam\Test\TestApply;
+use App\Infoexam\Test\TestList;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ApplyTest extends Command implements SelfHandling {
+class ApplyTest extends Job implements SelfHandling
+{
 
     /**
      * Account data.
@@ -25,7 +28,7 @@ class ApplyTest extends Command implements SelfHandling {
     protected $ssn;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @param \App\Infoexam\Account\Account $account
      * @param string $ssn
@@ -38,7 +41,7 @@ class ApplyTest extends Command implements SelfHandling {
     }
 
     /**
-     * Execute the command.
+     * Execute the job.
      *
      * @return boolean
      */
@@ -218,7 +221,7 @@ class ApplyTest extends Command implements SelfHandling {
             $not_test_apply = TestApply::where('account_id', '=', $this->account->id)
                 ->whereNull('test_result_id')
                 ->leftJoin('test_lists', 'test_applies.test_list_id', '=', 'test_lists.id')
-                ->whereBetween('test_lists.start_time', [Carbon::now()->subWeeks(1)->startOfWeek(), Carbon::now()->endOfWeek()])
+                ->whereBetween('test_lists.start_time', [Carbon::now()/*->subWeeks(1)*/->startOfWeek(), Carbon::now()->endOfWeek()])
                 ->count();
 
             if ($not_test_apply)

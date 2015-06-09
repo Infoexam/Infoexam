@@ -25,8 +25,8 @@
 </div>
 
 <div class="form-group">
-    @if(isset($announcement->image_ssn))
-        @foreach($announcement->image_ssn as $image_ssn)
+    @if (isset($announcement->image_ssn))
+        @foreach ($announcement->image_ssn as $image_ssn)
             @include('partials.image', ['image_ssn' => $image_ssn])
         @endforeach
     @else

@@ -25,7 +25,6 @@ class CreatePapersQuestionsTable extends Migration {
 
             $table->unique('ssn');
 
-            $table->index('ssn');
             $table->index('paper_list_id');
             $table->index('exam_question_id');
 

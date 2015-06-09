@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($exam_sets as $exam_set)
+                @foreach ($exam_sets as $exam_set)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.exam-sets.show', $exam_set->name, ['exam_sets' => $exam_set->ssn]) !!}</td>
                         <td>{{ ('A' === $exam_set->category) ? trans('exam-sets.application') : trans('exam-sets.software') }}</td>

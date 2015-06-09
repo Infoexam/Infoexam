@@ -33,7 +33,7 @@ class ExamSet extends Entity {
 
     public function getExamSetTagListAttribute()
     {
-        return $this->tags->lists('id');
+        return $this->tags->lists('id')->all();
     }
 
     public function syncTags(array $tags = [])

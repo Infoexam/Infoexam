@@ -1,6 +1,5 @@
 <footer class="center-block">
     <nav class="list-inline">
-        <ul></ul>
         <ul>
             <li class="copyright">{{ trans('general.copyright') }}</li>
             <li>｜</li>

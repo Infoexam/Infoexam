@@ -27,7 +27,6 @@ class CreateTestAppliesTable extends Migration {
 
             $table->unique('ssn');
 
-            $table->index('ssn');
             $table->index('account_id');
             $table->index('test_list_id');
 

@@ -1,21 +1,23 @@
-<?php namespace App\Commands\Admin;
+<?php
 
-use App\Commands\Command;
+namespace App\Jobs\Admin;
+
+use App\Jobs\Job;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\AccreditedDatum;
-use App\Infoexam\Account\UserDatum;
 use App\Infoexam\Account\Department;
+use App\Infoexam\Account\UserDatum;
 use App\Infoexam\Account\UserGroup;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
-class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
+class SyncStudentDataCenterToLocal extends Job implements SelfHandling {
 
     protected $override, $specific, $username;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @param bool $override
      * @param bool $specific
@@ -29,7 +31,7 @@ class SyncStudentDataCenterToLocal extends Command implements SelfHandling {
     }
 
     /**
-     * Execute the command.
+     * Execute the job.
      *
      * @return void
      */

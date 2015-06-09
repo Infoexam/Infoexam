@@ -2,6 +2,7 @@
 
 use App\Http\Requests;
 use App\Infoexam\Image;
+use Carbon\Carbon;
 use File;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -28,12 +29,24 @@ class ImageController extends Controller {
             throw new NotFoundHttpException;
         }
 
-        return response(File::get($path))->header('Content-Type', $image->image_type);
+        $prepare_headers = [
+            'Content-Length' => File::size($path),
+            'Content-Type' => $image->image_type,
+        ];
+
+        $response = response(File::get($path), 200, $prepare_headers);
+
+        $response->setLastModified(Carbon::createFromTimestamp(File::lastModified($path)));
+
+        $response->setEtag(sha1_file($path));
+
+        $response->headers->remove('Cache-Control');
+
+        return $response;
     }
 
     public function show_s($ssn)
     {
         return $this->show($ssn, true);
     }
-
 }

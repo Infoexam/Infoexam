@@ -12,9 +12,16 @@ HTML::macro('icon_menu_down', function()
     return '<span class="glyphicon glyphicon-menu-down"></span>';
 });
 
+HTML::macro('navigation_dropdown_title', function($title = 'nav')
+{
+    $title = e($title);
+
+    return '<span class="xbtn dropdown-toggle" aria-expanded="false" data-toggle="dropdown">' . $title . '<span class="glyphicon glyphicon-menu-down"></span></span>';
+});
+
 HTML::macro('recaptcha', function()
 {
-    return '<div class="g-recaptcha" id="g-recaptcha" data-sitekey="6LceEQITAAAAAKALUbnb3GoAyqso_q37fPXX-TOh"></div>';
+    return '<div class="g-recaptcha recaptcha" id="g-recaptcha" data-sitekey="6LceEQITAAAAAKALUbnb3GoAyqso_q37fPXX-TOh"></div>';
 });
 
 HTML::macro('nl2br', function($content)

@@ -30,7 +30,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($test_lists as $test_list)
+                @foreach ($test_lists as $test_list)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.test-lists.show', $test_list->ssn, ['test_lists' => $test_list->ssn]) !!}</td>
                         <td>{{ $test_list->start_time }}</td>
@@ -53,7 +53,7 @@
                             {!! Form::close() !!}
                         </td>
                         <td>
-                            @if('disabled' === $check_time)
+                            @if ('disabled' === $check_time)
                                 -
                             @else
                                 @include('partials.delete-form', ['route' => ['admin.test-lists.destroy', $test_list->ssn]])

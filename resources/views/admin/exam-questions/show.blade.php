@@ -18,13 +18,13 @@
                     </td>
                 </tr>
                 <?php $i = 1; ?>
-                @foreach($options as $option)
+                @foreach ($options as $option)
                     <tr>
                         <th class="text-center">{{ trans('exam-questions.options.'.($i++)) }}</th>
                         <td>
                             {!! HTML::nl2br($option->content) !!}
-                            @if(null !== $option->image_ssn)
-                                @foreach($option->image_ssn as $image_ssn)
+                            @if (null !== $option->image_ssn)
+                                @foreach ($option->image_ssn as $image_ssn)
                                     @include('partials.image', ['image_ssn' => $image_ssn, 'use_text' => true])
                                 @endforeach
                             @endif

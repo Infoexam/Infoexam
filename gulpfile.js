@@ -22,7 +22,7 @@ elixir(function(mix)
         ], 'public/assets/css/temp/all.css')
         .stylesIn('public/assets/css/temp', 'public/assets/css/main.css')
         .scripts([
-            'jquery-2.1.3.min.js',
+            'jquery-2.1.4.min.js',
             'bootstrap.min.js',
             'bootstrap-switch.min.js',
             'jquery.pjax.js',

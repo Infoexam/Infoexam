@@ -131,3 +131,5 @@ Route::group(['prefix' => 'api', 'namespace' => 'Api'], function()
 });
 
 get('noscript', ['as' => 'noscript', 'uses' => 'ExceptionHandleController@noscript']);
+
+get('admin/logs', ['middleware' => 'auth', 'as' => 'admin.website-logs.basic', 'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index']);

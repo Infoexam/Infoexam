@@ -37,7 +37,7 @@ class PracticeExamController extends Controller {
 
             $questions = $exam_practice->getQuestions();
 
-            session()->flash('exam_practice', $exam_practice);
+            session()->put('exam_practice', $exam_practice);
 
             logging(['level' => 'info', 'action' => 'startPracticeExam', 'content' => null, 'remark' => null]);
 
@@ -51,7 +51,7 @@ class PracticeExamController extends Controller {
 
     public function result(Request $request)
     {
-        if (null === ($exam_practice = session('exam_practice')))
+        if (null === ($exam_practice = session('exam_practice')) || null !== session('exam_practice_check'))
         {
             return redirect()->route('student.practice-exam.index');
         }

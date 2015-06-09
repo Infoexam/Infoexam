@@ -25,8 +25,6 @@ class CreateAnnouncementsTable extends Migration {
             $table->softDeletes();
 
             $table->unique('heading');
-
-            $table->index('heading');
         });
     }
 

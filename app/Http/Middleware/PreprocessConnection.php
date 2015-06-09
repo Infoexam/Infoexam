@@ -15,7 +15,10 @@ class PreprocessConnection {
     {
         $response = $next($request);
 
-        $response->headers->set('cache-control', 'no-cache, no-store, must-revalidate');
+        if ('images' !== $request->segment(1))
+        {
+            $response->headers->set('cache-control', 'no-cache, no-store, must-revalidate');
+        }
 
         $tls = env('TLS_CONNECTION', false);
 

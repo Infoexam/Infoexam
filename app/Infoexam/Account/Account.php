@@ -57,7 +57,7 @@ class Account extends Entity implements AuthenticatableContract {
 
     public function getGroupListAttribute()
     {
-        return $this->groups->lists('id');
+        return $this->groups->lists('id')->all();
     }
 
     public function __call($method, $args)

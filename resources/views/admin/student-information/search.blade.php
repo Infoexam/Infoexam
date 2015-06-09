@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 <?php $i = 0; ?>
-                @foreach($accounts as $account)
+                @foreach ($accounts as $account)
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>{!! HTML::linkRoute('admin.student-information.edit', $account->username, ['user' => $account->username]) !!}</td>

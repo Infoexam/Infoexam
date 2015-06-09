@@ -1,7 +1,7 @@
 <header class="center-block">
-    <img class="banner" src="/assets/images/banner.png" alt="banner">
+    {!! HTML::image('assets/images/banner.png', 'banner', ['class' => 'banner'], true) !!}
     <nav class="toolbar">
-        @if(\App\Infoexam\Account\Account::isStudent())
+        @if (\App\Infoexam\Account\Account::isStudent())
             <ul class="list-inline pull-left">
                 <li class="dropdown">
                     <a href="{{ route('student.member.info') }}">
@@ -53,7 +53,7 @@
                     </a>
                 </li>
             @endif
-            @if( ! \Auth::check())
+            @if ( ! \Auth::check())
                 <li class="dropdown">
                     <a href="{{ route('student.login') }}" title="{{ trans('general.login') }}">
                         <span class="btn glyphicon glyphicon-log-in" aria-hidden="true"></span>

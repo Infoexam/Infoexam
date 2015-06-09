@@ -25,8 +25,6 @@ class CreateTestResultsTable extends Migration {
 
             $table->unique('test_apply_id');
 
-            $table->index('test_apply_id');
-
             $table->foreign('test_apply_id')->references('id')->on('test_applies')->onDelete('cascade');
         });
     }

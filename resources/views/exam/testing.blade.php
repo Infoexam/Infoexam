@@ -15,15 +15,15 @@
                         @foreach($queustion->options as $option)
                             <div class="radio checkbox">
                                 <label>
-                                    @if($queustion->multiple)
+                                    @if ($queustion->multiple)
                                         {!! Form::checkbox($queustion->ssn . '[]', $option->ssn, null) !!}
                                     @else
                                         {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
                                     @endif
                                     <span>{!! HTML::nl2br($option->content) !!}</span>
                                 </label>
-                                @if(null !== $option->image_ssn)
-                                    @foreach($option->image_ssn as $image_ssn)
+                                @if (null !== $option->image_ssn)
+                                    @foreach ($option->image_ssn as $image_ssn)
                                         @include('partials.image', ['image_ssn' => $image_ssn])
                                     @endforeach
                                 @endif

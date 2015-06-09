@@ -1,6 +1,8 @@
-<?php namespace App\Commands\Admin;
+<?php
 
-use App\Commands\Command;
+namespace App\Jobs\Admin;
+
+use App\Jobs\Job;
 use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\Paper\PaperList;
 use App\Infoexam\Paper\PaperQuestion;
@@ -8,12 +10,12 @@ use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AutoGeneralPaper extends Command implements SelfHandling {
+class AutoGeneralPaper extends Job implements SelfHandling {
 
     protected $exam_sets, $level, $number;
 
     /**
-     * Create a new command instance.
+     * Create a new job instance.
      *
      * @param array $exam_sets
      * @param integer $level
@@ -27,7 +29,7 @@ class AutoGeneralPaper extends Command implements SelfHandling {
     }
 
     /**
-     * Execute the command.
+     * Execute the job.
      *
      * @return integer|boolean
      */

@@ -28,7 +28,7 @@ return [
 	|
 	*/
 
-	'model' => 'App\Infoexam\Account\Account',
+	'model' => App\Infoexam\Account\Account::class,
 
 	/*
 	|--------------------------------------------------------------------------

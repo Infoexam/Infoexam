@@ -1,6 +1,6 @@
 <?php namespace App\Http\Controllers\Admin;
 
-use App\Commands\Admin\SyncStudentDataCenterToLocal;
+use App\Jobs\Admin\SyncStudentDataCenterToLocal;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;

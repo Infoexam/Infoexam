@@ -1,8 +1,8 @@
 <?php namespace App\Http\Controllers\Student;
 
-use App\Commands\Student\ApplyTest;
-use App\Commands\Student\CancelTestApply;
-use App\Commands\Student\TransformTestApply;
+use App\Jobs\Student\ApplyTest;
+use App\Jobs\Student\CancelTestApply;
+use App\Jobs\Student\TransformTestApply;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Infoexam\Test\TestList;

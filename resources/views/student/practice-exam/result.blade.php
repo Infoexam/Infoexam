@@ -23,14 +23,14 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($questions as &$question)
+                @foreach ($questions as &$question)
                     <tr>
                         <td>
                             <span class="shorten-content">{!! HTML::nl2br(str_limit($question->topic, 15, ' ...')) !!}</span>
                             <span class="hidden">{!! HTML::nl2br($question->topic) !!}</span>
                         </td>
                         <td>
-                            @foreach($question->answer as $answer)
+                            @foreach ($question->answer as $answer)
                                 <span class="shorten-content">{!! HTML::nl2br(str_limit($question->options[$answer-1]->content, 15, ' ...')) !!}</span>
                                 <span class="hidden">{!! HTML::nl2br($question->options[$answer-1]->content) !!}</span>
                                 <br>
