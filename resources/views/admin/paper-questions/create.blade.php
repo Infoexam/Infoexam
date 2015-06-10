@@ -9,14 +9,14 @@
     </div>
     <div>
         {!! Form::open(['route' => 'admin.paper-questions.store', 'method' => 'POST']) !!}
-            @foreach ($exam_sets as $exam_set)
+            @foreach ($exam_sets as &$exam_set)
                 <div class="exam-sets">
                     <div class="questions-title">
                         <span class="glyphicon glyphicon-plus xbtn" aria-hidden="true"></span>
                         <span class="xbtn">{{ $exam_set->name }}</span>
                     </div>
                     <div class="questions-group">
-                        @foreach ($exam_set->questions as $question)
+                        @foreach ($exam_set->questions as &$question)
                             <div class="checkbox questions-pad">
                                 <label>
                                     {!! Form::checkbox('questions[]', $question->ssn) !!}
@@ -43,21 +43,24 @@
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            $('span.glyphicon.glyphicon-plus').parent('div').next('div').hide();
-            $('span.glyphicon.glyphicon-plus, span.glyphicon.glyphicon-minus').parent('div').click(function()
+            $(function()
             {
-                $(this).next('div').stop(true, false).toggle(250);
-                $(this).children('.glyphicon').toggleClass('glyphicon-plus').toggleClass('glyphicon-minus');
-            });
+                $('span.glyphicon.glyphicon-plus').parent('div').next('div').hide();
+                $('span.glyphicon.glyphicon-plus, span.glyphicon.glyphicon-minus').parent('div').click(function()
+                {
+                    $(this).next('div').stop(true, false).toggle(250);
+                    $(this).children('.glyphicon').toggleClass('glyphicon-plus').toggleClass('glyphicon-minus');
+                });
 
-            $('input[type="checkbox"]').change(function()
-            {
-                var s = '#questions_selected';
-                var v = parseInt($(s).text());
-                $(this).prop('checked') ? ($(s).text(v+1)) : ($(s).text(v-1));
+                $('input[type="checkbox"]').change(function()
+                {
+                    var s = '#questions_selected';
+                    var v = parseInt($(s).text());
+                    $(this).prop('checked') ? ($(s).text(v+1)) : ($(s).text(v-1));
+                });
             });
-        });
+        })(jQuery);
     </script>
 @stop

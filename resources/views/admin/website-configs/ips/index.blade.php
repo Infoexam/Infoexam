@@ -18,7 +18,6 @@
         <table class="table table-bordered table-hover text-center">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>{{ trans('website-configs.ips.ip') }}</th>
                     <th>{{ trans('website-configs.ips.student_page') }}</th>
                     <th>{{ trans('website-configs.ips.exam_page') }}</th>
@@ -28,9 +27,8 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($ips as $ip)
+                @foreach ($ips as &$ip)
                     <tr>
-                        <td>{{ $ip->id }}</td>
                         <td>{{ $ip->ip }}</td>
                         <td>{!! HTML::true_or_false($ip->student_page) !!}</td>
                         <td>{!! HTML::true_or_false($ip->exam_page) !!}</td>

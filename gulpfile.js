@@ -28,6 +28,7 @@ elixir(function(mix)
             'bootstrap-switch.min.js',
             'jquery.pjax.js',
             'nprogress.js',
-            'lightbox.min.js'
+            'lightbox.min.js',
+            'infoexam.js'
         ], 'public/assets/js/main.js');
 });

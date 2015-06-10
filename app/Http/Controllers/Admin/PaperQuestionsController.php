@@ -14,16 +14,16 @@ class PaperQuestionsController extends Controller
 {
     public function create(Request $request)
     {
-        if (null !== PaperList::where('ssn', '=', $request->input('ssn'))->first(['id']))
+        if (null === (PaperList::ssn($request->input('ssn'))->exists()))
         {
-            $title = trans('paper-questions.create');
-
-            $exam_sets = ExamSet::with('questions')->where('set_enable', '=', true)->get(['id', 'ssn', 'name']);
-
-            return view('admin.paper-questions.create', compact('title', 'exam_sets'));
+            return http_404('admin.paper-lists.index');
         }
 
-        return http_404('admin.paper-lists.index');
+        $title = trans('paper-questions.create');
+
+        $exam_sets = ExamSet::with('questions')->setEnable(true)->get(['id', 'ssn', 'name']);
+
+        return view('admin.paper-questions.create', compact('title', 'exam_sets'));
     }
 
     public function store(Request $request)
@@ -38,19 +38,15 @@ class PaperQuestionsController extends Controller
     
     public function destroy($ssn)
     {
-        try
-        {
-            $question = PaperQuestion::where('ssn', '=', $ssn)->firstOrFail();
-
-            $paper = $question->paper_list;
-
-            $question->delete();
-
-            return redirect()->route('admin.paper-lists.show', ['paper-lists' => $paper->ssn]);
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($question = PaperQuestion::with(['paper_list'])->ssn($ssn)->first(['id', 'paper_list_id'])))
         {
             return http_404('admin.paper-lists.index');
         }
+
+        $ssn = $question->paper_list->ssn;
+
+        $question->delete();
+
+        return redirect()->route('admin.paper-lists.show', ['paper-lists' => $ssn]);
     }
 }

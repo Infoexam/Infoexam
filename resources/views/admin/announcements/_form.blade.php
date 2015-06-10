@@ -26,9 +26,7 @@
 
 <div class="form-group">
     @if (isset($announcement->image_ssn))
-        @foreach ($announcement->image_ssn as $image_ssn)
-            @include('partials.image', ['image_ssn' => $image_ssn])
-        @endforeach
+        @include('partials.image', ['image_ssn' => $announcement->image_ssn])
     @else
         @include('partials.form-image-field', ['name' => 'image[]', 'options' => ['accept' => 'image/*', 'multiple' => 'multiple']])
     @endif
@@ -40,14 +38,17 @@
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            load_js('{{ secure_asset('assets/ckeditor/ckeditor.js') }}', function()
+            $(function()
             {
-                CKEDITOR.replace('content', {
-                    height: 300
+                load_js('{{ secure_asset('assets/ckeditor/ckeditor.js') }}', function()
+                {
+                    CKEDITOR.replace('content', {
+                        height: 300
+                    });
                 });
             });
-        });
+        })(jQuery);
     </script>
 @stop

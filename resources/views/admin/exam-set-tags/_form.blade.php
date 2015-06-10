@@ -3,7 +3,8 @@
     {!!
         Form::text('name', null, [
             'class' => 'form-control',
-            'required' => 'true'
+            'required' => 'true',
+            'autofocus' => 'autofocus'
         ])
     !!}
 </div>

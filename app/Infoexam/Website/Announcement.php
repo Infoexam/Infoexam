@@ -4,8 +4,8 @@ use App\Infoexam\Core\Entity;
 use App\Infoexam\Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Announcement extends Entity {
-
+class Announcement extends Entity
+{
     use SoftDeletes;
 
     protected $fillable = ['heading', 'link', 'content', 'image_ssn'];
@@ -43,5 +43,4 @@ class Announcement extends Entity {
 
         return parent::delete();
     }
-
 }

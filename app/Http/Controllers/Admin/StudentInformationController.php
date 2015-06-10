@@ -43,18 +43,14 @@ class StudentInformationController extends Controller
 
     public function edit($user)
     {
-        try
-        {
-            $account = Account::where('username', '=', $user)->firstOrFail();
-
-            $groups = Group::lists('name', 'id');
-
-            return view('admin.student-information.edit', compact('account', 'groups'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($account = Account::with(['userData', 'accreditedData', 'userData.department'])->where('username', '=', $user)->first()))
         {
             return http_404('admin.student-information.index');
         }
+
+        $groups = Group::lists('name', 'id');
+
+        return view('admin.student-information.edit', compact('account', 'groups'));
     }
 
     public function update(Requests\Admin\StudentInformationRequest $request, $user)

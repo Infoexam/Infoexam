@@ -22,7 +22,7 @@ class TestAppliesController extends Controller
             ->where('apply_type', 'like', '1\_%')
             ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
             ->orderBy('start_time', 'asc')
-            ->paginate(10);
+            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
 
         $route = 'student.test-applies.store';
 
@@ -47,9 +47,7 @@ class TestAppliesController extends Controller
 
         $now = Carbon::now();
 
-        $test_applies = $request->user()
-            ->applies
-            ->filter(function($item) use ($now)
+        $test_applies = $request->user()->applies()->with(['test_list'])->get()->filter(function($item) use ($now)
             {
                 return $item->test_list->start_time > $now;
             })
@@ -77,7 +75,7 @@ class TestAppliesController extends Controller
             ->where('apply_type', 'like', '2_%')
             ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
             ->orderBy('start_time', 'asc')
-            ->paginate(10);
+            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
 
         $route = 'student.test-applies.update';
 
@@ -102,7 +100,7 @@ class TestAppliesController extends Controller
 
         $now = Carbon::now();
 
-        $test_applies = $request->user()->applies->filter(function($item) use ($now)
+        $test_applies = $request->user()->applies()->with(['test_list'])->get()->filter(function($item) use ($now)
         {
             return $now > $item->test_list->end_time;
         });

@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tags as $tag)
+                @foreach ($tags as &$tag)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.exam-set-tags.show', $tag->name, ['exam_set_tags' => $tag->name]) !!}</td>
                         <td>{!! HTML::edit_icon(route('admin.exam-set-tags.edit', ['exam_set_tags' => $tag->name])) !!}</td>

@@ -68,24 +68,6 @@ if ( ! function_exists('http_404'))
     }
 }
 
-if ( ! function_exists('getTestListsSsn'))
-{
-    function getTestListsSsn(&$test_lists)
-    {
-        $ssn = [];
-
-        if (is_object($test_lists))
-        {
-            foreach ($test_lists as &$test_list)
-            {
-                $ssn[] = $test_list->ssn;
-            }
-        }
-
-        return $ssn;
-    }
-}
-
 if ( ! function_exists('upload_images'))
 {
     function upload_images(array $images = [], $public = false)

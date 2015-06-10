@@ -8,10 +8,8 @@
             {!! $announcement->content !!}
         </div>
 
-        @if (null !== $announcement->image_ssn)
-            @foreach ($announcement->image_ssn as $image_ssn)
-                @include('partials.image', ['image_ssn' => $image_ssn])
-            @endforeach
+        @if (isset($announcement->image_ssn))
+            @include('partials.image', ['image_ssn' => $announcement->image_ssn])
         @endif
 
         @if (null !== $announcement->link)

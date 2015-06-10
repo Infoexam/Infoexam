@@ -24,6 +24,6 @@ return [
     |
     */
 
-    'deleteRecordsOlderThanMonths' => 12,
+    'deleteRecordsOlderThanMonths' => 120,
 
 ];

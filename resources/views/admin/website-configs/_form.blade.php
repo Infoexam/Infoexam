@@ -32,25 +32,28 @@
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            $('input[data-checkbox-switch]').on('switchChange.bootstrapSwitch', function(event, state) {
-                var page = ('student_page_maintain_mode' === $(this).closest('input').attr('name')) ? 'student_page_remark' : 'exam_page_remark';
-
-                CKEDITOR.instances[page].setReadOnly( ! state);
-            });
-
-            load_or_reset_recaptcha();
-
-            load_js('{{ secure_asset('assets/ckeditor/ckeditor.js') }}', function()
+            $(function()
             {
-                CKEDITOR.replace('student_page_remark', {
-                    readOnly: ! $('input[name=student_page_maintain_mode]').prop('checked')
+                $('input[data-checkbox-switch]').on('switchChange.bootstrapSwitch', function(event, state) {
+                    var page = ('student_page_maintain_mode' === $(this).closest('input').attr('name')) ? 'student_page_remark' : 'exam_page_remark';
+
+                    CKEDITOR.instances[page].setReadOnly( ! state);
                 });
-                CKEDITOR.replace('exam_page_remark', {
-                    readOnly: ! $('input[name=exam_page_maintain_mode]').prop('checked')
+
+                load_or_reset_recaptcha();
+
+                load_js('{{ secure_asset('assets/ckeditor/ckeditor.js') }}', function()
+                {
+                    CKEDITOR.replace('student_page_remark', {
+                        readOnly: ! $('input[name=student_page_maintain_mode]').prop('checked')
+                    });
+                    CKEDITOR.replace('exam_page_remark', {
+                        readOnly: ! $('input[name=exam_page_maintain_mode]').prop('checked')
+                    });
                 });
             });
-        });
+        })(jQuery);
     </script>
 @stop

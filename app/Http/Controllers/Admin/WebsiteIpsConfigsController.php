@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Infoexam\Website\IpRule;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class WebsiteIpsConfigsController extends Controller
 {
@@ -36,31 +35,27 @@ class WebsiteIpsConfigsController extends Controller
 
     public function edit($id)
     {
-        try
-        {
-            $title = trans('website-configs.ips.edit');
-
-            $ip_rule = IpRule::findOrFail($id);
-
-            return view('admin.website-configs.ips.edit', compact('title', 'ip_rule'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($ip_rule = IpRule::find($id)))
         {
             return http_404('admin.website-configs.ips.index');
         }
+
+        $title = trans('website-configs.ips.edit');
+
+        return view('admin.website-configs.ips.edit', compact('title', 'ip_rule'));
     }
 
     public function update(Requests\Admin\WebsiteIpsConfigsRequest $request, $id)
     {
-        try
-        {
-            IpRule::findOrFail($id)->update($request->all());
-
-            $this->updateCache();
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($ip = IpRule::find($id)))
         {
             http_404();
+        }
+        else
+        {
+            $ip->update($request->all());
+
+            $this->updateCache();
         }
 
         return redirect()->route('admin.website-configs.ips.index');
@@ -68,15 +63,15 @@ class WebsiteIpsConfigsController extends Controller
 
     public function destroy($id)
     {
-        try
-        {
-            IpRule::findOrFail($id)->delete();
-
-            $this->updateCache();
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($ip = IpRule::find($id)))
         {
             http_404();
+        }
+        else
+        {
+            $ip->delete();
+
+            $this->updateCache();
         }
 
         return redirect()->route('admin.website-configs.ips.index');

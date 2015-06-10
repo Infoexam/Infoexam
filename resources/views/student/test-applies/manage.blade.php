@@ -19,7 +19,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($test_applies as $test_apply)
+                @foreach ($test_applies as &$test_apply)
                     <tr>
 
                         <td>{{ $test_apply->test_list->ssn }}</td>

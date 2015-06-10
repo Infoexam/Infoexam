@@ -15,7 +15,7 @@ class PracticeExamController extends Controller
     {
         $title = trans('practice-exam.title');
 
-        $exam_sets = ExamSetTag::orderBy('name')->get();
+        $exam_sets = ExamSetTag::orderBy('name')->get(['name']);
 
         session()->forget('exam_practice');
 

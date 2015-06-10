@@ -41,8 +41,10 @@
 
 @section('scripts')
     <script>
-        (function($){
-            $(function(){
+        (function($)
+        {
+            $(function()
+            {
                 load_css('{{ secure_asset('assets/select2/select2.min.css') }}');
                 load_js('{{ secure_asset('assets/select2/select2.min.js') }}', function()
                 {

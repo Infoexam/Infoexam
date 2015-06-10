@@ -30,6 +30,6 @@
         </table>
     </div>
     <div class="text-center">
-        {!! $groups->render() !!}
+        {!! $groups->appends(Request::query())->render() !!}
     </div>
 @stop

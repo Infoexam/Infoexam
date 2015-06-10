@@ -34,9 +34,12 @@
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            load_or_reset_recaptcha();
-        });
+            $(function()
+            {
+                load_or_reset_recaptcha();
+            });
+        })(jQuery);
     </script>
 @stop

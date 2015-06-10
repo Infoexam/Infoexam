@@ -71,6 +71,18 @@ abstract class Entity extends Model
     }
 
     /**
+     * Ssn scope.
+     *
+     * @param \Illuminate\Database\Eloquent\Model $query
+     * @param string $param
+     * @return void
+     */
+    public function scopeSsn($query, $param = '')
+    {
+        $query->where('ssn', '=', $param);
+    }
+
+    /**
      * Create ssn key.
      *
      * @return string|false
@@ -88,7 +100,7 @@ abstract class Entity extends Model
         {
             $ssn = str_random($length);
 
-            if (null === ($this->where('ssn', '=', $ssn)->first(['ssn'])))
+            if ( ! $this->ssn($ssn)->exists())
             {
                 return $ssn;
             }

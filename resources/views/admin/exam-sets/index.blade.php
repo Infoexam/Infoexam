@@ -40,6 +40,6 @@
         </table>
     </div>
     <div class="text-center">
-        {!! $exam_sets->render() !!}
+        {!! $exam_sets->appends(Request::query())->render() !!}
     </div>
 @stop

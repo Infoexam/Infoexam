@@ -18,33 +18,26 @@ class PaperQuestion extends Entity {
 
     public function paper_list()
     {
-        return $this->belongsTo('App\Infoexam\Admin\PaperList');
+        return $this->belongsTo('App\Infoexam\Paper\PaperList')
+            ->select(['id', 'ssn', 'name', 'remark', 'auto_generate']);
     }
 
     public static function create(array $attributes = [])
     {
-        if ( ! isset($attributes['paper_ssn']) || ! isset($attributes['questions']) || null === ($paper = PaperList::where('ssn', '=', $attributes['paper_ssn'])->first(['id'])))
+        if ( ! isset($attributes['paper_ssn']) || ! isset($attributes['questions']) || null === ($paper = PaperList::ssn($attributes['paper_ssn'])->first(['id'])))
         {
             return false;
         }
 
-        $questions = ExamQuestion::whereIn('ssn', $attributes['questions'])->get(['id']);
+        $questions = ExamQuestion::whereIn('ssn', $attributes['questions'])->get(['id'])->pluck('id')->all();
 
-        foreach ($questions as &$question)
+        $already_exist_questions = PaperQuestion::where('paper_list_id', '=', $paper->id)->get(['exam_question_id'])->pluck('exam_question_id')->all();
+
+        foreach (array_diff($questions, $already_exist_questions) as &$question)
         {
-            $check_repeat = PaperQuestion::where('paper_list_id', '=', $paper->id)
-                ->where('exam_question_id', '=', $question->id)
-                ->first();
-
-            if (null !== $check_repeat)
-            {
-                continue;
-            }
-
-            parent::create(['paper_list_id' => $paper->id, 'exam_question_id' => $question->id]);
+            parent::create(['paper_list_id' => $paper->id, 'exam_question_id' => $question]);
         }
 
         return true;
     }
-
 }

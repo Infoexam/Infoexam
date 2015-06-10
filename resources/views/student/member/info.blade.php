@@ -47,39 +47,42 @@
     <hr>
     <div>
         <div>
-            <span>{{ trans('user.acad_score') }}：{{ (is_null($info->accreditedData->acad_score)) ? trans('user.no_data') : $info->accreditedData->acad_score }}</span>
+            <span>{{ trans('user.acad_score') }}：{{ (null === ($info->accreditedData->acad_score)) ? trans('user.no_data') : $info->accreditedData->acad_score }}</span>
         </div>
         <div>
-            <span>{{ trans('user.tech_score') }}：{{ (is_null($info->accreditedData->tech_score)) ? trans('user.no_data') : $info->accreditedData->tech_score }}</span>
+            <span>{{ trans('user.tech_score') }}：{{ (null === ($info->accreditedData->tech_score)) ? trans('user.no_data') : $info->accreditedData->tech_score }}</span>
         </div>
         <div>
             <span>{{ trans('user.is_passed') }}：{{ ($info->accreditedData->is_passed) ? trans('user.passed') : trans('user.not_passed') }}</span>
         </div>
         <div>
-            <span>{{ trans('user.passed_score') }}：{{ (is_null($info->accreditedData->passed_score)) ? trans('user.not_passed') : $info->accreditedData->passed_score }}</span>
+            <span>{{ trans('user.passed_score') }}：{{ (null === ($info->accreditedData->passed_score)) ? trans('user.not_passed') : $info->accreditedData->passed_score }}</span>
         </div>
         <div>
-            <span>{{ trans('user.passed_time') }}：{{ (is_null($info->accreditedData->passed_time)) ? trans('user.not_passed') : $info->accreditedData->passed_time }}</span>
+            <span>{{ trans('user.passed_time') }}：{{ (null === ($info->accreditedData->passed_time)) ? trans('user.not_passed') : $info->accreditedData->passed_time }}</span>
         </div>
     </div>
 @stop
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            $('#update-email').hide();
-
-            $('button').click(function(e)
+            $(function()
             {
-                if ($(this).data('target') === 'update-email')
-                {
-                    $('#update-email').show(300);
-                    $(this).hide();
-                }
-            });
+                $('#update-email').hide();
 
-            load_or_reset_recaptcha();
-        });
+                $('button').click(function(e)
+                {
+                    if ($(this).data('target') === 'update-email')
+                    {
+                        $('#update-email').show(300);
+                        $(this).hide();
+                    }
+                });
+
+                load_or_reset_recaptcha();
+            });
+        })(jQuery);
     </script>
 @stop

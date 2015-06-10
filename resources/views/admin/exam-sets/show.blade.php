@@ -21,7 +21,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($questions as $question)
+                @foreach ($exam_set->questions as &$question)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.exam-questions.show', trans('exam-questions.show'), [$question->ssn]) !!}</td>
                         <td>

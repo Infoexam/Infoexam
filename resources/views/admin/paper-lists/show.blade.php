@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 <?php $i = 0; ?>
-                @foreach ($questions as $question)
+                @foreach ($paper->questions as &$question)
                     <tr>
                         <td>{{ ++$i }}</td>
                         <td>

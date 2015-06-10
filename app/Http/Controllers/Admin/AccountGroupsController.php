@@ -35,56 +35,48 @@ class AccountGroupsController extends Controller
 
     public function edit($id)
     {
-        try
-        {
-            $title = trans('account-groups.edit');
-
-            $group = Group::findOrFail($id);
-
-            foreach (unserialize($group->permissions) as $key => &$value)
-            {
-                $group->setAttribute($key, $value);
-            }
-
-            return view('admin.account-groups.edit', compact('title', 'group'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($group = Group::find($id)))
         {
             return http_404('admin.account-groups.index');
         }
+
+        $title = trans('account-groups.edit');
+
+        foreach (unserialize($group->permissions) as $key => &$value)
+        {
+            $group->setAttribute($key, $value);
+        }
+
+        return view('admin.account-groups.edit', compact('title', 'group'));
     }
 
     public function show($id)
     {
-        try
-        {
-            $group = Group::findOrFail($id);
-
-            $accounts = new Account();
-
-            $accounts = $accounts->leftJoin('user_data', 'accounts.id', '=', 'user_data.account_id')
-                ->leftJoin('user_groups', 'accounts.id', '=', 'user_groups.account_id')
-                ->where('user_groups.group_id', '=', $id)
-                ->orderBy('accounts.username', 'asc')
-                ->paginate(15);
-
-            return view('admin.account-groups.show', compact('group', 'accounts'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($group = Group::find($id)))
         {
             return http_404('admin.account-groups.index');
         }
+
+        $accounts = new Account();
+
+        $accounts = $accounts->leftJoin('user_data', 'accounts.id', '=', 'user_data.account_id')
+            ->leftJoin('user_groups', 'accounts.id', '=', 'user_groups.account_id')
+            ->where('user_groups.group_id', '=', $id)
+            ->orderBy('accounts.username', 'asc')
+            ->paginate(15, ['name', 'username']);
+
+        return view('admin.account-groups.show', compact('group', 'accounts'));
     }
 
     public function update(Requests\Admin\AccountGroupsRequest $request, $id)
     {
-        try
-        {
-            Group::findOrFail($id)->update($request->all());
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($group = Group::find($id)))
         {
             http_404();
+        }
+        else
+        {
+            $group->update($request->all());
         }
 
         return redirect()->route('admin.account-groups.index');
@@ -92,13 +84,13 @@ class AccountGroupsController extends Controller
 
     public function destroy($id)
     {
-        try
-        {
-            Group::findOrFail($id)->delete();
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($group = Group::find($id)))
         {
             http_404();
+        }
+        else
+        {
+            $group->delete();
         }
 
         return redirect()->route('admin.account-groups.index');

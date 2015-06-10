@@ -8,7 +8,7 @@
         <noscript><meta http-equiv="refresh" content="0;url={{ route('noscript') }}"></noscript>
         {!! HTML::style(secure_asset('assets/css/main.css')) !!}
         {!! HTML::script(secure_asset('assets/js/main.js')) !!}
-        {!! HTML::script(secure_asset('assets/js/infoexam.js'), ['async']) !!}
+        {{-- HTML::script(secure_asset('assets/js/infoexam.js'), ['async']) --}}
     </head>
     <body>
         <div class="main">

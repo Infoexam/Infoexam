@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($test_lists as $test_list)
+                @foreach ($test_lists as &$test_list)
                     <tr>
                         <td>{{ $test_list->ssn }}</td>
                         <td>{{ $test_list->start_time }}</td>

@@ -9,7 +9,7 @@
                 {!! HTML::link_button(route('admin.test-lists.create'), trans('test-lists.create')) !!}
             </li>
             <li>
-                {!! HTML::link_button(route('admin.test-lists.index', array_merge(Request::query(), ['tested' => ! $tested])), trans('test-lists.show_tested_'.intval($tested))) !!}
+                {!! HTML::link_button(route('admin.test-lists.index', array_merge(Request::query(), ['tested' => ! $tested])), trans('test-lists.show_tested_'.intval( ! $tested))) !!}
             </li>
         </ul>
     </div>
@@ -40,14 +40,14 @@
                         <td>{{ $test_list->std_apply_num . ' / ' .$test_list->std_num_limit }}</td>
                         <td>
                             {!! Form::open(['route' => ['admin.test-lists.update', $test_list->ssn], 'method' => 'PATCH']) !!}
-                                {!! Form::checkbox('test_enable', true, $test_list->test_enable, ['data-checkbox-switch', 'data-on-text' => trans('general.open'), 'data-off-text' => trans('general.off'), ($check_time = ((\Carbon\Carbon::now() >= $test_list->start_time) ? 'disabled' : 'data-nothing'))]) !!}
+                                {!! Form::checkbox('test_enable', true, $test_list->test_enable, ['data-checkbox-switch', 'data-on-text' => trans('general.on'), 'data-off-text' => trans('general.off'), ($check_time = ((\Carbon\Carbon::now() >= $test_list->start_time) ? 'disabled' : 'data-nothing'))]) !!}
                                 {!! Form::hidden('page', \Request::input('page', 1)) !!}
                                 {!! Form::hidden('type', 'test_enable') !!}
                             {!! Form::close() !!}
                         </td>
                         <td>
                             {!! Form::open(['route' => ['admin.test-lists.update', $test_list->ssn], 'method' => 'PATCH']) !!}
-                                {!! Form::checkbox('allow_apply', true, $test_list->allow_apply, ['data-checkbox-switch', 'data-on-text' => trans('general.on'), 'data-off-text' => trans('general.off'), $check_time]) !!}
+                                {!! Form::checkbox('allow_apply', true, $test_list->allow_apply, ['data-checkbox-switch', 'data-on-text' => trans('general.open'), 'data-off-text' => trans('general.off'), $check_time]) !!}
                                 {!! Form::hidden('page', \Request::input('page', 1)) !!}
                                 {!! Form::hidden('type', 'apply_status') !!}
                             {!! Form::close() !!}

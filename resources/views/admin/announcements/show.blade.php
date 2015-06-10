@@ -3,31 +3,31 @@
 @section('main')
     @include('partials.heading', ['heading' => $announcement->heading])
 
-    <div class="list-inline">
-        <li>
-            {!! HTML::link_button(route('admin.announcements.edit', ['announcements' => $announcement->id]), trans('announcements.edit')) !!}
-        </li>
-        <li>
-            {!! Form::open(['route' => ['admin.announcements.destroy.images', $announcement->id], 'method' => 'DELETE']) !!}
-                {!! Form::button(e(trans('announcements.delete.image')), [
-                        'type' => 'submit',
-                        'class' => 'btn btn-primary',
-                        'data-toggle' => 'modal',
-                        'data-target' => '#delete-confirm'
-                    ])
-                !!}
-            {!! Form::close() !!}
-        </li>
+    <div>
+        <ul class="list-inline">
+            <li>
+                {!! HTML::link_button(route('admin.announcements.edit', ['announcements' => $announcement->id]), trans('announcements.edit')) !!}
+            </li>
+            <li>
+                {!! Form::open(['route' => ['admin.announcements.destroy.images', $announcement->id], 'method' => 'DELETE']) !!}
+                    {!! Form::button(e(trans('announcements.delete.image')), [
+                            'type' => 'submit',
+                            'class' => 'btn btn-primary',
+                            'data-toggle' => 'modal',
+                            'data-target' => '#delete-confirm'
+                        ])
+                    !!}
+                {!! Form::close() !!}
+            </li>
+        </ul>
     </div>
     <br>
     <div>
         {!! $announcement->content !!}
     </div>
     
-    @if (null !== $announcement->image_ssn)
-        @foreach ($announcement->image_ssn as $image_ssn)
-            @include('partials.image', ['image_ssn' => $image_ssn])
-        @endforeach
+    @if (isset($announcement->image_ssn))
+        @include('partials.image', ['image_ssn' => $announcement->image_ssn])
     @endif
     
     @if (null !== $announcement->link)

@@ -8,7 +8,7 @@
     </div>
     <br>
     <div class="text-center">
-        {!! $accounts->render() !!}
+        {!! $accounts->appends(Request::query())->render() !!}
     </div>
     <div>
         <table class="table table-bordered table-hover text-center">
@@ -29,6 +29,6 @@
         </table>
     </div>
     <div class="text-center">
-        {!! $accounts->render() !!}
+        {!! $accounts->appends(Request::query())->render() !!}
     </div>
 @stop

@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\ExamSet\ExamSetTag;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class ExamSetsController extends Controller
 {
@@ -23,7 +22,7 @@ class ExamSetsController extends Controller
     {
         $title = trans('exam-sets.create');
 
-        $exam_set_tags = ExamSetTag::lists('name', 'id');
+        $exam_set_tags = $this->getExamSetTags();
 
         return view('admin.exam-sets.create', compact('title', 'exam_set_tags'));
     }
@@ -40,53 +39,41 @@ class ExamSetsController extends Controller
 
     public function show($ssn)
     {
-        try
-        {
-            $title = trans('exam-questions.list');
-
-            $exam_set = ExamSet::where('ssn', '=', $ssn)->firstOrFail(['id', 'ssn', 'name']);
-
-            $questions = $exam_set->questions;
-
-            return view('admin.exam-sets.show', compact('title', 'exam_set', 'questions'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($exam_set = ExamSet::with(['questions'])->ssn($ssn)->first(['id', 'ssn', 'name'])))
         {
             return http_404('admin.exam-sets.index');
         }
+
+        $title = trans('exam-questions.list');
+
+        return view('admin.exam-sets.show', compact('title', 'exam_set'));
     }
 
     public function edit($ssn)
     {
-        try
-        {
-            $title = trans('exam-sets.edit');
-
-            $exam_set = ExamSet::where('ssn', '=', $ssn)->firstOrFail();
-
-            $exam_set_tags = ExamSetTag::lists('name', 'id');
-
-            return view('admin.exam-sets.edit', compact('title', 'exam_set', 'exam_set_tags'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($exam_set = ExamSet::ssn($ssn)->first()))
         {
             return http_404('admin.exam-sets.index');
         }
+
+        $title = trans('exam-sets.edit');
+
+        $exam_set_tags = $this->getExamSetTags();
+
+        return view('admin.exam-sets.edit', compact('title', 'exam_set', 'exam_set_tags'));
     }
 
     public function update(Requests\Admin\ExamSetsRequest $request, $ssn)
     {
-        try
+        if (null === ($exam_set = ExamSet::ssn($ssn)->first(['id'])))
         {
-            $exam_set = ExamSet::where('ssn', '=', $ssn)->firstOrFail(['id']);
-
+            http_404();
+        }
+        else
+        {
             $exam_set->update($request->all());
 
             $exam_set->syncTags($request->input('exam_set_tag_list', []));
-        }
-        catch (ModelNotFoundException $e)
-        {
-            http_404();
         }
 
         return redirect()->route('admin.exam-sets.index');
@@ -94,15 +81,20 @@ class ExamSetsController extends Controller
 
     public function destroy($ssn)
     {
-        try
+        if (null === ($exam_set = ExamSet::ssn($ssn)->first()))
         {
-            ExamSet::where('ssn', '=', $ssn)->firstOrFail()->delete();
+            http_404();
+        }
+        else
+        {
+            $exam_set->delete();
+        }
 
-            return redirect()->route('admin.exam-sets.index');
-        }
-        catch (ModelNotFoundException $e)
-        {
-            return http_404('admin.exam-sets.index');
-        }
+        return redirect()->route('admin.exam-sets.index');
+    }
+
+    public function getExamSetTags()
+    {
+        return ExamSetTag::lists('name', 'id');
     }
 }

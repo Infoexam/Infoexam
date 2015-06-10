@@ -1,6 +1,6 @@
 <div class="form-group">
     {!! Form::label('open_room', trans('exam-configs.open_room')).'：' !!}
-    @foreach ($room_list as $room)
+    @foreach ($room_list as &$room)
         <label class="checkbox-inline">
             {!! Form::checkbox('open_room[]', $room) !!}
             {{ $room }}
@@ -38,9 +38,12 @@
 
 @section('scripts')
     <script>
-        $(function()
+        (function($)
         {
-            load_or_reset_recaptcha();
-        });
+            $(function()
+            {
+                load_or_reset_recaptcha();
+            });
+        })(jQuery);
     </script>
 @stop

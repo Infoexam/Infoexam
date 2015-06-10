@@ -20,13 +20,13 @@ class TestListsController extends Controller
     {
         $title = trans('test-lists.list');
 
-        $tested = $request->input('tested', false);
+        $tested = (bool) $request->input('tested', false);
 
         $test_lists = TestList::Tested($tested)
             ->orderBy('start_time', $tested ? 'desc' : 'asc')
             ->paginate(10);
 
-        $test_list_ssn = implode(',', getTestListsSsn($test_lists));
+        $test_list_ssn = $test_lists->implode('attributes.ssn', ',');
 
         return view('admin.test-lists.index', compact('title', 'tested', 'test_lists', 'test_list_ssn'));
     }

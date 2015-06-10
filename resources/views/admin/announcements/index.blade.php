@@ -4,7 +4,7 @@
     @include('partials.heading', ['heading' => trans('announcements.list')])
 
     <div>
-        {!! HTML::link_button(route('admin.announcements.create', [], true), trans('announcements.create')) !!}
+        {!! HTML::link_button(route('admin.announcements.create'), trans('announcements.create')) !!}
     </div>
     <br>
     <div>
@@ -20,7 +20,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($announcements as $announcement)
+                @foreach ($announcements as &$announcement)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.announcements.show', $announcement->heading, [$announcement->id]) !!}</td>
                         <td title="{{ $announcement->updated_at }}">{{ $announcement->updated_at->diffForHumans() }}</td>

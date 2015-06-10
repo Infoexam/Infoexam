@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Infoexam\ExamSet\ExamSetTag;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
@@ -33,7 +32,7 @@ class ExamSetTagsController extends Controller
         {
             if ( ! ((null !== ($name = $request->input('name'))) && (ExamSetTag::create(['name' => $name])->exists)))
             {
-                flash()->success(trans('general.create.failed'));
+                flash()->error(trans('general.create.failed'));
             }
         }
         catch (QueryException $e)
@@ -46,49 +45,42 @@ class ExamSetTagsController extends Controller
 
     public function show($name)
     {
-        try
-        {
-            $exam_sets = ExamSetTag::where('name', '=', $name)->firstOrFail()->exam_sets;
-
-            return view('admin.exam-set-tags.show', compact('name', 'exam_sets'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($exam_set_tag = ExamSetTag::with(['exam_sets'])->where('name', '=', $name)->first()))
         {
             return http_404('admin.exam-set-tags.index');
         }
+
+        return view('admin.exam-set-tags.show', compact('name', 'exam_set_tag'));
     }
 
     public function edit($name)
     {
-        try
-        {
-            $title = trans('exam-set-tags.edit');
-
-            $tag = ExamSetTag::where('name', '=', $name)->firstOrFail();
-
-            return view('admin.exam-set-tags.edit', compact('title', 'tag'));
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($tag = ExamSetTag::where('name', '=', $name)->first(['name'])))
         {
             return http_404('admin.exam-set-tags.index');
         }
+
+        $title = trans('exam-set-tags.edit');
+
+        return view('admin.exam-set-tags.edit', compact('title', 'tag'));
     }
 
     public function update(Request $request, $name)
     {
-        try
-        {
-            $tag = ExamSetTag::where('name', '=', $name)->firstOrFail();
-
-            $tag->update(['name' => $request->input('name', $name)]);
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($tag = ExamSetTag::where('name', '=', $name)->first()))
         {
             http_404();
         }
-        catch (QueryException $e)
+        else
         {
-            flash()->error(trans('exam-set-tags.exist'));
+            try
+            {
+                $tag->update(['name' => $request->input('name', $name)]);
+            }
+            catch (QueryException $e)
+            {
+                flash()->error(trans('exam-set-tags.exist'));
+            }
         }
 
         return redirect()->route('admin.exam-set-tags.index');
@@ -96,13 +88,13 @@ class ExamSetTagsController extends Controller
 
     public function destroy($name)
     {
-        try
-        {
-            ExamSetTag::where('name', '=', $name)->firstOrFail()->delete();
-        }
-        catch (ModelNotFoundException $e)
+        if (null === ($tag = ExamSetTag::where('name', '=', $name)->first()))
         {
             http_404();
+        }
+        else
+        {
+            $tag->delete();
         }
 
         return redirect()->route('admin.exam-set-tags.index');

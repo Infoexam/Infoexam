@@ -5,7 +5,7 @@
 
     <div>
         <ul>
-            @foreach ($exam_sets as $exam_set)
+            @foreach ($exam_set_tag->exam_sets as &$exam_set)
                 <li>{!! HTML::linkRoute('admin.exam-sets.show', $exam_set->name, ['exam_sets' => $exam_set->ssn]) !!}</li>
             @endforeach
         </ul>
