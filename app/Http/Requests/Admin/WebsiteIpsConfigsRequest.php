@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class WebsiteIpsConfigsRequest extends Request {
-
+class WebsiteIpsConfigsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -55,5 +57,4 @@ class WebsiteIpsConfigsRequest extends Request {
             'g-recaptcha-response.required' => 'Please ensure that you are a human!',
         ];
     }
-
 }

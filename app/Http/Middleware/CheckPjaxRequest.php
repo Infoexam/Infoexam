@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckPjaxRequest {
-
+class CheckPjaxRequest
+{
     /**
      * Handle an incoming request.
      *
@@ -43,5 +45,4 @@ class CheckPjaxRequest {
 
         return $next($request);
     }
-
 }

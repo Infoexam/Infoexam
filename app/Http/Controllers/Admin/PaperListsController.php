@@ -1,14 +1,16 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Paper\PaperList;
 use App\Infoexam\Paper\PaperQuestion;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class PaperListsController extends Controller {
-
+class PaperListsController extends Controller
+{
     public function index(Request $request)
     {
         $title = trans('paper-lists.title');
@@ -102,5 +104,4 @@ class PaperListsController extends Controller {
 
         return redirect()->route('admin.paper-lists.index');
     }
-
 }

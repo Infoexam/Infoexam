@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class StudentInformationRequest extends Request {
-
+class StudentInformationRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -47,5 +49,4 @@ class StudentInformationRequest extends Request {
 
         ];
     }
-
 }

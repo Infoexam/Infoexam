@@ -1,13 +1,14 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Website\IpRule;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
-class WebsiteIpsConfigsController extends Controller {
-
+class WebsiteIpsConfigsController extends Controller
+{
     public function index()
     {
         $title = trans('website-configs.ips.list');
@@ -85,5 +86,4 @@ class WebsiteIpsConfigsController extends Controller {
     {
         \Cache::forever('ip_rules', IpRule::all(['ip', 'student_page', 'exam_page', 'admin_page']));
     }
-
 }

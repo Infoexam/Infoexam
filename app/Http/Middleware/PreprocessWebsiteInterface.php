@@ -1,12 +1,14 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use App;
 use Carbon\Carbon;
 use Closure;
 use Jenssegers\Agent\Facades\Agent;
 
-class PreprocessWebsiteInterface {
-
+class PreprocessWebsiteInterface
+{
     /**
      * Handle an incoming request.
      *
@@ -63,5 +65,4 @@ class PreprocessWebsiteInterface {
 
         return $next($request);
     }
-
 }

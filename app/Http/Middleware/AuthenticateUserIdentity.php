@@ -1,11 +1,13 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use App\Infoexam\Account\Account;
 use App\Infoexam\Exam\ExamAuth;
 use Closure;
 
-class AuthenticateUserIdentity {
-
+class AuthenticateUserIdentity
+{
     /**
      * Handle an incoming request.
      *
@@ -51,5 +53,4 @@ class AuthenticateUserIdentity {
 
         return $next($request);
     }
-
 }

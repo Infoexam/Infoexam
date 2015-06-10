@@ -1,13 +1,14 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Jobs\Admin\SyncStudentDataCenterToLocal;
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
+use App\Http\Requests;
+use App\Jobs\Admin\SyncStudentDataCenterToLocal;
 use Illuminate\Support\Facades\Queue;
 
-class SyncStudentDataController extends Controller {
-    
+class SyncStudentDataController extends Controller
+{
     public function index()
     {
         $title = trans('sync-student-data.title');
@@ -39,5 +40,4 @@ class SyncStudentDataController extends Controller {
 
         return redirect()->route('admin.sync-student-data.index');
     }
-
 }

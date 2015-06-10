@@ -1,15 +1,17 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\Paper\PaperList;
 use App\Infoexam\Paper\PaperQuestion;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class PaperQuestionsController extends Controller {
-    
+class PaperQuestionsController extends Controller
+{
     public function create(Request $request)
     {
         if (null !== PaperList::where('ssn', '=', $request->input('ssn'))->first(['id']))
@@ -51,5 +53,4 @@ class PaperQuestionsController extends Controller {
             return http_404('admin.paper-lists.index');
         }
     }
-
 }

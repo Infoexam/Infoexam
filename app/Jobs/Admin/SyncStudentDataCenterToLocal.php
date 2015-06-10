@@ -2,18 +2,18 @@
 
 namespace App\Jobs\Admin;
 
-use App\Jobs\Job;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\AccreditedDatum;
 use App\Infoexam\Account\Department;
 use App\Infoexam\Account\UserDatum;
 use App\Infoexam\Account\UserGroup;
+use App\Jobs\Job;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\DB;
 
-class SyncStudentDataCenterToLocal extends Job implements SelfHandling {
-
+class SyncStudentDataCenterToLocal extends Job implements SelfHandling
+{
     protected $override, $specific, $username;
 
     /**
@@ -161,5 +161,4 @@ class SyncStudentDataCenterToLocal extends Job implements SelfHandling {
             }
         }
     }
-
 }

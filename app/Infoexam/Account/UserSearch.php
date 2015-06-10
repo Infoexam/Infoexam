@@ -16,7 +16,8 @@ class UserSearch {
      */
     public function __construct(Account $model)
     {
-        $this->model = $model->leftJoin('user_data', 'accounts.id', '=', 'user_data.account_id')
+        $this->model = $model->with(['userData.department'])
+            ->leftJoin('user_data', 'accounts.id', '=', 'user_data.account_id')
             ->leftJoin('accredited_data', 'accounts.id', '=', 'accredited_data.account_id');
     }
 

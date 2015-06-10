@@ -1,15 +1,15 @@
-<?php namespace App\Http\Controllers;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers;
+
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class ExceptionHandleController extends Controller {
-
+class ExceptionHandleController extends Controller
+{
     public function noscript()
     {
         return view('errors.503');
     }
-
 }

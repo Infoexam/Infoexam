@@ -1,14 +1,16 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Student;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Authenticate;
 use Auth;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller {
-
+class AuthController extends Controller
+{
     public function login(Authenticate $auth)
     {
         /*
@@ -49,5 +51,4 @@ class AuthController extends Controller {
 
         return redirect()->route('student.login');
     }
-    
 }

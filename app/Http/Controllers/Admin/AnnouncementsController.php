@@ -1,13 +1,15 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use App\Infoexam\Website\Announcement;
+use App\Http\Requests;
 use App\Infoexam\Image;
+use App\Infoexam\Website\Announcement;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AnnouncementsController extends Controller {
-
+class AnnouncementsController extends Controller
+{
     public function index()
     {
         $title = trans('announcements.list');
@@ -119,5 +121,4 @@ class AnnouncementsController extends Controller {
 
         return redirect()->route('admin.announcements.show', ['announcements' => $id]);
     }
-
 }

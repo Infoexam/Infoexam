@@ -1,15 +1,17 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use Auth;
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Authenticate;
+use Auth;
 use Illuminate\Http\Request;
 use Spatie\Activitylog\Models\Activity;
 
-class HomeController extends Controller {
-
+class HomeController extends Controller
+{
     public function index()
     {
         $logs = Activity::with('user')->where('text', 'not like', '%"login"%')->latest()->limit(10)->get()
@@ -80,5 +82,4 @@ class HomeController extends Controller {
 
         return redirect()->route('admin.login');
     }
-
 }

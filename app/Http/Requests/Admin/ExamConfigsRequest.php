@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ExamConfigsRequest extends Request {
-
+class ExamConfigsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *

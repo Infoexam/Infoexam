@@ -1,12 +1,13 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Student;
+
 use App\Http\Controllers\Controller;
-
+use App\Http\Requests;
 use Illuminate\Http\Request;
 
-class MemberController extends Controller {
-
+class MemberController extends Controller
+{
     public function info(Request $request)
     {
         $info = $request->user();
@@ -20,5 +21,4 @@ class MemberController extends Controller {
 
         return redirect()->route('student.member.info');
     }
-
 }

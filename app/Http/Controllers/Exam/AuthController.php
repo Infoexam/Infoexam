@@ -1,14 +1,16 @@
-<?php namespace App\Http\Controllers\Exam;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Exam;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Authenticate;
 use App\Infoexam\Exam\ExamAuth;
 use Auth;
 use Illuminate\Http\Request;
 
-class AuthController extends Controller {
-
+class AuthController extends Controller
+{
     public function login(Authenticate $auth)
     {
         $title = trans('general.login');
@@ -43,5 +45,4 @@ class AuthController extends Controller {
 
         return redirect()->route('exam.login');
     }
-
 }

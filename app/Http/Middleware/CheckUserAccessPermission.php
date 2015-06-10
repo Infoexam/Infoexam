@@ -1,15 +1,17 @@
-<?php namespace App\Http\Middleware;
+<?php
 
-use App\Infoexam\Website\WebsiteConfig;
+namespace App\Http\Middleware;
+
 use App\Infoexam\Website\IpRule;
+use App\Infoexam\Website\WebsiteConfig;
 use Auth;
 use Cache;
 use Closure;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\ServiceUnavailableHttpException;
 
-class CheckUserAccessPermission {
-
+class CheckUserAccessPermission
+{
     /**
      * Handle an incoming request.
      *
@@ -174,5 +176,4 @@ class CheckUserAccessPermission {
 
         return $next($request);
     }
-
 }

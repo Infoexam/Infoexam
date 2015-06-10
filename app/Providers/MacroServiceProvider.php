@@ -6,7 +6,6 @@ use Illuminate\Support\ServiceProvider;
 
 class MacroServiceProvider extends ServiceProvider
 {
-
     /**
      * Bootstrap the application services.
      *
@@ -26,5 +25,4 @@ class MacroServiceProvider extends ServiceProvider
     {
         //
     }
-
 }

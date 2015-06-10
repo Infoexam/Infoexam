@@ -2,16 +2,15 @@
 
 namespace App\Jobs\Student;
 
-use App\Jobs\Job;
 use App\Infoexam\Exam\ExamConfig;
 use App\Infoexam\Test\TestList;
+use App\Jobs\Job;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TransformTestApply extends Job implements SelfHandling
 {
-
     /**
      * Account data.
      *
@@ -99,5 +98,4 @@ class TransformTestApply extends Job implements SelfHandling
             return false;
         }
     }
-
 }

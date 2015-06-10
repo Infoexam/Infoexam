@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class PaperListsRequest extends Request {
-
+class PaperListsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -28,5 +30,4 @@ class PaperListsRequest extends Request {
             'name.between' => trans('error.between', ['attribute' => trans('paper-lists.name'), 'min' => 3, 'max' => 32]),
         ];
     }
-
 }

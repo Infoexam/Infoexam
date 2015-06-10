@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class PreprocessConnection {
-
+class PreprocessConnection
+{
     /**
      * Handle an incoming request.
      *
@@ -50,5 +52,4 @@ class PreprocessConnection {
 
         return $response;
     }
-
 }

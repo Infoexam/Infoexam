@@ -11,16 +11,17 @@ var elixir = require('laravel-elixir');
  |
  */
 
+elixir.config.sourcemaps = false;
+
 elixir(function(mix)
 {
     mix
         .sass([
             '*'
-        ], 'public/assets/css/temp')
+        ], 'resources/assets/css/infoexam.css')
         .styles([
             '*'
-        ], 'public/assets/css/temp/all.css')
-        .stylesIn('public/assets/css/temp', 'public/assets/css/main.css')
+        ], 'public/assets/css/main.css')
         .scripts([
             'jquery-2.1.4.min.js',
             'bootstrap.min.js',

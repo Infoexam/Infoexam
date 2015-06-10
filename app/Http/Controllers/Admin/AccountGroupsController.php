@@ -1,13 +1,15 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Group;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AccountGroupsController extends Controller {
-
+class AccountGroupsController extends Controller
+{
     public function index()
     {
         $title = trans('account-groups.list');
@@ -101,5 +103,4 @@ class AccountGroupsController extends Controller {
 
         return redirect()->route('admin.account-groups.index');
     }
-
 }

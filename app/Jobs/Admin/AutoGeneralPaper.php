@@ -2,16 +2,16 @@
 
 namespace App\Jobs\Admin;
 
-use App\Jobs\Job;
 use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\Paper\PaperList;
 use App\Infoexam\Paper\PaperQuestion;
+use App\Jobs\Job;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AutoGeneralPaper extends Job implements SelfHandling {
-
+class AutoGeneralPaper extends Job implements SelfHandling
+{
     protected $exam_sets, $level, $number;
 
     /**
@@ -109,5 +109,4 @@ class AutoGeneralPaper extends Job implements SelfHandling {
             return false;
         }
     }
-
 }

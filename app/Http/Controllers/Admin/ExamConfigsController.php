@@ -1,13 +1,14 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Exam\ExamConfig;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Http\Request;
 
-class ExamConfigsController extends Controller {
-
+class ExamConfigsController extends Controller
+{
     public function edit()
     {
         try
@@ -39,5 +40,4 @@ class ExamConfigsController extends Controller {
             return http_404('admin.index');
         }
     }
-
 }

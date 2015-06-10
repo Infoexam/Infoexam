@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ExamQuestionsRequest extends Request {
-
+class ExamQuestionsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -67,5 +69,4 @@ class ExamQuestionsRequest extends Request {
             'answer.required' => trans('error.required', ['attribute' => trans('exam-questions.option')]),
         ];
     }
-
 }

@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class UnserializeUserGroupsPermissions {
-
+class UnserializeUserGroupsPermissions
+{
     /**
      * Handle an incoming request.
      *
@@ -26,5 +28,4 @@ class UnserializeUserGroupsPermissions {
 
         return $next($request);
     }
-
 }

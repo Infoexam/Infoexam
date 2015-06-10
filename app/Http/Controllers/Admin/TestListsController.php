@@ -1,19 +1,21 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Jobs\Admin\ApplyTest;
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Infoexam\Account\Department;
 use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\Paper\PaperList;
-use App\Infoexam\Test\TestList;
-use App\Infoexam\Account\Department;
 use App\Infoexam\Test\TestApply;
+use App\Infoexam\Test\TestList;
+use App\Jobs\Admin\ApplyTest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class TestListsController extends Controller {
-
+class TestListsController extends Controller
+{
     public function index(Request $request)
     {
         $title = trans('test-lists.list');
@@ -206,5 +208,4 @@ class TestListsController extends Controller {
 
         return redirect()->route('admin.test-lists.show', ['ssn' => $test_ssn]);
     }
-
 }

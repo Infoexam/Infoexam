@@ -2,18 +2,18 @@
 
 namespace App\Jobs\Admin;
 
-use App\Jobs\Job;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\UserDatum;
 use App\Infoexam\Exam\ExamConfig;
 use App\Infoexam\Test\TestApply;
 use App\Infoexam\Test\TestList;
+use App\Jobs\Job;
 use Carbon\Carbon;
 use Illuminate\Contracts\Bus\SelfHandling;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ApplyTest extends Job implements SelfHandling {
-
+class ApplyTest extends Job implements SelfHandling
+{
     /**
      * HTTP request
      *
@@ -192,5 +192,4 @@ class ApplyTest extends Job implements SelfHandling {
             return false;
         }
     }
-
 }

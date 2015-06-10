@@ -1,7 +1,9 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Department;
 use App\Infoexam\Account\Group;
@@ -9,8 +11,8 @@ use App\Infoexam\Account\UserSearch;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class StudentInformationController extends Controller {
-
+class StudentInformationController extends Controller
+{
     public function index()
     {
         $title = trans('student-information.search');
@@ -83,5 +85,4 @@ class StudentInformationController extends Controller {
             return http_404('admin.student-information.index');
         }
     }
-    
 }

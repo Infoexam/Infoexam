@@ -1,10 +1,12 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 use App\Infoexam\Exam\ExamConfig;
 
-class TestListsRequest extends Request {
-
+class TestListsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -71,5 +73,4 @@ class TestListsRequest extends Request {
             'test_paper_specific.exists' => trans('error.exists', ['attribute' => trans('test-lists.test_paper_specific')]),
         ];
     }
-
 }

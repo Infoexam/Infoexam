@@ -1,12 +1,14 @@
-<?php namespace App\Http\Controllers\Api;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Api;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use Illuminate\Http\Request;
 
-class AuthSsoController extends Controller {
-
+class AuthSsoController extends Controller
+{
     public function index(Request $request)
     {
         $cid = $request->input('miXd', '');
@@ -66,5 +68,4 @@ class AuthSsoController extends Controller {
 
         return [0, null];
     }
-
 }

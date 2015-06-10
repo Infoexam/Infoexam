@@ -1,9 +1,11 @@
-<?php namespace App\Http\Middleware;
+<?php
+
+namespace App\Http\Middleware;
 
 use Closure;
 
-class CheckRequestValidation {
-
+class CheckRequestValidation
+{
     /**
      * Handle an incoming request.
      *
@@ -36,5 +38,4 @@ class CheckRequestValidation {
 
         return $next($request);
     }
-
 }

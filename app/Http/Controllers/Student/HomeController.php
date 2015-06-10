@@ -1,15 +1,14 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Student;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 
-use Illuminate\Http\Request;
-
-class HomeController extends Controller {
-       
+class HomeController extends Controller
+{
     public function index()
     {
         return view('student.index');
     }
-
 }

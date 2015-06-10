@@ -1,16 +1,14 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 
-use Illuminate\Http\Request;
-use Rap2hpoutre\LaravelLogViewer\LaravelLogViewer;
-
-class LogViewerController extends Controller {
-
+class LogViewerController extends Controller
+{
     public function index()
     {
         return view('admin.logs');
     }
-
 }

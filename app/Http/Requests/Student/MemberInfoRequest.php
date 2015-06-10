@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Student;
+<?php
+
+namespace App\Http\Requests\Student;
 
 use App\Http\Requests\Request;
 
-class MemberInfoRequest extends Request {
-
+class MemberInfoRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -31,5 +33,4 @@ class MemberInfoRequest extends Request {
             'g-recaptcha-response.required' => 'Please ensure that you are a human!',
         ];
     }
-
 }

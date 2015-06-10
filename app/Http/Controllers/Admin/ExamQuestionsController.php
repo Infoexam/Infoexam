@@ -1,13 +1,15 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\ExamSet\ExamOption;
 use App\Infoexam\ExamSet\ExamQuestion;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class ExamQuestionsController extends Controller {
-
+class ExamQuestionsController extends Controller
+{
     public function create()
     {
         $title = trans('exam-questions.create');
@@ -107,5 +109,4 @@ class ExamQuestionsController extends Controller {
             return http_404('admin.exam-sets.index');
         }
     }
-
 }

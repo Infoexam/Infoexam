@@ -1,4 +1,6 @@
-<?php namespace App\Http\Controllers;
+<?php
+
+namespace App\Http\Controllers;
 
 use App\Http\Requests;
 use App\Infoexam\Image;
@@ -7,8 +9,8 @@ use File;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class ImageController extends Controller {
-
+class ImageController extends Controller
+{
     public function show($ssn, $small = false)
     {
         $image = Image::where('ssn', '=', $ssn)->first();

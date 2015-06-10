@@ -1,11 +1,13 @@
-<?php namespace App\Http\Controllers\Exam;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Exam;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Paper\PaperList;
 
-class ExamController extends Controller {
-
+class ExamController extends Controller
+{
     public function panel()
     {
 
@@ -43,5 +45,4 @@ class ExamController extends Controller {
     {
 
     }
-
 }

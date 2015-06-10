@@ -1,16 +1,18 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
+namespace App\Http\Controllers\Student;
+
+use App\Http\Controllers\Controller;
+use App\Http\Requests;
+use App\Infoexam\Test\TestList;
 use App\Jobs\Student\ApplyTest;
 use App\Jobs\Student\CancelTestApply;
 use App\Jobs\Student\TransformTestApply;
-use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use App\Infoexam\Test\TestList;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
-class TestAppliesController extends Controller {
-
+class TestAppliesController extends Controller
+{
     public function apply()
     {
         $title = trans('test-applies.apply_student');
@@ -107,5 +109,4 @@ class TestAppliesController extends Controller {
 
         return view('student.test-applies.history', compact('title', 'test_applies'));
     }
-
 }

@@ -1,9 +1,11 @@
-<?php namespace App\Http\Requests\Admin;
+<?php
+
+namespace App\Http\Requests\Admin;
 
 use App\Http\Requests\Request;
 
-class ExamSetsRequest extends Request {
-
+class ExamSetsRequest extends Request
+{
     /**
      * Get the validation rules that apply to the request.
      *
@@ -43,5 +45,4 @@ class ExamSetsRequest extends Request {
             'exam_set_tag_list.exists' => trans('error.exists', ['attribute' => 'Tags']),
         ];
     }
-
 }

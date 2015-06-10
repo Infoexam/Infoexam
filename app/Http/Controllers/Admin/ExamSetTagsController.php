@@ -1,14 +1,16 @@
-<?php namespace App\Http\Controllers\Admin;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\ExamSet\ExamSetTag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 
-class ExamSetTagsController extends Controller {
-
+class ExamSetTagsController extends Controller
+{
     public function index()
     {
         $title = trans('exam-set-tags.list');
@@ -105,5 +107,4 @@ class ExamSetTagsController extends Controller {
 
         return redirect()->route('admin.exam-set-tags.index');
     }
-
 }

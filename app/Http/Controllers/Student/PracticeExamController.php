@@ -1,14 +1,16 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Student;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Exam\ExamPractice;
 use App\Infoexam\ExamSet\ExamSetTag;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
-class PracticeExamController extends Controller {
-
+class PracticeExamController extends Controller
+{
     public function index()
     {
         $title = trans('practice-exam.title');
@@ -68,5 +70,4 @@ class PracticeExamController extends Controller {
 
         return view('student.practice-exam.result', compact('score', 'questions'));
     }
-
 }

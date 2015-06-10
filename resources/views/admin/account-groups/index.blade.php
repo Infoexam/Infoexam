@@ -17,7 +17,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($groups as $group)
+                @foreach ($groups as &$group)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.account-groups.show', $group->name, ['account_groups' => $group->id]) !!}</td>
                         <td>{!! HTML::edit_icon(route('admin.account-groups.edit', ['id' => $group->id])) !!}</td>

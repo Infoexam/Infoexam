@@ -10,17 +10,14 @@
         <table class="table table-bordered table-hover text-center">
             <thead>
                 <tr>
-                    <th>#</th>
                     <th>{{ trans('student-information.username') }}</th>
                     <th>{{ trans('student-information.name') }}</th>
                     <th>{{ trans('student-information.department') }}</th>
                 </tr>
             </thead>
             <tbody>
-                <?php $i = 0; ?>
-                @foreach ($accounts as $account)
+                @foreach ($accounts as &$account)
                     <tr>
-                        <td>{{ ++$i }}</td>
                         <td>{!! HTML::linkRoute('admin.student-information.edit', $account->username, ['user' => $account->username]) !!}</td>
                         <td>{{ $account->name }}</td>
                         <td>{{ $account->userData->department->name }}</td>

@@ -1,12 +1,14 @@
-<?php namespace App\Http\Controllers\Student;
+<?php
 
-use App\Http\Requests;
+namespace App\Http\Controllers\Student;
+
 use App\Http\Controllers\Controller;
+use App\Http\Requests;
 use App\Infoexam\Website\Announcement;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class AnnouncementsController extends Controller {
-
+class AnnouncementsController extends Controller
+{
     public function index()
     {
         $announcements = Announcement::orderBy('id', 'desc')->paginate(10);
@@ -31,5 +33,4 @@ class AnnouncementsController extends Controller {
             return http_404('student.announcements.index');
         }
     }
-
 }
