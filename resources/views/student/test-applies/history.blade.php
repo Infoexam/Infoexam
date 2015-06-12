@@ -9,7 +9,7 @@
                 <tr>
                     <th>{{ trans('test-lists.ssn') }}</th>
                     <th>{{ trans('test-lists.test_type') }}</th>
-                    <th>{{ trans('test-lists.apply_type') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.apply_type') }}</th>
                     <th>{{ trans('test-applies.scores') }}</th>
                 </tr>
             </thead>
@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ $test_apply->test_list->ssn }}</td>
                         <td>{{ trans('test-lists.test_types.'.($test_apply->test_list->test_type)) }}</td>
-                        <td>{{ trans('test-lists.apply_types.'.($test_apply->test_list->apply_type)) }}</td>
+                        <td class="hidden-xs">{{ trans('test-lists.apply_types.'.($test_apply->test_list->apply_type)) }}</td>
                         <td>{{ (null === $test_apply->test_result_id) ? trans('test-applies.scores.null') : $test_apply->test_result->score }}</td>
                     </tr>
                 @endforeach

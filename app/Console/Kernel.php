@@ -13,7 +13,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        \App\Console\Commands\Inspire::class,
+        \App\Console\Commands\SyncReceipts::class,
+        \App\Console\Commands\SyncTestAppliesPaidAt::class,
     ];
 
     /**
@@ -24,7 +25,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        $schedule->command('inspire')
-            ->hourly();
+        $schedule->command('sync:receipts')->withoutOverlapping()->dailyAt('02:00');
+        $schedule->command('sync:test-applies-paid-at')->withoutOverlapping()->dailyAt('02:10');
     }
 }

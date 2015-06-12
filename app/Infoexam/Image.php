@@ -23,7 +23,7 @@ class Image extends Entity {
 
         $images = [];
 
-        foreach ($files as &$file)
+        foreach ($files as $file)
         {
             $model = $this->uploadImage($file, $public);
 

@@ -15,4 +15,6 @@ return [
     'show_auto_generate_1' => '顯示自動產生試卷',
     'show_auto_generate_0' => '顯示手動產生試卷',
 
+    'paper_already_in_used' => '此試卷已用於測驗中，無法刪除',
+
 ];

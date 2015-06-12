@@ -1,6 +1,6 @@
 <div class="form-group">
     {!! Form::label('open_room', trans('exam-configs.open_room')).'：' !!}
-    @foreach ($room_list as &$room)
+    @foreach ($room_list as $room)
         <label class="checkbox-inline">
             {!! Form::checkbox('open_room[]', $room) !!}
             {{ $room }}

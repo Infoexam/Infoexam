@@ -13,23 +13,23 @@
                 <tr>
                     <th>{{ trans('announcements.title') }}</th>
                     <th>{{ trans('announcements.updated_at') }}</th>
-                    <th>{{ trans('announcements.created_at') }}</th>
-                    <th>{{ trans('announcements.edit') }}</th>
-                    <th>{{ trans('announcements.delete.image') }}</th>
-                    <th>{{ trans('announcements.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('announcements.created_at') }}</th>
+                    <th class="hidden-xs">{{ trans('announcements.edit') }}</th>
+                    <th class="hidden-xs">{{ trans('announcements.delete.image') }}</th>
+                    <th class="hidden-xs">{{ trans('announcements.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($announcements as &$announcement)
+                @foreach ($announcements as $announcement)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.announcements.show', $announcement->heading, [$announcement->id]) !!}</td>
                         <td title="{{ $announcement->updated_at }}">{{ $announcement->updated_at->diffForHumans() }}</td>
-                        <td title="{{ $announcement->created_at }}">{{ $announcement->created_at->diffForHumans() }}</td>
-                        <td>{!! HTML::edit_icon(route('admin.announcements.edit', ['id' => $announcement->id]) ) !!}</td>
-                        <td>
+                        <td class="hidden-xs" title="{{ $announcement->created_at }}">{{ $announcement->created_at->diffForHumans() }}</td>
+                        <td class="hidden-xs">{!! HTML::edit_icon(route('admin.announcements.edit', ['id' => $announcement->id]) ) !!}</td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.announcements.destroy.images', $announcement->id]])
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.announcements.destroy', $announcement->id]])
                         </td>
                     </tr>

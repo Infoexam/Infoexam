@@ -1,65 +1,65 @@
 <header class="center-block">
     {!! HTML::image('assets/images/banner.png', 'banner', ['class' => 'banner'], true) !!}
-    <nav class="toolbar">
-        @if (\App\Infoexam\Account\Account::isStudent())
-            <ul class="list-inline pull-left">
+    <div class="toolbar">
+        <div class="navbar-header">
+            <span class="cursor-pointer navbar-toggle collapsed glyphicon glyphicon-th-list" data-toggle="collapse" data-target="#collapse-menu"></span>
+            <a href="{{ route('student.index') }}" title="{{ trans('general.home') }}">
+                <span class="xbtn glyphicon glyphicon-home" aria-hidden="true"></span>
+            </a>
+            @if (\Auth::check())
+                <a href="{{ route('student.logout') }}" title="{{ trans('general.logout') }}" data-no-pjax>
+                    <span class="xbtn glyphicon glyphicon-log-out" aria-hidden="true"></span>
+                </a>
+            @else
+                <a href="{{ route('student.login') }}" title="{{ trans('general.login') }}">
+                    <span class="xbtn glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                </a>
+            @endif
+        </div>
+        <nav class="collapse navbar-collapse" id="collapse-menu">
+            <ul class="nav navbar-nav">
                 <li class="dropdown">
-                    <a href="{{ route('student.member.info') }}">
-                        <span class="btn">{{ \Auth::user()->username }}</span>
+                    <a class="xbtn" href="{{ route('student.announcements.index') }}">
+                        {{ trans('announcements.nav_title') }}
                     </a>
                 </li>
-                <li class="dropdown">
-                    <a href="{{ route('student.member.info') }}">
-                        <span class="btn">{{ \Auth::user()->userData->name }}</span>
-                    </a>
-                </li>
+                @if (\App\Infoexam\Account\Account::isStudent())
+                    <li class="dropdown">
+                        <a class="xbtn" href="{{ route('student.practice-exam.index') }}">
+                            {{ trans('practice-exam.title') }}
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        {!! HTML::navigation_dropdown_title(trans('test-applies.title')) !!}
+                        <ul class="dropdown-menu">
+                            <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
+                            <li>{!! HTML::linkRoute('student.test-applies.apply', trans('test-applies.apply_student')) !!}</li>
+                            <li>{!! HTML::linkRoute('student.test-applies.manage-unite', trans('test-applies.manage_unite')) !!}</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        {!! HTML::navigation_dropdown_title(trans('user.title')) !!}
+                        <ul class="dropdown-menu">
+                            <li>{!! HTML::linkRoute('student.member.info', trans('user.info')) !!}</li>
+                            <li>{!! HTML::linkRoute('student.test-applies.history', trans('test-applies.history')) !!}</li>
+                        </ul>
+                    </li>
+                @endif
             </ul>
-        @endif
-        <ul class="list-inline pull-right">
-            <li class="dropdown">
-                <a href="{{ route('student.index') }}" title="{{ trans('general.home') }}">
-                    <span class="btn glyphicon glyphicon-home" aria-hidden="true"></span>
-                </a>
-            </li>
-            <li class="dropdown">
-                <a href="{{ route('student.announcements.index') }}">
-                    <span class="btn">{{ trans('announcements.nav_title') }}</span>
-                </a>
-            </li>
-            @if (\App\Infoexam\Account\Account::isStudent())
-                <li class="dropdown">
-                    <a href="{{ route('student.practice-exam.index') }}">
-                        <span class="btn">{{ trans('practice-exam.title') }}</span>
-                    </a>
-                </li>
-                <li class="dropdown">
-                    <span class="btn dropdown-toggle" data-toggle="dropdown">{{ trans('test-applies.title') }}{!! HTML::icon_menu_down() !!}</span>
-                    <ul class="dropdown-menu">
-                        <li>{!! HTML::linkRoute('student.test-applies.manage', trans('test-applies.manage')) !!}</li>
-                        <li>{!! HTML::linkRoute('student.test-applies.apply', trans('test-applies.apply_student')) !!}</li>
-                        <li>{!! HTML::linkRoute('student.test-applies.manage-unite', trans('test-applies.manage_unite')) !!}</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <span class="btn dropdown-toggle" data-toggle="dropdown">{{ trans('user.title') }}{!! HTML::icon_menu_down() !!}</span>
-                    <ul class="dropdown-menu">
-                        <li>{!! HTML::linkRoute('student.member.info', trans('user.info')) !!}</li>
-                        <li>{!! HTML::linkRoute('student.test-applies.history', trans('test-applies.history')) !!}</li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a href="{{ route('student.logout') }}" title="{{ trans('general.logout') }}" data-no-pjax>
-                        <span class="btn glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                    </a>
-                </li>
-            @endif
-            @if ( ! \Auth::check())
-                <li class="dropdown">
-                    <a href="{{ route('student.login') }}" title="{{ trans('general.login') }}">
-                        <span class="btn glyphicon glyphicon-log-in" aria-hidden="true"></span>
-                    </a>
-                </li>
-            @endif
-        </ul>
-    </nav>
+            <ul class="nav navbar-nav pull-right stu-info">
+                @if (\App\Infoexam\Account\Account::isStudent())
+                    <li class="pull-right">
+                        <a class="xbtn" href="{{ route('student.member.info') }}">
+                            <span>{{ \Auth::user()->username }}</span>
+                        </a>
+                    </li>
+                    <li class="pull-right">
+                        <a class="xbtn" href="{{ route('student.member.info') }}">
+                            <span>{{ \Auth::user()->userData->name }}</span>
+                        </a>
+                    </li>
+                @endif
+            </ul>
+        </nav>
+    </div>
 </header>

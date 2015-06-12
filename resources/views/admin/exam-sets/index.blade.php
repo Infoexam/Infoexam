@@ -17,9 +17,9 @@
                     <th>{{ trans('exam-sets.category') }}</th>
                     <th>{{ trans('exam-sets.set_enable') }}</th>
                     <th>{{ trans('exam-sets.open_practice') }}</th>
-                    <th>{{ trans('exam-questions.create') }}</th>
-                    <th>{{ trans('exam-sets.edit') }}</th>
-                    <th>{{ trans('exam-sets.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('exam-questions.create') }}</th>
+                    <th class="hidden-xs">{{ trans('exam-sets.edit') }}</th>
+                    <th class="hidden-xs">{{ trans('exam-sets.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,9 +29,9 @@
                         <td>{{ ('A' === $exam_set->category) ? trans('exam-sets.application') : trans('exam-sets.software') }}</td>
                         <td>{!! HTML::true_or_false($exam_set->set_enable) !!}</td>
                         <td>{!! HTML::true_or_false($exam_set->open_practice) !!}</td>
-                        <td>{!! HTML::create_icon(route('admin.exam-questions.create', ['ssn' => $exam_set->ssn])) !!}</td>
-                        <td>{!! HTML::edit_icon(route('admin.exam-sets.edit', ['ssn' => $exam_set->ssn])) !!}</td>
-                        <td>
+                        <td class="hidden-xs">{!! HTML::create_icon(route('admin.exam-questions.create', ['ssn' => $exam_set->ssn])) !!}</td>
+                        <td class="hidden-xs">{!! HTML::edit_icon(route('admin.exam-sets.edit', ['ssn' => $exam_set->ssn])) !!}</td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.exam-sets.destroy', $exam_set->ssn]])
                         </td>
                     </tr>

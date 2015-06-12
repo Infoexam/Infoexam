@@ -12,15 +12,15 @@
                 <tr>
                     <th>{{ trans('announcements.title') }}</th>
                     <th>{{ trans('announcements.updated_at') }}</th>
-                    <th>{{ trans('announcements.created_at') }}</th>
+                    <th class="hidden-xs">{{ trans('announcements.created_at') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($announcements as &$announcement)
+                @foreach ($announcements as $announcement)
                     <tr>
                         <td class="text-left announcement-heading">{!! HTML::linkRoute('student.announcements.show', $announcement->heading, ['heading' => $announcement->heading]) !!}</td>
                         <td title="{{ $announcement->updated_at }}">{{ $announcement->updated_at->diffForHumans() }}</td>
-                        <td title="{{ $announcement->created_at }}">{{ $announcement->created_at->diffForHumans() }}</td>
+                        <td class="hidden-xs" title="{{ $announcement->created_at }}">{{ $announcement->created_at->diffForHumans() }}</td>
                     </tr>
                 @endforeach
             </tbody>

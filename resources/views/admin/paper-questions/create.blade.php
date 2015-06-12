@@ -9,14 +9,14 @@
     </div>
     <div>
         {!! Form::open(['route' => 'admin.paper-questions.store', 'method' => 'POST']) !!}
-            @foreach ($exam_sets as &$exam_set)
+            @foreach ($exam_sets as $exam_set)
                 <div class="exam-sets">
                     <div class="questions-title">
                         <span class="glyphicon glyphicon-plus xbtn" aria-hidden="true"></span>
                         <span class="xbtn">{{ $exam_set->name }}</span>
                     </div>
                     <div class="questions-group">
-                        @foreach ($exam_set->questions as &$question)
+                        @foreach ($exam_set->questions as $question)
                             <div class="checkbox questions-pad">
                                 <label>
                                     {!! Form::checkbox('questions[]', $question->ssn) !!}

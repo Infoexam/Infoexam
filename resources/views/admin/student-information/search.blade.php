@@ -16,7 +16,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($accounts as &$account)
+                @foreach ($accounts as $account)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.student-information.edit', $account->username, ['user' => $account->username]) !!}</td>
                         <td>{{ $account->name }}</td>

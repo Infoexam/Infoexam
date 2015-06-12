@@ -48,10 +48,9 @@ class TestAppliesController extends Controller
         $now = Carbon::now();
 
         $test_applies = $request->user()->applies()->with(['test_list'])->get()->filter(function($item) use ($now)
-            {
-                return $item->test_list->start_time > $now;
-            })
-            ->reverse();
+        {
+            return $item->test_list->start_time > $now;
+        })->sortBy('test_list.start_time');
 
         return view('student.test-applies.manage', compact('title', 'test_applies'));
     }

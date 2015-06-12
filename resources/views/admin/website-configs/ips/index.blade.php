@@ -22,19 +22,19 @@
                     <th>{{ trans('website-configs.ips.student_page') }}</th>
                     <th>{{ trans('website-configs.ips.exam_page') }}</th>
                     <th>{{ trans('website-configs.ips.admin_page') }}</th>
-                    <th>{{ trans('website-configs.ips.edit') }}</th>
-                    <th>{{ trans('website-configs.ips.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('website-configs.ips.edit') }}</th>
+                    <th class="hidden-xs">{{ trans('website-configs.ips.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($ips as &$ip)
+                @foreach ($ips as $ip)
                     <tr>
                         <td>{{ $ip->ip }}</td>
                         <td>{!! HTML::true_or_false($ip->student_page) !!}</td>
                         <td>{!! HTML::true_or_false($ip->exam_page) !!}</td>
                         <td>{!! HTML::true_or_false($ip->admin_page) !!}</td>
-                        <td>{!! HTML::edit_icon(route('admin.website-configs.ips.edit', ['ips' => $ip->id])) !!}</td>
-                        <td>
+                        <td class="hidden-xs">{!! HTML::edit_icon(route('admin.website-configs.ips.edit', ['ips' => $ip->id])) !!}</td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.website-configs.ips.destroy', $ip->id]])
                         </td>
                     </tr>

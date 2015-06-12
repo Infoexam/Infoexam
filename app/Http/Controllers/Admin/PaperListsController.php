@@ -76,11 +76,15 @@ class PaperListsController extends Controller
         return redirect()->route('admin.paper-lists.index');
     }
 
-    public function destroy($ssn)
+    public function destroy(Request $request, $ssn)
     {
-        if (null === ($paper = PaperList::ssn($ssn)->first()))
+        if (null === ($paper = PaperList::with(['test_lists'])->ssn($ssn)->first()))
         {
             http_404();
+        }
+        else if ($paper->test_lists->count())
+        {
+            flash()->error(trans('paper-lists.paper_already_in_used'));
         }
         else
         {
@@ -89,6 +93,6 @@ class PaperListsController extends Controller
             $paper->delete();
         }
 
-        return redirect()->route('admin.paper-lists.index');
+        return redirect()->route('admin.paper-lists.index', ['auto_generated' => $request->input('auto_generated', 0), 'page' => $request->input('page', 1)]);
     }
 }

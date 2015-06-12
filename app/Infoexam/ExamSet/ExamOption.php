@@ -80,7 +80,7 @@ class ExamOption extends Entity {
     {
         if (isset($attributes['option_ssn']) && isset($attributes['option']) && isset($attributes['option_image_ssn']) && isset($attributes['option_image']))
         {
-            foreach ($attributes['option_ssn'] as $index => &$ssn)
+            foreach ($attributes['option_ssn'] as $index => $ssn)
             {
                 if (null !== ($option = ExamOption::where('ssn', '=', $ssn)->first()))
                 {
@@ -93,7 +93,7 @@ class ExamOption extends Entity {
 
                     if (isset($attributes['option_image'][$index]))
                     {
-                        foreach ($attributes['option_image'][$index] as &$value)
+                        foreach ($attributes['option_image'][$index] as $value)
                         {
                             if (null === $value)
                             {

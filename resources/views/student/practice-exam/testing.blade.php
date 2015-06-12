@@ -43,15 +43,18 @@
     <script>
         $(function()
         {
+            var c_count = 0,
+                r_count = 0;
+
             $(window).bind('beforeunload', function()
             {
                 $('form').submit();
             });
             
-            $(window).blur(function()
+            /*$(window).blur(function()
             {
                 $('form').submit();
-            });
+            });*/
             
             $(document).keydown(function(e)
             {
@@ -59,6 +62,31 @@
                 {
                     e.preventDefault();
                 }
+            });
+
+            $('input[type="radio"]').change(function()
+            {
+                if ($(this).prop('checked'))
+                {
+                    r_count++;
+                }
+            });
+            
+            $('input[type="checkbox"]').change(function()
+            {
+                if ($(this).prop('checked'))
+                {
+                    c_count++;
+                }
+                else
+                {
+                    c_count--;
+                }
+            });
+            
+            $('form').submit(function(e)
+            {
+                
             });
         });
     </script>

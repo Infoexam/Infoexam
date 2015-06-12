@@ -13,15 +13,15 @@
                 <tr>
                     <th>{{ trans('exam-set-tags.name') }}</th>
                     <th>{{ trans('exam-set-tags.edit') }}</th>
-                    <th>{{ trans('exam-set-tags.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('exam-set-tags.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($tags as &$tag)
+                @foreach ($tags as $tag)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.exam-set-tags.show', $tag->name, ['exam_set_tags' => $tag->name]) !!}</td>
                         <td>{!! HTML::edit_icon(route('admin.exam-set-tags.edit', ['exam_set_tags' => $tag->name])) !!}</td>
-                        <td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.exam-set-tags.destroy', $tag->name]])
                         </td>
                     </tr>

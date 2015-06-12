@@ -13,15 +13,15 @@
                 <tr>
                     <th>{{ trans('account-groups.name') }}</th>
                     <th>{{ trans('account-groups.edit') }}</th>
-                    <th>{{ trans('account-groups.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('account-groups.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($groups as &$group)
+                @foreach ($groups as $group)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.account-groups.show', $group->name, ['account_groups' => $group->id]) !!}</td>
                         <td>{!! HTML::edit_icon(route('admin.account-groups.edit', ['id' => $group->id])) !!}</td>
-                        <td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.account-groups.destroy', $group->id]])
                         </td>
                     </tr>

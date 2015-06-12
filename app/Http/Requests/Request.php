@@ -28,7 +28,7 @@ abstract class Request extends FormRequest
         {
             $replace = [];
 
-            foreach ($lists as &$list)
+            foreach ($lists as $list)
             {
                 $replace[$list] = (bool) $this->input($list, false);
             }

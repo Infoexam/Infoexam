@@ -20,20 +20,20 @@
                 <tr>
                     <th>{{ trans('paper-lists.name') }}</th>
                     <th>{{ trans('paper-lists.remark') }}</th>
-                    <th>{{ trans('paper-questions.create') }}</th>
-                    <th>{{ trans('paper-lists.edit') }}</th>
-                    <th>{{ trans('paper-lists.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('paper-questions.create') }}</th>
+                    <th class="hidden-xs">{{ trans('paper-lists.edit') }}</th>
+                    <th class="hidden-xs">{{ trans('paper-lists.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($paper_lists as &$paper)
+                @foreach ($paper_lists as $paper)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.paper-lists.show', $paper->name, ['paper_lists' => $paper->ssn]) !!}</td>
                         <td>{!! HTML::nl2br($paper->remark) !!}</td>
-                        <td>{!! HTML::create_icon(route('admin.paper-questions.create', ['ssn' => $paper->ssn])) !!}</td>
-                        <td>{!! HTML::edit_icon(route('admin.paper-lists.edit', ['paper_lists' => $paper->ssn])) !!}</td>
-                        <td>
-                            @include('partials.delete-form', ['route' => ['admin.paper-lists.destroy', $paper->ssn]])
+                        <td class="hidden-xs">{!! HTML::create_icon(route('admin.paper-questions.create', ['ssn' => $paper->ssn])) !!}</td>
+                        <td class="hidden-xs">{!! HTML::edit_icon(route('admin.paper-lists.edit', ['paper_lists' => $paper->ssn])) !!}</td>
+                        <td class="hidden-xs">
+                            @include('partials.delete-form', ['route' => ['admin.paper-lists.destroy', $paper->ssn, 'auto_generated' => $auto_generated, 'page' => $paper_lists->currentPage()]])
                         </td>
                     </tr>
                 @endforeach

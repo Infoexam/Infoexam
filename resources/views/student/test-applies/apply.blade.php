@@ -11,8 +11,8 @@
             <thead>
                 <tr>
                     <th>{{ trans('test-lists.ssn') }}</th>
-                    <th>{{ trans('test-lists.start_time') }}</th>
-                    <th>{{ trans('test-lists.test_time') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.start_time') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.test_time') }}</th>
                     <th>{{ trans('test-lists.test_type') }}</th>
                     <th>{{ trans('test-lists.apply_type') }}</th>
                     <th>{{ trans('test-lists.std_apply_num') }}</th>
@@ -20,11 +20,11 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($test_lists as &$test_list)
+                @foreach ($test_lists as $test_list)
                     <tr>
                         <td>{{ $test_list->ssn }}</td>
-                        <td>{{ $test_list->start_time }}</td>
-                        <td>{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
+                        <td class="hidden-xs">{{ $test_list->start_time }}</td>
+                        <td class="hidden-xs">{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
                         <td>{{ trans('test-lists.test_types.'.($test_list->test_type)) }}</td>
                         <td>{{ trans('test-lists.apply_types.'.($test_list->apply_type)) }}</td>
                         <td>{{ $test_list->std_apply_num . ' / ' . $test_list->std_num_limit }}</td>

@@ -33,7 +33,7 @@ class PaperQuestion extends Entity {
 
         $already_exist_questions = PaperQuestion::where('paper_list_id', '=', $paper->id)->get(['exam_question_id'])->pluck('exam_question_id')->all();
 
-        foreach (array_diff($questions, $already_exist_questions) as &$question)
+        foreach (array_diff($questions, $already_exist_questions) as $question)
         {
             parent::create(['paper_list_id' => $paper->id, 'exam_question_id' => $question]);
         }

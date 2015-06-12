@@ -14,9 +14,9 @@
                 <tr>
                     <th>{{ trans('user.id') }}</th>
                     <th>{{ trans('user.name') }}</th>
-                    <th>{{ trans('test-applies.apply.time') }}</th>
+                    <th class="hidden-xs">{{ trans('test-applies.apply.time') }}</th>
                     <th>{{ trans('test-applies.paid_status') }}</th>
-                    <th>{{ trans('test-applies.apply.cancel') }}</th>
+                    <th class="hidden-xs">{{ trans('test-applies.apply.cancel') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -24,9 +24,9 @@
                     <tr>
                         <td>{{ $apply->account->username }}</td>
                         <td>{{ $apply->account->userData->name }}</td>
-                        <td>{{ $apply->apply_time }}</td>
+                        <td class="hidden-xs">{{ $apply->apply_time }}</td>
                         <td>{!! HTML::true_or_false(null !== $apply->paid_at) !!}</td>
-                        <td>
+                        <td class="hidden-xs">
                             @include('partials.delete-form', ['route' => ['admin.test-lists.apply.destroy', $ssn, $apply->ssn]])
                         </td>
                     </tr>

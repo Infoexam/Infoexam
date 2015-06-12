@@ -23,7 +23,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($questions as &$question)
+                @foreach ($questions as $question)
                     <tr>
                         <td>
                             <span class="shorten-content">{!! HTML::nl2br(str_limit($question->topic, 15, ' ...')) !!}</span>

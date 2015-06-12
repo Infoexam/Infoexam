@@ -19,40 +19,40 @@
             <thead>
                 <tr>
                     <th>{{ trans('test-lists.ssn') }}</th>
-                    <th>{{ trans('test-lists.start_time') }}</th>
-                    <th>{{ trans('test-lists.test_time') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.start_time') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.test_time') }}</th>
                     <th>{{ trans('test-lists.test_type') }}</th>
-                    <th>{{ trans('test-lists.apply_type') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.apply_type') }}</th>
                     <th>{{ trans('test-lists.std_apply_num') }}</th>
-                    <th>{{ trans('test-lists.test_enable') }}</th>
-                    <th>{{ trans('test-lists.allow_apply') }}</th>
-                    <th>{{ trans('test-lists.delete') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.test_enable') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.allow_apply') }}</th>
+                    <th class="hidden-xs">{{ trans('test-lists.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($test_lists as $test_list)
                     <tr>
                         <td>{!! HTML::linkRoute('admin.test-lists.show', $test_list->ssn, ['test_lists' => $test_list->ssn]) !!}</td>
-                        <td>{{ $test_list->start_time }}</td>
-                        <td>{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
+                        <td class="hidden-xs">{{ $test_list->start_time }}</td>
+                        <td class="hidden-xs">{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
                         <td>{{ trans('test-lists.test_types.'.($test_list->test_type)) }}</td>
-                        <td>{{ trans('test-lists.apply_types.'.($test_list->apply_type)) }}</td>
+                        <td class="hidden-xs">{{ trans('test-lists.apply_types.'.($test_list->apply_type)) }}</td>
                         <td>{{ $test_list->std_apply_num . ' / ' .$test_list->std_num_limit }}</td>
-                        <td>
+                        <td class="hidden-xs">
                             {!! Form::open(['route' => ['admin.test-lists.update', $test_list->ssn], 'method' => 'PATCH']) !!}
                                 {!! Form::checkbox('test_enable', true, $test_list->test_enable, ['data-checkbox-switch', 'data-on-text' => trans('general.on'), 'data-off-text' => trans('general.off'), ($check_time = ((\Carbon\Carbon::now() >= $test_list->start_time) ? 'disabled' : 'data-nothing'))]) !!}
                                 {!! Form::hidden('page', \Request::input('page', 1)) !!}
                                 {!! Form::hidden('type', 'test_enable') !!}
                             {!! Form::close() !!}
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             {!! Form::open(['route' => ['admin.test-lists.update', $test_list->ssn], 'method' => 'PATCH']) !!}
                                 {!! Form::checkbox('allow_apply', true, $test_list->allow_apply, ['data-checkbox-switch', 'data-on-text' => trans('general.open'), 'data-off-text' => trans('general.off'), $check_time]) !!}
                                 {!! Form::hidden('page', \Request::input('page', 1)) !!}
                                 {!! Form::hidden('type', 'apply_status') !!}
                             {!! Form::close() !!}
                         </td>
-                        <td>
+                        <td class="hidden-xs">
                             @if ('disabled' === $check_time)
                                 -
                             @else
@@ -61,7 +61,7 @@
                         </td>
                     </tr>
                 @endforeach
-                <tr>
+                <tr class="hidden-xs">
                     <td colspan="6">全部選取</td>
                     <td>
                         {!! Form::open(['route' => ['admin.test-lists.update.all'], 'method' => 'PATCH']) !!}
