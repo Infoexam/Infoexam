@@ -6,7 +6,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('test-lists.ssn') }}</th>
                     <th>{{ trans('test-lists.test_type') }}</th>
                     <th class="hidden-xs">{{ trans('test-lists.apply_type') }}</th>

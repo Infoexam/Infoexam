@@ -9,7 +9,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('announcements.title') }}</th>
                     <th>{{ trans('announcements.updated_at') }}</th>
                     <th class="hidden-xs">{{ trans('announcements.created_at') }}</th>

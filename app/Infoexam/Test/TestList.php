@@ -11,7 +11,7 @@ class TestList extends Entity {
 
     use SoftDeletes;
 
-    protected $fillable = ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num', 'std_real_test_num', 'paper_list_id', 'allow_apply', 'test_enable'];
+    protected $fillable = ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num', 'std_real_test_num', 'paper_list_id', 'allow_apply', 'test_enable', 'test_started'];
 
     protected $dates = ['start_time', 'end_time', 'deleted_at'];
 
@@ -30,55 +30,6 @@ class TestList extends Entity {
         $query->where('end_time', ($param) ? '<' : '>=', Carbon::now());
     }
 
-    public static function getOpenRoom()
-    {
-        $list = unserialize(ExamConfig::firstOrFail()->open_room);
-
-        foreach ($list as $key => $value)
-        {
-            $list[$value] = $value;
-            unset($list[$key]);
-        }
-
-        return $list;
-    }
-
-    public static function getApplyType()
-    {
-        return [
-            trans('test-lists.apply_student') => [
-                '1_1' => trans('test-lists.apply_types.1_1'),
-                '1_2' => trans('test-lists.apply_types.1_2'),
-                '1_3' => trans('test-lists.apply_types.1_3'),
-            ],
-            trans('test-lists.apply_unite') => [
-                '2_1' => trans('test-lists.apply_types.2_1'),
-                '2_2' => trans('test-lists.apply_types.2_2'),
-            ],
-        ];
-    }
-
-    public static function getTestType()
-    {
-        return [
-            '1_1' => trans('test-lists.test_types.1_1'),
-            '1_2' => trans('test-lists.test_types.1_2'),
-            '2_1' => trans('test-lists.test_types.2_1'),
-            '2_2' => trans('test-lists.test_types.2_2'),
-        ];
-    }
-
-    public static function getRecentlyExams()
-    {
-        return self::where('start_time', '<', Carbon::now()->addMinutes(30))
-            ->whereBetween('end_time', [Carbon::now(), Carbon::now()->addDays(100)])
-            ->get(['id']);
-
-//        未來的版本
-//        return self::whereBetween('start_time', [Carbon::now()->addMinutes(30), Carbon::now()->endOfDay()->addMinutes(30)])
-//            ->get(['id']);
-    }
-
     public function create_test(array $attributes = [])
     {
         $this->attributes['start_time'] = Carbon::parse($attributes['start_time']);
@@ -95,7 +46,7 @@ class TestList extends Entity {
         $this->attributes['apply_type'] = $attributes['apply_type'];
         $this->attributes['test_type'] = $attributes['test_type'];
         $this->attributes['std_num_limit'] = $attributes['std_num_limit'];
-        $this->attributes['ssn'] = (Carbon::parse($this->attributes['start_time'])->format('Ymd')).($this->attributes['room']).(Carbon::parse($this->attributes['start_time'])->format('H'));
+        $this->attributes['ssn'] = (Carbon::parse($this->attributes['start_time'])->format('YmdH')).($this->attributes['room']);
         $this->attributes['paper_list_id'] = $this->getPaperListId($attributes);
 
         if (false === $this->attributes['paper_list_id'])

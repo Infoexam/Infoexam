@@ -2,65 +2,101 @@
 
 @section('main')
     <div>
-        <div>
-            <span>{{ trans('user.name') }}：{{ $info->userData->name }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.id') }}：{{ $info->username }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.department') }}：{{ $info->userData->department->name }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.grade') }}：{{ $info->userData->grade }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.email') }}：{{ $info->userData->email }}</span>
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr class="info">
+                    <th class="col-xs-6">{{ trans('user.name') }}</th>
+                    <th class="col-xs-6">{{ trans('user.id') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $info->userData->name }}</td>
+                    <td>{{ $info->username }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-            <button type="button" data-target="update-email" class="btn btn-primary btn-xs">{{ trans('general.update') }}</button>
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr class="info">
+                    <th class="col-xs-3">{{ trans('user.department') }}</th>
+                    <th class="col-xs-3">{{ trans('user.grade') }}</th>
+                    <th class="col-xs-6">{{ trans('user.email') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ $info->userData->department->name }}</td>
+                    <td>{{ $info->userData->grade }}</td>
+                    <td>
+                        <span>{{ $info->userData->email }}</span>
 
-            <div id="update-email">
-                {!! Form::open(['route' => 'student.member.info.update', 'method' => 'PATCH']) !!}
-                    <div class="form-group">
-                        {!!
-                            Form::email('email', null, [
-                                'class' => 'form-control',
-                                'placeholder' => trans('general.email'),
-                                'required' => 'true',
-                            ])
-                        !!}
-                    </div>
+                        <button type="button" data-target="update-email" class="btn btn-success btn-xs">{{ trans('general.update') }}</button>
 
-                    <div class="form-group">
-                        {!! HTML::recaptcha() !!}
-                    </div>
+                        <div id="update-email">
+                            <br>
 
-                    <div class="form-group">
-                        {!! Form::submit(trans('general.update'), ['class' => 'btn btn-primary form-control']) !!}
-                    </div>
-                {!! Form::close() !!}
+                            {!! Form::open(['route' => 'student.member.info.update', 'method' => 'PATCH']) !!}
+                                <div class="form-group">
+                                    {!!
+                                        Form::email('email', null, [
+                                            'class' => 'form-control',
+                                            'placeholder' => trans('general.email'),
+                                            'required' => 'true',
+                                        ])
+                                    !!}
+                                </div>
 
-                @include('errors.form')
-            </div>
-        </div>
-    </div>
-    <hr>
-    <div>
-        <div>
-            <span>{{ trans('user.acad_score') }}：{{ (null === ($info->accreditedData->acad_score)) ? trans('user.no_data') : $info->accreditedData->acad_score }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.tech_score') }}：{{ (null === ($info->accreditedData->tech_score)) ? trans('user.no_data') : $info->accreditedData->tech_score }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.is_passed') }}：{{ ($info->accreditedData->is_passed) ? trans('user.passed') : trans('user.not_passed') }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.passed_score') }}：{{ (null === ($info->accreditedData->passed_score)) ? trans('user.not_passed') : $info->accreditedData->passed_score }}</span>
-        </div>
-        <div>
-            <span>{{ trans('user.passed_time') }}：{{ (null === ($info->accreditedData->passed_time)) ? trans('user.not_passed') : $info->accreditedData->passed_time }}</span>
-        </div>
+                                <div class="form-group">
+                                    {!! HTML::recaptcha() !!}
+                                </div>
+
+                                <div class="form-group">
+                                    {!! Form::submit(trans('general.update'), ['class' => 'btn btn-success form-control']) !!}
+                                </div>
+                            {!! Form::close() !!}
+
+                            @include('errors.form')
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <hr>
+
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr class="success">
+                    <th class="col-xs-4">{{ trans('user.is_passed') }}</th>
+                    <th class="col-xs-4">{{ trans('user.passed_score') }}</th>
+                    <th class="col-xs-4">{{ trans('user.passed_time') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ ($info->accreditedData->is_passed) ? trans('user.passed') : trans('user.not_passed') }}</td>
+                    <td>{{ (null === ($info->accreditedData->passed_score)) ? trans('user.not_passed') : $info->accreditedData->passed_score }}</td>
+                    <td>{{ (null === ($info->accreditedData->passed_time)) ? trans('user.not_passed') : $info->accreditedData->passed_time }}</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-hover table-bordered text-center">
+            <thead>
+                <tr class="success">
+                    <th class="col-xs-6">{{ trans('user.acad_score') }}</th>
+                    <th class="col-xs-6">{{ trans('user.tech_score') }}</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ (null === ($info->accreditedData->acad_score)) ? trans('user.no_data') : $info->accreditedData->acad_score }}</td>
+                    <td>{{ (null === ($info->accreditedData->tech_score)) ? trans('user.no_data') : $info->accreditedData->tech_score }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 @stop
 

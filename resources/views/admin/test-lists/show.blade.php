@@ -4,14 +4,20 @@
     @include('partials.heading', ['heading' => trans('test-applies.applies')])
 
     <div>
-        {!! HTML::link_button(route('admin.test-lists.index'), trans('test-applies.list')) !!}
-        {!! HTML::link_button(route('admin.test-lists.apply', ['ssn' => $ssn]), trans('test-applies.apply')) !!}
+        <ul class="list-inline">
+            <li>
+                {!! HTML::link_button(route('admin.test-lists.index'), trans('test-applies.list')) !!}
+            </li>
+            <li>
+                {!! HTML::link_button(route('admin.test-lists.apply', ['ssn' => $ssn]), trans('test-applies.apply')) !!}
+            </li>
+        </ul>
     </div>
     <br>
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('user.id') }}</th>
                     <th>{{ trans('user.name') }}</th>
                     <th class="hidden-xs">{{ trans('test-applies.apply.time') }}</th>

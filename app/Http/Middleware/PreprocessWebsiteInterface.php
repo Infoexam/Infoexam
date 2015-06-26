@@ -10,6 +10,15 @@ use Jenssegers\Agent\Facades\Agent;
 class PreprocessWebsiteInterface
 {
     /**
+     * The URIs that should be excluded from browser detection.
+     *
+     * @var array
+     */
+    protected $browserExcept = [
+        'browser-not-support',
+    ];
+
+    /**
      * Handle an incoming request.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -61,6 +70,21 @@ class PreprocessWebsiteInterface
             App::setLocale($lan);
 
             Carbon::setLocale($lan);
+        }
+
+        foreach ($this->browserExcept as $except)
+        {
+            if ( ! $request->is($except))
+            {
+                $browser = Agent::browser();
+
+                $version = Agent::version($browser);
+
+                if ('IE' === $browser && $version < 11)
+                {
+                    return redirect()->route('browser-not-support');
+                }
+            }
         }
 
         return $next($request);

@@ -17,7 +17,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('test-lists.ssn') }}</th>
                     <th class="hidden-xs">{{ trans('test-lists.start_time') }}</th>
                     <th class="hidden-xs">{{ trans('test-lists.test_time') }}</th>

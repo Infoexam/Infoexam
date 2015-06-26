@@ -28,7 +28,7 @@ class AuthController extends Controller
 
         if ($auth->login($request->input('username'), $request->input('password')))
         {
-            return ($auth->isInvigilator()) ? redirect()->route('exam.panel') : redirect()->route('exam.testing');
+            return ($auth->isInvigilator()) ? redirect()->route('exam.panel.index') : redirect()->route('exam.testing', ['ssn' => $auth->apply->test_list->ssn]);
         }
 
         return redirect()->route('exam.login');

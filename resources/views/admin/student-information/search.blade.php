@@ -9,7 +9,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('student-information.username') }}</th>
                     <th>{{ trans('student-information.name') }}</th>
                     <th>{{ trans('student-information.department') }}</th>

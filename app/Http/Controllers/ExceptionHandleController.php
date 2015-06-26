@@ -12,4 +12,9 @@ class ExceptionHandleController extends Controller
     {
         return view('errors.503');
     }
+
+    public function browserNotSupport()
+    {
+        return view('errors.browserNotSupport');
+    }
 }

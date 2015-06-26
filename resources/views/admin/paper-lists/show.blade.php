@@ -11,7 +11,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>#</th>
                     <th>{{ trans('exam-questions.topic') }}</th>
                     <th class="hidden-xs">{{ trans('exam-questions.level') }}</th>

@@ -17,7 +17,8 @@
                 Form::password('password', [
                     'class' => 'form-control',
                     'placeholder' => trans('general.password'),
-                    'required' => 'required'
+                    'required' => 'required',
+                    'autocomplete' => 'off'
                 ])
             !!}
         </div>
@@ -29,7 +30,7 @@
         @endif
 
         <div class="form-group">
-            {!! Form::submit(trans('general.login'), ['class' => 'btn btn-primary form-control']) !!}
+            {!! Form::submit(trans('general.login'), ['class' => 'btn btn-success form-control']) !!}
         </div>
     {!! Form::close() !!}
 

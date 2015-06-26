@@ -60,12 +60,27 @@ class SyncTestAppliesPaidAt extends Command
 
             foreach ($test->applies as $apply)
             {
+                $log = false;
+
                 $free = $apply->account->accreditedData->$free_type;
 
                 if ($free > 0 && null === $apply->paid_at)
                 {
                     $apply->paid_at = $now;
 
+                    $log = true;
+                }
+                else if (0 === $free && null !== $apply->paid_at)
+                {
+                    $apply->paid_at = null;
+
+                    $log = true;
+                }
+
+                $apply->save();
+
+                if ($log)
+                {
                     logging([
                         'level' => 'info',
                         'action' => 'syncTestApplyPaidAt',
@@ -75,12 +90,6 @@ class SyncTestAppliesPaidAt extends Command
                         'remark' => null
                     ], 1);
                 }
-                else if (0 === $free && null !== $apply->paid_at)
-                {
-                    $apply->paid_at = null;
-                }
-
-                $apply->save();
             }
         }
     }

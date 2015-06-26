@@ -5,7 +5,7 @@
         <h2>Logs</h2>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th class="hidden-xs">Level</th>
                     <th>Username</th>
                     <th>Action</th>

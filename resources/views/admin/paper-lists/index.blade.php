@@ -17,7 +17,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('paper-lists.name') }}</th>
                     <th>{{ trans('paper-lists.remark') }}</th>
                     <th class="hidden-xs">{{ trans('paper-questions.create') }}</th>

@@ -14,16 +14,14 @@
                             <div class="radio checkbox">
                                 <label>
                                     @if ($queustion->multiple)
-                                        {!! Form::checkbox($queustion->ssn . '[]', $option->ssn, null) !!}
+                                        {!! Form::checkbox($queustion->ssn . '[]', $option->ssn) !!}
                                     @else
-                                        {!! Form::radio($queustion->ssn, $option->ssn, null, ['required']) !!}
+                                        {!! Form::radio($queustion->ssn, $option->ssn, null) !!}
                                     @endif
                                     <span>{!! HTML::nl2br($option->content) !!}</span>
                                 </label>
                                 @if (null !== $option->image_ssn)
-                                    @foreach ($option->image_ssn as $image_ssn)
-                                        @include('partials.image', ['image_ssn' => $image_ssn])
-                                    @endforeach
+                                    @include('partials.image', ['image_ssn' => $option->image_ssn])
                                 @endif
                             </div>
                         @endforeach
@@ -43,18 +41,17 @@
     <script>
         $(function()
         {
-            var c_count = 0,
-                r_count = 0;
+            var click_times = 0;
 
             $(window).bind('beforeunload', function()
             {
                 $('form').submit();
             });
             
-            /*$(window).blur(function()
+            $(window).blur(function()
             {
                 $('form').submit();
-            });*/
+            });
             
             $(document).keydown(function(e)
             {
@@ -64,29 +61,33 @@
                 }
             });
 
-            $('input[type="radio"]').change(function()
-            {
-                if ($(this).prop('checked'))
-                {
-                    r_count++;
-                }
-            });
             
-            $('input[type="checkbox"]').change(function()
+            $('.form-group').click(function(e)
             {
-                if ($(this).prop('checked'))
+                var count = 0;
+
+                $('input[type="radio"]').each(function()
                 {
-                    c_count++;
+                    if( $(this).prop('checked'))
+                    {
+                        ++count;
+                    }
+                });
+
+                if (count >= 3)
+                {
+                    $('form').submit();
+                }
+                else if (click_times >= 1)
+                {
+                    $('form').submit();
                 }
                 else
                 {
-                    c_count--;
+                    $('.form-group').append('似乎還有題目尚未作答，若要送出請再按一次送出鍵');
+                    ++click_times;
+                    e.preventDefault();
                 }
-            });
-            
-            $('form').submit(function(e)
-            {
-                
             });
         });
     </script>

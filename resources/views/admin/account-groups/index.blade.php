@@ -10,7 +10,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('account-groups.name') }}</th>
                     <th>{{ trans('account-groups.edit') }}</th>
                     <th class="hidden-xs">{{ trans('account-groups.delete') }}</th>

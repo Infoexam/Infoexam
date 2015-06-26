@@ -9,7 +9,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('test-lists.ssn') }}</th>
                     <th class="hidden-xs">{{ trans('test-lists.start_time') }}</th>
                     <th class="hidden-xs">{{ trans('test-lists.test_time') }}</th>
@@ -25,7 +25,7 @@
                         <td>{{ $test_list->ssn }}</td>
                         <td class="hidden-xs">{{ $test_list->start_time }}</td>
                         <td class="hidden-xs">{{ $test_list->end_time->diffInMinutes($test_list->start_time) }}</td>
-                        <td>{{ trans('test-lists.test_types.'.($test_list->test_type)) }}</td>
+                        <td class="{{ starts_with($test_list->test_type, '2') ? 'danger' : '' }}">{{ trans('test-lists.test_types.'.($test_list->test_type)) }}</td>
                         <td>{{ trans('test-lists.apply_types.'.($test_list->apply_type)) }}</td>
                         <td>{{ $test_list->std_apply_num . ' / ' . $test_list->std_num_limit }}</td>
                         <td>

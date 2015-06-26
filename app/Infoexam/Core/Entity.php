@@ -1,4 +1,6 @@
-<?php namespace App\Infoexam\Core;
+<?php
+
+namespace App\Infoexam\Core;
 
 use Illuminate\Database\Eloquent\Model;
 

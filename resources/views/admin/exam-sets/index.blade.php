@@ -12,7 +12,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('exam-sets.name') }}</th>
                     <th>{{ trans('exam-sets.category') }}</th>
                     <th>{{ trans('exam-sets.set_enable') }}</th>

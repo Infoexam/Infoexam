@@ -10,7 +10,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('exam-set-tags.name') }}</th>
                     <th>{{ trans('exam-set-tags.edit') }}</th>
                     <th class="hidden-xs">{{ trans('exam-set-tags.delete') }}</th>

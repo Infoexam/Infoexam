@@ -206,13 +206,13 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
 
-        'Activity'  => 'Spatie\Activitylog\ActivitylogFacade',
-        'Agent'     => 'Jenssegers\Agent\Facades\Agent',
-        'Debugbar'  => 'Barryvdh\Debugbar\Facade',
-        'Form'      => 'Illuminate\Html\FormFacade',
-        'HTML'      => 'Illuminate\Html\HtmlFacade',
-        'Imager'    => 'Intervention\Image\Facades\Image',
-        'Recaptcha' => 'Greggilbert\Recaptcha\Facades\Recaptcha',
+        'Activity'  => Spatie\Activitylog\ActivitylogFacade::class,
+        'Agent'     => Jenssegers\Agent\Facades\Agent::class,
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
+        'Form'      => Illuminate\Html\FormFacade::class,
+        'HTML'      => Illuminate\Html\HtmlFacade::class,
+        'Imager'    => Intervention\Image\Facades\Image::class,
+        'Recaptcha' => Greggilbert\Recaptcha\Facades\Recaptcha::class,
 
     ],
 

@@ -14,12 +14,16 @@ return [
 
     'allow_apply' => '預約狀態',
     'test_enable' => '測驗狀態',
+    'test_started' => '測驗進行中',
     'ssn' => '測驗代碼',
     'start_time' => '測驗起始時間',
+    'end_time' => '測驗結束時間',
     'test_time' => '測驗時長',
+    'extend_time' => '延長時間',
     'room' => '測驗教室',
     'std_num_limit' => '人數限制',
-    'std_apply_num' => '目前人數',
+    'std_apply_num' => '報名人數',
+    'std_real_test_num' => '到考人數',
 
     'personal_apply' => '學生個人預約',
     'department_apply' => '系所統一預約 (大二)',

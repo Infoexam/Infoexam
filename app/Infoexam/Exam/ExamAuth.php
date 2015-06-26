@@ -3,6 +3,7 @@
 use App\Infoexam\Account\Authenticate;
 use App\Infoexam\Test\TestList;
 use App\Infoexam\Test\TestApply;
+use App\Infoexam\Test\TestListRepository;
 use App\Infoexam\Test\TestResult;
 use Auth;
 
@@ -20,7 +21,7 @@ class ExamAuth {
      *
      * @var \Illuminate\Database\Eloquent\Model|null
      */
-    protected $apply = null;
+    public $apply = null;
 
     /**
      * Indicates if the user is login or not.
@@ -31,7 +32,6 @@ class ExamAuth {
 
     /**
      * Create a new ExamAuth instance.
-     *
      */
     public function __construct()
     {
@@ -62,14 +62,11 @@ class ExamAuth {
         {
             $this->setAccount(Auth::user());
 
-            if (/*$this->account->isInvigilator() ||*/ ($this->existExam() && $this->nonMultiLogin() && $this->initializeTestResult()))
+            if ($this->account->isInvigilator() || ($this->existExam() && $this->isExamStarted() /*&& $this->nonMultiLogin() && $this->initializeTestResult()*/))
             {
                 $this->login = true;
 
                 $auth->logging();
-
-                /* 該換 */
-                session()->put('test_ssn', $this->apply->test_list);
 
                 return true;
             }
@@ -95,11 +92,12 @@ class ExamAuth {
         }
         else
         {
-            $test_lists = TestList::getRecentlyExams()->toArray();
+            $test_id = TestListRepository::getRecentlyExamIds();
 
-            $test_id = array_merge(array_column($test_lists, 'id'));
-
-            $apply = TestApply::whereIn('test_list_id', $test_id)->where('account_id', '=', $this->account->id)->get(['id', 'test_list_id', 'test_result_id']);
+            $apply = TestApply::with(['test_list'])
+                ->whereIn('test_list_id', $test_id)
+                ->where('account_id', '=', $this->account->id)
+                ->get(['id', 'test_list_id', 'test_result_id']);
 
             if (1 !== $apply->count())
             {
@@ -112,6 +110,23 @@ class ExamAuth {
                 return true;
             }
         }
+
+        return false;
+    }
+
+    /**
+     * Check the exam is started or not.
+     *
+     * @return bool
+     */
+    public function isExamStarted()
+    {
+        if ($this->apply->test_list->test_started)
+        {
+            return true;
+        }
+
+        flash()->error(trans('exam.error.examNotStart'));
 
         return false;
     }
@@ -140,7 +155,7 @@ class ExamAuth {
      */
     public function ensureHasExam()
     {
-        if ($this->login && (null !== session('test_ssn')))
+        if ($this->login /*&& (null !== session('test_ssn'))*/)
         {
             return true;
         }

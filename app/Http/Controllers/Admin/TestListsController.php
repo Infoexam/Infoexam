@@ -9,6 +9,7 @@ use App\Infoexam\ExamSet\ExamSet;
 use App\Infoexam\Paper\PaperList;
 use App\Infoexam\Test\TestApply;
 use App\Infoexam\Test\TestList;
+use App\Infoexam\Test\TestListRepository;
 use App\Jobs\Admin\ApplyTest;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -31,15 +32,15 @@ class TestListsController extends Controller
         return view('admin.test-lists.index', compact('title', 'tested', 'test_lists', 'test_list_ssn'));
     }
 
-    public function create()
+    public function create(TestListRepository $testListRepository)
     {
         $title = trans('test-lists.create');
 
-        $open_room = TestList::getOpenRoom();
+        $open_room = $testListRepository->getOpenRooms();
 
-        $apply_type = TestList::getApplyType();
+        $apply_type = $testListRepository->getApplyTypes();
 
-        $test_type = TestList::getTestType();
+        $test_type = $testListRepository->getTestTypes();
 
         $exam_sets = ExamSet::setEnable()->get(['ssn', 'name', 'category']);
 

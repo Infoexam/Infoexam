@@ -17,7 +17,7 @@
     <div>
         <table class="table table-bordered table-hover text-center">
             <thead>
-                <tr>
+                <tr class="info">
                     <th>{{ trans('website-configs.ips.ip') }}</th>
                     <th>{{ trans('website-configs.ips.student_page') }}</th>
                     <th>{{ trans('website-configs.ips.exam_page') }}</th>

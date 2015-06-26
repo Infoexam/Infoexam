@@ -13,18 +13,14 @@ class AuthenticateUserIdentity
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \Closure  $next
+     * @param  string $domain
      * @return mixed
      */
-    public function handle($request, Closure $next)
+    public function handle($request, Closure $next, $domain = null)
     {
-        /*
-         * 驗證使用者是否已登錄且符合該頁面訪問權限
-         */
-        $domain = $request->segment(1);
-
-        if (in_array($domain, ['images', 'api']))
+        if (null === $domain)
         {
-            return $next($request);
+            return redirect()->route('student.index');
         }
         else if ('admin' === $domain)
         {

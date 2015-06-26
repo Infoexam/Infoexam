@@ -28,10 +28,10 @@ class SyncStudentDataController extends Controller
                 //Queue::push(new SyncStudentDataCenterToLocal(false, false, null));
                 break;
             case 'center_to_local_all_override':
-                Queue::push(new SyncStudentDataCenterToLocal(true, false, null));
+                //Queue::push(new SyncStudentDataCenterToLocal(true, false, null));
                 break;
             case 'center_to_local_specific':
-                Queue::push(new SyncStudentDataCenterToLocal(true, true, $request->input('center_to_local_specific_username')));
+                //Queue::push(new SyncStudentDataCenterToLocal(true, true, $request->input('center_to_local_specific_username')));
                 //$this->dispatch(new SyncStudentDataCenterToLocal(true, true, $request->input('center_to_local_specific_username')));
                 break;
         }
