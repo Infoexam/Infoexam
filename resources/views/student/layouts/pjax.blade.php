@@ -2,4 +2,4 @@
 
 @section('title')
     <title>{{ $title or trans('general.title') }}</title>
-@stop
+@endsection

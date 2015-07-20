@@ -1,12 +1,14 @@
-<?php namespace App\Infoexam\Account;
+<?php
+
+namespace App\Infoexam\Account;
 
 use App\Infoexam\Core\Entity;
 use Auth;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 
-class Account extends Entity implements AuthenticatableContract {
-
+class Account extends Entity implements AuthenticatableContract
+{
     use Authenticatable;
 
     protected $showRemind = false;
@@ -84,5 +86,4 @@ class Account extends Entity implements AuthenticatableContract {
 
         return parent::__call($method, $args);
     }
-
 }

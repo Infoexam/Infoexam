@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExamConfigsTable extends Migration {
-
+class CreateExamConfigsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -34,5 +34,4 @@ class CreateExamConfigsTable extends Migration {
     {
         Schema::dropIfExists('exam_configs');
     }
-
 }

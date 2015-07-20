@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => $group->name . ' - ' . trans('account-groups.show')])
@@ -31,4 +31,4 @@
     <div class="text-center">
         {!! $accounts->appends(Request::query())->render() !!}
     </div>
-@stop
+@endsection

@@ -37,13 +37,13 @@
     @include('errors.form')
 </div>
 
-@section('scripts')
-    @if($recaptcha)
+@if($recaptcha)
+    @section('scripts')
         <script>
             $(function()
             {
                 load_or_reset_recaptcha();
             });
         </script>
-    @endif
-@stop
+    @endsection
+@endif

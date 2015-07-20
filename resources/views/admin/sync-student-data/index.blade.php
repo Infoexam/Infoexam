@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('sync-student-data.title')])
@@ -79,7 +79,7 @@
             </div>
         {!! Form::close() !!}
     </div>
-@stop
+@endsection
 
 @section('scripts')
     <script>
@@ -97,4 +97,4 @@
             load_or_reset_recaptcha();
         });
     </script>
-@stop
+@endsection

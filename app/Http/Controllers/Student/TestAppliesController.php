@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Infoexam\Test\TestList;
+use App\Infoexam\Test\TestListRepository;
 use App\Jobs\Student\ApplyTest;
 use App\Jobs\Student\CancelTestApply;
 use App\Jobs\Student\TransformTestApply;
@@ -17,12 +18,7 @@ class TestAppliesController extends Controller
     {
         $title = trans('test-applies.apply_student');
 
-        $test_lists = TestList::where('test_enable', '=', true)
-            ->where('allow_apply', '=', true)
-            ->where('apply_type', 'like', '1\_%')
-            ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
-            ->orderBy('start_time', 'asc')
-            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
+        $test_lists = TestListRepository::getTestsStudentCanApply();
 
         $route = 'student.test-applies.store';
 
@@ -69,12 +65,7 @@ class TestAppliesController extends Controller
     {
         $title = trans('test-applies.manage_unite');
 
-        $test_lists = TestList::where('test_enable', '=', true)
-            ->where('allow_apply', '=', true)
-            ->where('apply_type', 'like', '2_%')
-            ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
-            ->orderBy('start_time', 'asc')
-            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
+        $test_lists = TestListRepository::getUniteTestsStudentCanManage();
 
         $route = 'student.test-applies.update';
 

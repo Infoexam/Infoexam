@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIpRulesTable extends Migration {
-
+class CreateIpRulesTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -40,5 +40,4 @@ class CreateIpRulesTable extends Migration {
     {
         Schema::dropIfExists('ip_rules');
     }
-
 }

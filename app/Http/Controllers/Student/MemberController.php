@@ -4,18 +4,15 @@ namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests;
-use Illuminate\Http\Request;
 
 class MemberController extends Controller
 {
-    public function info(Request $request)
+    public function info()
     {
-        $info = $request->user();
-
-        return view('student.member.info', compact('info'));
+        return view('student.member.info');
     }
 
-    public function info_update(Requests\Student\MemberInfoRequest $request)
+    public function infoUpdate(Requests\Student\MemberInfoRequest $request)
     {
         $request->user()->userData->update(['email' => $request->input('email')]);
 

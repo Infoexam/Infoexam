@@ -10,6 +10,9 @@ Route::group(['namespace' => 'Student'], function()
     get('announcements', ['as' => 'student.announcements.index', 'uses' => 'AnnouncementsController@index']);
     get('announcements/{heading}', ['as' => 'student.announcements.show', 'uses' => 'AnnouncementsController@show']);
 
+    // FAQ
+    get('faqs', ['as' => 'student.faqs.index', 'uses' => 'FrequentlyAskedQuestionsController@index']);
+
     // 認証
     Route::group(['prefix' => 'auth'], function()
     {
@@ -48,7 +51,7 @@ Route::group(['namespace' => 'Student'], function()
         Route::group(['prefix' => 'member', 'as' => 'student.member.'], function()
         {
             get('info', ['as' => 'info', 'uses' => 'MemberController@info']);
-            patch('info', ['as' => 'info.update', 'uses' => 'MemberController@info_update']);
+            patch('info', ['as' => 'info.update', 'uses' => 'MemberController@infoUpdate']);
         });
     });
 });
@@ -115,6 +118,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
         });
         patch('test-lists', ['as' => 'admin.test-lists.update.all', 'uses' => 'TestListsController@update']);
         resource('test-lists', 'TestListsController', ['except' => ['edit']]);
+        resource('test-scores', 'TestScoresController', ['except' => ['create', 'edit', 'destroy']]);
 
         // 題庫及題目
         resource('exam-sets', 'ExamSetsController');
@@ -141,6 +145,9 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
             patch('/', ['as' => 'admin.website-configs.update', 'uses' => 'WebsiteConfigsController@update']);
             resource('ips', 'WebsiteIpsConfigsController', ['except' => ['show']]);
         });
+
+        delete('faqs/{faqs}/delete-images', ['as' => 'admin.faqs.destroy.images', 'uses' => 'FrequentlyAskedQuestionsController@destroy_images']);
+        resource('faqs', 'FrequentlyAskedQuestionsController', ['except' => ['show']]);
 
         // Log
         get('logs', ['as' => 'admin.website-logs.basic', 'uses' => '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index']);

@@ -2,8 +2,8 @@
 
 @section('title')
     <title>{{ $title or trans('general.title') }}</title>
-@stop
+@endsection
 
 @section('header')
     @include('exam.partials.header')
-@stop
+@endsection

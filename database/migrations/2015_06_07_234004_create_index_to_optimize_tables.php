@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateIndexToOptimizeTables extends Migration {
-
+class CreateIndexToOptimizeTables extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -89,6 +89,7 @@ class CreateIndexToOptimizeTables extends Migration {
         {
             $table->index('user_id');
             $table->index('text');
+            $table->index('ip_address');
         });
     }
 
@@ -176,7 +177,7 @@ class CreateIndexToOptimizeTables extends Migration {
         {
             $table->dropIndex('activity_log_user_id_index');
             $table->dropIndex('activity_log_text_index');
+            $table->dropIndex('activity_log_ip_address_index');
         });
     }
-
 }

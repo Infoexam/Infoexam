@@ -87,4 +87,38 @@ class TestListRepository extends Repository
     {
         return self::getRecentlyExams()->pluck('id')->all();
     }
+
+    public static function getTestsStudentCanApply()
+    {
+        return TestList::where('test_enable', '=', true)
+            ->where('allow_apply', '=', true)
+            ->where('apply_type', 'like', '1\_%')
+            ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
+            ->orderBy('start_time', 'asc')
+            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
+    }
+
+    public static function getUniteTestsStudentCanManage()
+    {
+        return TestList::where('test_enable', '=', true)
+            ->where('allow_apply', '=', true)
+            ->where('apply_type', 'like', '2_%')
+            ->where('start_time', '>=', Carbon::now()->addDays(1)->startOfDay())
+            ->orderBy('start_time', 'asc')
+            ->paginate(10, ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num']);
+    }
+
+    public static function getTestScoresAdminManage()
+    {
+        return TestList::where('end_time', '<=', Carbon::now())
+            ->orderBy('end_time', 'desc')
+            ->paginate(10, ['ssn', 'apply_type', 'test_type', 'std_apply_num', 'std_real_test_num']);
+    }
+
+    public static function getTestScoresListsAdminManage()
+    {
+        return TestList::where('end_time', '<=', Carbon::now())
+            ->orderBy('end_time', 'desc')
+            ->lists('ssn', 'ssn');
+    }
 }

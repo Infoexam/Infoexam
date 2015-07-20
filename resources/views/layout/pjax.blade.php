@@ -2,7 +2,9 @@
 
 @yield('title', '<title>' . trans('general.title') . '</title>')
 
-@include('flash::message')
+@if (session()->has('flash_notification.message'))
+    @include('flash::message')
+@endif
 
 <ul class="form-error-msg alert alert-danger ul-li-margin-left"></ul>
 

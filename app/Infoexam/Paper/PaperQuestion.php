@@ -1,17 +1,34 @@
-<?php namespace App\Infoexam\Paper;
+<?php
+
+namespace App\Infoexam\Paper;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\ExamSet\ExamQuestion;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaperQuestion extends Entity {
-
+class PaperQuestion extends Entity
+{
     use SoftDeletes;
 
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
     protected $table = 'papers_questions';
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['ssn', 'paper_list_id', 'exam_question_id'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     protected $ssn = true;

@@ -24,7 +24,7 @@ class AnnouncementsRequest extends Request
             $rules['heading'] .= ',' . last($this->segments());
         }
 
-        foreach ($this->file('image', []) as $key => &$image)
+        foreach ($this->file('image', []) as $key => $image)
         {
             if (null !== $image)
             {

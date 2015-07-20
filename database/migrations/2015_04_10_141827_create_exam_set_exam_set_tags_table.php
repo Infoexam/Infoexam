@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExamSetExamSetTagsTable extends Migration {
-
+class CreateExamSetExamSetTagsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -41,5 +41,4 @@ class CreateExamSetExamSetTagsTable extends Migration {
 
         Schema::dropIfExists('exam_set_exam_set_tags');
     }
-
 }

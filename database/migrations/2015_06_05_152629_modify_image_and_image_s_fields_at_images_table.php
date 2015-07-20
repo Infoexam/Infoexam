@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class ModifyImageAndImageSFieldsAtImagesTable extends Migration {
-
+class ModifyImageAndImageSFieldsAtImagesTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -38,5 +38,4 @@ class ModifyImageAndImageSFieldsAtImagesTable extends Migration {
         DB::statement('ALTER TABLE `images` MODIFY `image` LONGBLOB');
         DB::statement('ALTER TABLE `images` MODIFY `image_s` LONGBLOB');
     }
-
 }

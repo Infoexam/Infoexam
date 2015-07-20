@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'exam.layouts.pjax' : 'exam.layouts.master')
+@extends($pjax ? 'exam.layouts.pjax' : 'exam.layouts.master')
 
 @section('main')
     <div>
@@ -23,4 +23,4 @@
             </table>
         @endforeach
     </div>
-@stop
+@endsection

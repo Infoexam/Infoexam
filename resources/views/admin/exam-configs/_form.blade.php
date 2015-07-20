@@ -46,4 +46,4 @@
             });
         })(jQuery);
     </script>
-@stop
+@endsection

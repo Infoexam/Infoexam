@@ -26,7 +26,7 @@ HTML::macro('recaptcha', function()
 
 HTML::macro('nl2br', function($content)
 {
-    return nl2br(e($content));
+    return str_replace(["\r\n", "\n"], '', e($content));
 });
 
 HTML::macro('link_button', function($route, $text)
@@ -35,7 +35,7 @@ HTML::macro('link_button', function($route, $text)
     $text = e($text);
 
     return <<< EOF
-    <a href="{$route}"><button class="btn btn-primary">{$text}</button></a>
+<a href="{$route}"><button class="btn btn-primary">{$text}</button></a>
 EOF;
 });
 
@@ -45,7 +45,7 @@ HTML::macro('create_icon', function($route)
     $title = e(trans('general.create'));
 
     return <<< EOF
-    <a href="{$route}" title="{$title}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-pencil"></span></a>
+<a href="{$route}" title="{$title}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-pencil"></span></a>
 EOF;
 });
 
@@ -55,7 +55,7 @@ HTML::macro('edit_icon', function($route)
     $title = e(trans('general.edit'));
 
     return <<< EOF
-    <a href="{$route}" title="{$title}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit"></span></a>
+<a href="{$route}" title="{$title}" class="btn btn-default btn-lg"><span class="glyphicon glyphicon-edit"></span></a>
 EOF;
 });
 

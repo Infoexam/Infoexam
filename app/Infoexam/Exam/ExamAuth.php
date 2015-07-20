@@ -1,4 +1,6 @@
-<?php namespace App\Infoexam\Exam;
+<?php
+
+namespace App\Infoexam\Exam;
 
 use App\Infoexam\Account\Authenticate;
 use App\Infoexam\Test\TestList;
@@ -7,8 +9,8 @@ use App\Infoexam\Test\TestListRepository;
 use App\Infoexam\Test\TestResult;
 use Auth;
 
-class ExamAuth {
-
+class ExamAuth
+{
     /**
      * The account model.
      *

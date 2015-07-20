@@ -1,14 +1,26 @@
-<?php namespace App\Infoexam\Paper;
+<?php
+
+namespace App\Infoexam\Paper;
 
 use App\Infoexam\Core\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class PaperList extends Entity {
-
+class PaperList extends Entity
+{
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['ssn', 'name', 'remark', 'auto_generate'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     protected $ssn = true;
@@ -29,5 +41,4 @@ class PaperList extends Entity {
     {
         $query->where('auto_generate', '=', (bool) $param);
     }
-
 }

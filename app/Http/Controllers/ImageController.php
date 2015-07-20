@@ -6,20 +6,26 @@ use App\Http\Requests;
 use App\Infoexam\Image;
 use Carbon\Carbon;
 use File;
+use Illuminate\Auth\Guard;
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ImageController extends Controller
 {
+    protected $guard;
+
+    public function __construct(Guard $guard)
+    {
+        $this->guard = $guard;
+    }
+
     public function show($ssn, $small = false)
     {
-        $image = Image::where('ssn', '=', $ssn)->first();
-
-        if (null === $image)
+        if (null === ($image = Image::ssn($ssn)->first()))
         {
             throw new NotFoundHttpException;
         }
-        else if ( ! $image->public && ! \Auth::check())
+        else if (( ! $image->public) && ($this->guard->guest()))
         {
             throw new AccessDeniedHttpException;
         }

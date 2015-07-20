@@ -1,4 +1,6 @@
-<?php namespace App\Infoexam\Test;
+<?php
+
+namespace App\Infoexam\Test;
 
 use App\Jobs\Admin\AutoGeneralPaper;
 use App\Infoexam\Core\Entity;
@@ -7,12 +9,22 @@ use App\Infoexam\Paper\PaperList;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class TestList extends Entity {
-
+class TestList extends Entity
+{
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['ssn', 'start_time', 'end_time', 'room', 'apply_type', 'test_type', 'std_num_limit', 'std_apply_num', 'std_real_test_num', 'paper_list_id', 'allow_apply', 'test_enable', 'test_started'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['start_time', 'end_time', 'deleted_at'];
 
     public function applies()
@@ -113,5 +125,4 @@ class TestList extends Entity {
             return $list->id;
         }
     }
-
 }

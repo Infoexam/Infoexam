@@ -1,15 +1,27 @@
-<?php namespace App\Infoexam;
+<?php
+
+namespace App\Infoexam;
 
 use App\Infoexam\Core\Entity;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Intervention\Image\Facades\Image as Imager;
 
-class Image extends Entity {
-
+class Image extends Entity
+{
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['ssn', 'image_type', 'public', 'original_path', 'thumbnail_path'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     protected $ssn = true;

@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateQueueJobsTable extends Migration {
-
+class CreateQueueJobsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -36,5 +36,4 @@ class CreateQueueJobsTable extends Migration {
     {
         Schema::dropIfExists('queue_jobs');
     }
-
 }

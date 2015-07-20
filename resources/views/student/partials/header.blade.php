@@ -6,13 +6,13 @@
             <a href="{{ route('student.index') }}" title="{{ trans('general.home') }}">
                 <span class="xbtn glyphicon glyphicon-home" aria-hidden="true"></span>
             </a>
-            @if (\Auth::check())
-                <a href="{{ route('student.logout') }}" title="{{ trans('general.logout') }}" data-no-pjax>
-                    <span class="xbtn glyphicon glyphicon-log-out" aria-hidden="true"></span>
-                </a>
-            @else
+            @if ($guard->guest())
                 <a href="{{ route('student.login') }}" title="{{ trans('general.login') }}">
                     <span class="xbtn glyphicon glyphicon-log-in" aria-hidden="true"></span>
+                </a>
+            @else
+                <a href="{{ route('student.logout') }}" title="{{ trans('general.logout') }}" data-no-pjax>
+                    <span class="xbtn glyphicon glyphicon-log-out" aria-hidden="true"></span>
                 </a>
             @endif
         </div>
@@ -23,7 +23,7 @@
                         {{ trans('announcements.nav_title') }}
                     </a>
                 </li>
-                @if (\App\Infoexam\Account\Account::isStudent())
+                @if ( ! $guard->guest() && $guard->user()->isStudent())
                     <li class="dropdown">
                         <a class="xbtn" href="{{ route('student.practice-exam.index') }}">
                             {{ trans('practice-exam.title') }}
@@ -45,17 +45,22 @@
                         </ul>
                     </li>
                 @endif
+                <li class="dropdown">
+                    <a class="xbtn" href="{{ route('student.faqs.index') }}">
+                        {{ trans('faqs.nav_title') }}
+                    </a>
+                </li>
             </ul>
             <ul class="nav navbar-nav pull-right stu-info">
-                @if (\App\Infoexam\Account\Account::isStudent())
+                @if ( ! $guard->guest() && $guard->user()->isStudent())
                     <li class="pull-right">
                         <a class="xbtn" href="{{ route('student.member.info') }}">
-                            <span>{{ \Auth::user()->username }}</span>
+                            <span>{{ $guard->user()->username }}</span>
                         </a>
                     </li>
                     <li class="pull-right">
                         <a class="xbtn" href="{{ route('student.member.info') }}">
-                            <span>{{ \Auth::user()->userData->name }}</span>
+                            <span>{{ $guard->user()->userData->name }}</span>
                         </a>
                     </li>
                 @endif

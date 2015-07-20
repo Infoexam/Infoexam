@@ -4,7 +4,11 @@
     @endif
 
     @foreach ($image_ssn as $ssn)
-        <a href="{{ route('image', [$ssn]) }}" {!! isset($use_text) ? 'data-no-lightbox' : 'data-lightbox="' . e($ssn) . '"' !!}>
+        @if (isset($use_text))
+            <a href="{{ route('image', [$ssn]) }}" data-no-lightbox>
+        @else
+            <a href="{{ route('image', [$ssn]) }}" data-lightbox="{{ $ssn }}">
+        @endif
             @if (isset($use_text))
                 {{ trans('general.show_image') }}
             @else

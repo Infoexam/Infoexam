@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTestStartedFieldToTestLists extends Migration {
-
+class AddTestStartedFieldToTestLists extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -32,5 +32,4 @@ class AddTestStartedFieldToTestLists extends Migration {
             $table->dropColumn('test_started');
         });
     }
-
 }

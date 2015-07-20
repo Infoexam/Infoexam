@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'student.layouts.pjax' : 'student.layouts.master')
+@extends($pjax ? 'student.layouts.pjax' : 'student.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('practice-exam.exam_sets_select')])
@@ -21,4 +21,4 @@
     <div>
         <div class="col-lg-12 col-xs-12 lead">術科測驗</div>
     </div>
-@stop
+@endsection

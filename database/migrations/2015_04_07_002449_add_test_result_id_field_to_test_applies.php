@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTestResultIdFieldToTestApplies extends Migration {
-
+class AddTestResultIdFieldToTestApplies extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -34,5 +34,4 @@ class AddTestResultIdFieldToTestApplies extends Migration {
             $table->dropForeign('test_applies_test_result_id_foreign');
         });
     }
-
 }

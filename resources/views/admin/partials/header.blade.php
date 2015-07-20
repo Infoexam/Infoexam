@@ -27,6 +27,7 @@
                             <li>{!! HTML::linkRoute('admin.test-lists.index', trans('test-lists.list')) !!}</li>
                             <li>{!! HTML::linkRoute('admin.test-lists.create', trans('test-lists.create')) !!}</li>
                             <li>{!! HTML::linkRoute('admin.exam-configs.edit', trans('exam-configs.title')) !!}</li>
+                            <li>{!! HTML::linkRoute('admin.test-scores.index', trans('test-scores.title')) !!}</li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -45,12 +46,18 @@
                         </ul>
                     </li>
                     <li class="dropdown">
-                        {!! HTML::navigation_dropdown_title(trans('website-configs.nav_title')) !!}
+                        {!! HTML::navigation_dropdown_title(trans('announcements.title')) !!}
                         <ul class="dropdown-menu">
                             <li>{!! HTML::linkRoute('admin.announcements.index', trans('announcements.list')) !!}</li>
                             <li>{!! HTML::linkRoute('admin.announcements.create', trans('announcements.create')) !!}</li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        {!! HTML::navigation_dropdown_title(trans('website-configs.nav_title')) !!}
+                        <ul class="dropdown-menu">
                             <li>{!! HTML::linkRoute('admin.website-configs.edit', trans('website-configs.title')) !!}</li>
                             <li>{!! HTML::linkRoute('admin.website-configs.ips.index', trans('website-configs.ips.title')) !!}</li>
+                            <li>{!! HTML::linkRoute('admin.faqs.index', trans('faqs.title')) !!}</li>
                             <li>{!! HTML::linkRoute('admin.website-logs', 'Logs') !!}</li>
                         </ul>
                     </li>

@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => $announcement->heading])
@@ -42,4 +42,4 @@
         <span class="release-info" title="{{ $announcement->updated_at }}">{{ trans('announcements.updated_at').'：'.$announcement->updated_at->diffForHumans() }}</span>
         <span class="release-info" title="{{ $announcement->created_at }}">{{ trans('announcements.created_at').'：'.$announcement->created_at->diffForHumans() }}</span>
     </div>
-@stop
+@endsection

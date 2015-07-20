@@ -111,4 +111,4 @@
             });
         });
     </script>
-@stop
+@endsection

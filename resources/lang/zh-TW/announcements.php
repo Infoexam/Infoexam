@@ -3,6 +3,7 @@
 return [
 
     'nav_title' => '訊息公告',
+    'title' => '公告系統',
     'list' => '公告列表',
     'create' => '新增公告',
     'edit' => '編輯公告',
@@ -10,7 +11,7 @@ return [
     'delete.image' => '刪除圖片',
 
     'miniature' => '縮圖',
-    'title' => '公告標題',
+    'heading' => '公告標題',
     'link' => '相關連結',
     'content' => '公告內容',
 

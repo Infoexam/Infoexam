@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'exam.layouts.pjax' : 'exam.layouts.master')
+@extends($pjax ? 'exam.layouts.pjax' : 'exam.layouts.master')
 
 @section('main')
     <div>
@@ -21,7 +21,9 @@
                                     <span>{!! HTML::nl2br($option->content) !!}</span>
                                 </label>
                                 @if (null !== $option->image_ssn)
-                                    @include('partials.image', ['image_ssn' => $option->image_ssn])
+                                    @foreach ($option->image_ssn as $image_ssn)
+                                        @include('partials.image', ['image_ssn' => $image_ssn])
+                                    @endforeach
                                 @endif
                             </div>
                         @endforeach
@@ -35,7 +37,7 @@
             </div>
         {!! Form::close() !!}
     </div>
-@stop
+@endsection
 
 @section('scripts')
     <script>
@@ -48,7 +50,7 @@
                 $('form').submit();
             });
             
-            $(window).blur(function()
+            $(window).on('blur' , function()
             {
                 $('form').submit();
             });
@@ -60,35 +62,35 @@
                     e.preventDefault();
                 }
             });
-
             
             $('.form-group').click(function(e)
             {
-                var count = 0;
+                e.preventDefault();
 
-                $('input[type="radio"]').each(function()
-                {
+                $('#delete-confirm').modal('show');
+                
+                /*var count = 0;
+                $('input[type="radio"]').each(function () {
                     if( $(this).prop('checked'))
                     {
-                        ++count;
+                        count++;
                     }
-                });
-
-                if (count >= 3)
-                {
+                })
+                if(count >= 3) {
                     $('form').submit();
-                }
-                else if (click_times >= 1)
-                {
+                } else if( click_times >= 1) {
                     $('form').submit();
-                }
-                else
-                {
+                } else {
                     $('.form-group').append('似乎還有題目尚未作答，若要送出請再按一次送出鍵');
-                    ++click_times;
+                    click_times++;
                     e.preventDefault();
-                }
+                }*/
+                
+                
+                /*$('#delete-confirm').on('shown.bs.modal', function () {
+                  $('#delete-confirm').focus()
+                })*/
             });
         });
     </script>
-@stop
+@endsection

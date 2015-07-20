@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddExplanationFieldToExamQuestions extends Migration {
-
+class AddExplanationFieldToExamQuestions extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -32,5 +32,4 @@ class AddExplanationFieldToExamQuestions extends Migration {
             $table->dropColumn('explanation');
         });
     }
-
 }

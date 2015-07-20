@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => $name])
@@ -13,4 +13,4 @@
     <div>
         {!! HTML::link_button(route('admin.exam-set-tags.index'), trans('exam-set-tags.list')) !!}
     </div>
-@stop
+@endsection

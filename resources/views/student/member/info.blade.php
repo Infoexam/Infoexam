@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'student.layouts.pjax' : 'student.layouts.master')
+@extends($pjax ? 'student.layouts.pjax' : 'student.layouts.master')
 
 @section('main')
     <div>
@@ -11,8 +11,8 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $info->userData->name }}</td>
-                    <td>{{ $info->username }}</td>
+                    <td>{{ $guard->user()->userData->name }}</td>
+                    <td>{{ $guard->user()->username }}</td>
                 </tr>
             </tbody>
         </table>
@@ -27,10 +27,10 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $info->userData->department->name }}</td>
-                    <td>{{ $info->userData->grade }}</td>
+                    <td>{{ $guard->user()->userData->department->name }}</td>
+                    <td>{{ $guard->user()->userData->grade }}</td>
                     <td>
-                        <span>{{ $info->userData->email }}</span>
+                        <span>{{ $guard->user()->userData->email }}</span>
 
                         <button type="button" data-target="update-email" class="btn btn-success btn-xs">{{ trans('general.update') }}</button>
 
@@ -76,9 +76,9 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ ($info->accreditedData->is_passed) ? trans('user.passed') : trans('user.not_passed') }}</td>
-                    <td>{{ (null === ($info->accreditedData->passed_score)) ? trans('user.not_passed') : $info->accreditedData->passed_score }}</td>
-                    <td>{{ (null === ($info->accreditedData->passed_time)) ? trans('user.not_passed') : $info->accreditedData->passed_time }}</td>
+                    <td>{{ ($guard->user()->accreditedData->is_passed) ? trans('user.passed') : trans('user.not_passed') }}</td>
+                    <td>{{ (null === ($guard->user()->accreditedData->passed_score)) ? trans('user.not_passed') : $guard->user()->accreditedData->passed_score }}</td>
+                    <td>{{ (null === ($guard->user()->accreditedData->passed_time)) ? trans('user.not_passed') : $guard->user()->accreditedData->passed_time }}</td>
                 </tr>
             </tbody>
         </table>
@@ -92,13 +92,13 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ (null === ($info->accreditedData->acad_score)) ? trans('user.no_data') : $info->accreditedData->acad_score }}</td>
-                    <td>{{ (null === ($info->accreditedData->tech_score)) ? trans('user.no_data') : $info->accreditedData->tech_score }}</td>
+                    <td>{{ (null === ($guard->user()->accreditedData->acad_score)) ? trans('user.no_data') : $guard->user()->accreditedData->acad_score }}</td>
+                    <td>{{ (null === ($guard->user()->accreditedData->tech_score)) ? trans('user.no_data') : $guard->user()->accreditedData->tech_score }}</td>
                 </tr>
             </tbody>
         </table>
     </div>
-@stop
+@endsection
 
 @section('scripts')
     <script>
@@ -108,7 +108,7 @@
             {
                 $('#update-email').hide();
 
-                $('button').click(function(e)
+                $('button').click(function()
                 {
                     if ($(this).data('target') === 'update-email')
                     {
@@ -121,4 +121,4 @@
             });
         })(jQuery);
     </script>
-@stop
+@endsection

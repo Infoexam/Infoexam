@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserGroupsTable extends Migration {
-
+class CreateUserGroupsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -41,5 +41,4 @@ class CreateUserGroupsTable extends Migration {
 
         Schema::dropIfExists('user_groups');
     }
-
 }

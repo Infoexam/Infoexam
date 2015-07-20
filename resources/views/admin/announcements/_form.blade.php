@@ -1,5 +1,5 @@
 <div class="form-group">
-    {!! Form::label('heading', trans('announcements.title')) !!}
+    {!! Form::label('heading', trans('announcements.heading')) !!}
     {!!
         Form::text('heading', null, [
             'class' => 'form-control',
@@ -51,4 +51,4 @@
             });
         })(jQuery);
     </script>
-@stop
+@endsection

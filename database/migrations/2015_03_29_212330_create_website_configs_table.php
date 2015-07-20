@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateWebsiteConfigsTable extends Migration {
-
+class CreateWebsiteConfigsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -33,5 +33,4 @@ class CreateWebsiteConfigsTable extends Migration {
     {
         Schema::dropIfExists('website_configs');
     }
-
 }

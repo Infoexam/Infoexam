@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'exam.layouts.pjax' : 'exam.layouts.master')
+@extends($pjax ? 'exam.layouts.pjax' : 'exam.layouts.master')
 
 @section('main')
     <div id="timer">
@@ -54,7 +54,7 @@
             </div>
         {!! Form::close() !!}
     </div>
-@stop
+@endsection
 
 @section('scripts')
     <script>
@@ -113,4 +113,4 @@
             });
         });
     </script>
-@stop
+@endsection

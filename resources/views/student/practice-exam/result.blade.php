@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'student.layouts.pjax' : 'student.layouts.master')
+@extends($pjax ? 'student.layouts.pjax' : 'student.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('practice-exam.result')])
@@ -46,7 +46,7 @@
             </tbody>
         </table>
     </div>
-@stop
+@endsection
 
 @section('scripts')
     <script>
@@ -63,4 +63,4 @@
             });
         });
     </script>
-@stop
+@endsection

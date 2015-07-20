@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'student.layouts.pjax' : 'student.layouts.master')
+@extends($pjax ? 'student.layouts.pjax' : 'student.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('announcements.list')])
@@ -10,7 +10,7 @@
         <table class="table table-bordered table-hover text-center">
             <thead>
                 <tr class="info">
-                    <th>{{ trans('announcements.title') }}</th>
+                    <th>{{ trans('announcements.heading') }}</th>
                     <th>{{ trans('announcements.updated_at') }}</th>
                     <th class="hidden-xs">{{ trans('announcements.created_at') }}</th>
                 </tr>
@@ -26,4 +26,4 @@
             </tbody>
         </table>
     </div>
-@stop
+@endsection

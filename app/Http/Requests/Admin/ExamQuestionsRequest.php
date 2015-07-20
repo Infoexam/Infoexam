@@ -30,7 +30,7 @@ class ExamQuestionsRequest extends Request
 
         foreach ($this->file('option_image', []) as $keys => &$values)
         {
-            foreach ($values as $key => &$value)
+            foreach ($values as $key => $value)
             {
                 if (null !== $value)
                 {

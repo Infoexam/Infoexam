@@ -42,4 +42,4 @@
             });
         })(jQuery);
     </script>
-@stop
+@endsection

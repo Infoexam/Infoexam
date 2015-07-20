@@ -9,11 +9,15 @@ class AppServiceProvider extends ServiceProvider
     /**
      * Bootstrap any application services.
      *
+     * @param \Illuminate\Filesystem\Filesystem $filesystem
      * @return void
      */
-    public function boot()
+    public function boot(\Illuminate\Filesystem\Filesystem $filesystem)
     {
-        //
+        foreach ($filesystem->files(app_path('Libraries/Macros')) as $file)
+        {
+            $filesystem->requireOnce($file);
+        }
     }
 
     /**

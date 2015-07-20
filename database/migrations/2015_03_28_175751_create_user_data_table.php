@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserDataTable extends Migration {
-
+class CreateUserDataTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -53,5 +53,4 @@ class CreateUserDataTable extends Migration {
 
         Schema::dropIfExists('user_data');
     }
-
 }

@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestAppliesTable extends Migration {
-
+class CreateTestAppliesTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -50,5 +50,4 @@ class CreateTestAppliesTable extends Migration {
 
         Schema::dropIfExists('test_applies');
     }
-
 }

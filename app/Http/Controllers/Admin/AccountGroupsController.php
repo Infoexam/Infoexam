@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests;
 use App\Infoexam\Account\Account;
 use App\Infoexam\Account\Group;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class AccountGroupsController extends Controller
 {
@@ -42,7 +41,7 @@ class AccountGroupsController extends Controller
 
         $title = trans('account-groups.edit');
 
-        foreach (unserialize($group->permissions) as $key => &$value)
+        foreach (unserialize($group->permissions) as $key => $value)
         {
             $group->setAttribute($key, $value);
         }

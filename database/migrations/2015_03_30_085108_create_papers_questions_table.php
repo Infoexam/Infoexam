@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePapersQuestionsTable extends Migration {
-
+class CreatePapersQuestionsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -48,5 +48,4 @@ class CreatePapersQuestionsTable extends Migration {
         
         Schema::dropIfExists('papers_questions');
     }
-
 }

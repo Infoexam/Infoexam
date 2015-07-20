@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('website-configs.ips.edit')])
@@ -8,4 +8,4 @@
             @include('admin.website-configs.ips._form', ['submitButtonText' => trans('general.update')])
         {!! Form::close() !!}
     </div>
-@stop
+@endsection

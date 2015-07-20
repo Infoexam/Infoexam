@@ -20,6 +20,6 @@ abstract class Controller extends BaseController
 
     public function explode_image_ssn($image_ssn)
     {
-        return (null === $image_ssn && ! is_string($image_ssn)) ? null : explode(',', $image_ssn);
+        return ((null === $image_ssn) && ( ! is_string($image_ssn))) ? null : explode(',', $image_ssn);
     }
 }

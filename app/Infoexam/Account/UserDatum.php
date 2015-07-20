@@ -1,9 +1,16 @@
-<?php namespace App\Infoexam\Account;
+<?php
+
+namespace App\Infoexam\Account;
 
 use App\Infoexam\Core\Entity;
 
-class UserDatum extends Entity {
-
+class UserDatum extends Entity
+{
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['name', 'email'];
 
     public function account()
@@ -15,5 +22,4 @@ class UserDatum extends Entity {
     {
         return $this->belongsTo('App\Infoexam\Account\Department');
     }
-
 }

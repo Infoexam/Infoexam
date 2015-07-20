@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateImagesTable extends Migration {
-
+class CreateImagesTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -38,5 +38,4 @@ class CreateImagesTable extends Migration {
     {
         Schema::dropIfExists('images');
     }
-
 }

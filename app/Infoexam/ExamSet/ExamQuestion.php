@@ -1,15 +1,27 @@
-<?php namespace App\Infoexam\ExamSet;
+<?php
+
+namespace App\Infoexam\ExamSet;
 
 use App\Infoexam\Core\Entity;
 use App\Infoexam\Image;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class ExamQuestion extends Entity {
-
+class ExamQuestion extends Entity
+{
     use SoftDeletes;
 
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['ssn', 'exam_set_id', 'topic', 'level', 'multiple', 'image_ssn', 'answer', 'explanation'];
 
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
     protected $dates = ['deleted_at'];
 
     protected $ssn = true;
@@ -126,5 +138,4 @@ class ExamQuestion extends Entity {
 
         return parent::delete();
     }
-
 }

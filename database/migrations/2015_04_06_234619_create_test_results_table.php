@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateTestResultsTable extends Migration {
-
+class CreateTestResultsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -19,7 +19,7 @@ class CreateTestResultsTable extends Migration {
             $table->increments('id');
             $table->integer('test_apply_id')->unsigned();
             $table->longText('record')->nullable();
-            $table->float('score', 6, 3)->unsigned()->default(0.0);
+            $table->float('score', 6, 3)->nullable()->unsigned();
             $table->boolean('allow_relogin')->default(false);
             $table->timestamps();
 
@@ -43,5 +43,4 @@ class CreateTestResultsTable extends Migration {
 
         Schema::dropIfExists('test_results');
     }
-
 }

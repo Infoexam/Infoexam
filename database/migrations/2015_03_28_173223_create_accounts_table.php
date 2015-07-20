@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAccountsTable extends Migration {
-
+class CreateAccountsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -35,5 +35,4 @@ class CreateAccountsTable extends Migration {
     {
         Schema::dropIfExists('accounts');
     }
-
 }

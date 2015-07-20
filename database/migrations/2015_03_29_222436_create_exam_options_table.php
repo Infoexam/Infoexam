@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateExamOptionsTable extends Migration {
-
+class CreateExamOptionsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -50,5 +50,4 @@ class CreateExamOptionsTable extends Migration {
 
         Schema::dropIfExists('exam_options');
     }
-
 }

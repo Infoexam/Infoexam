@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('paper-lists.name').'：'.$paper->name])
@@ -40,4 +40,4 @@
             </tbody>
         </table>
     </div>
-@stop
+@endsection

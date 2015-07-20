@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateDepartmentsTable extends Migration {
-
+class CreateDepartmentsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -34,5 +34,4 @@ class CreateDepartmentsTable extends Migration {
     {
         Schema::dropIfExists('departments');
     }
-
 }

@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 abstract class Entity extends Model
 {
     /**
+     * The number of models to return for pagination.
+     *
+     * @var int
+     */
+    protected $perPage = 10;
+
+    /**
      * Indicates whether the model contains ssn column.
      *
      * @var bool

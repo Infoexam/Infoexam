@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateAnnouncementsTable extends Migration {
-
+class CreateAnnouncementsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -37,5 +37,4 @@ class CreateAnnouncementsTable extends Migration {
     {
         Schema::dropIfExists('announcements');
     }
-
 }

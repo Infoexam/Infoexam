@@ -3,8 +3,8 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePaperListsTable extends Migration {
-
+class CreatePaperListsTable extends Migration
+{
     /**
      * Run the migrations.
      *
@@ -37,5 +37,4 @@ class CreatePaperListsTable extends Migration {
     {
         Schema::dropIfExists('paper_lists');
     }
-
 }

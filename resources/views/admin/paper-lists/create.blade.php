@@ -1,4 +1,4 @@
-@extends(env('IS_PJAX') ? 'admin.layouts.pjax' : 'admin.layouts.master')
+@extends($pjax ? 'admin.layouts.pjax' : 'admin.layouts.master')
 
 @section('main')
     @include('partials.heading', ['heading' => trans('paper-lists.create')])
@@ -8,4 +8,4 @@
             @include('admin.paper-lists._form', ['submitButtonText' => trans('general.create')])
         {!! Form::close() !!}
     </div>
-@stop
+@endsection
