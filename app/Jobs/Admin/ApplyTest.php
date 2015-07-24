@@ -74,7 +74,7 @@ class ApplyTest extends Job implements SelfHandling
             /*
              * 取得學生資料
              */
-            if (strlen($this->request->input('personal')))
+            if ($personal = strlen($this->request->input('personal')))
             {
                 $students = [
                     Account::where('username', '=', $this->request->input('personal'))->firstOrFail()->userData
@@ -121,7 +121,7 @@ class ApplyTest extends Job implements SelfHandling
                 /*
                  * 檢查是否為資工系學生，如是，則檢查是否預約電腦軟體能力類型測驗
                  */
-                if ('4104' === $student->department->code && (2 !== $test_type[0]))
+                if (('4104' === $student->department->code) && (2 !== $test_type[0]))
                 {
                     continue;
                 }
@@ -159,7 +159,11 @@ class ApplyTest extends Job implements SelfHandling
                 /*
                  * 檢查是否有免費測驗的額度
                  */
-                if ((1 === $test_type[1]) && ($student->account->accreditedData->free_acad > 0))
+                if (0 === $personal)
+                {
+                    $apply['paid_at'] = $now;
+                }
+                else if ((1 === $test_type[1]) && ($student->account->accreditedData->free_acad > 0))
                 {
                     $apply['paid_at'] = $now;
                 }

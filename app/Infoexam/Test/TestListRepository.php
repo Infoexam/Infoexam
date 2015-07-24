@@ -67,15 +67,9 @@ class TestListRepository extends Repository
      */
     public static function getRecentlyExams()
     {
-        return TestList::where('start_time', '<', Carbon::now()->addDays(5))
-            ->whereBetween('end_time', [Carbon::now(), Carbon::now()->addDays(100)])
+        return TestList::whereBetween('start_time', [Carbon::now()->startOfDay(), Carbon::now()->endOfDay()])
             ->orderBy('start_time')
             ->get(['id', 'ssn', 'start_time', 'room', 'test_started']);
-
-        // 正式版本
-//        return TestList::whereBetween('start_time', [Carbon::now()->addMinutes(30), Carbon::now()->endOfDay()->addMinutes(30)])
-//            ->orderBy('start_time')
-//            ->get(['id', 'ssn', 'start_time', 'room', 'test_started']);
     }
 
     /**

@@ -70,10 +70,21 @@ Route::group(['prefix' => 'exam', 'namespace' => 'Exam'], function()
     Route::group(['middleware' => 'auth:exam'], function()
     {
         get('testing/{ssn}', ['as' => 'exam.testing', 'uses' => 'ExamController@testing']);
+        get('syncExamTime/{ssn}', ['as' => 'exam.syncExamTime', 'uses' => 'ExamController@syncExamTime']);
         post('testing', ['as' => 'exam.submit', 'uses' => 'ExamController@submit']);
         get('result', ['as' => 'exam.result', 'uses' => 'ExamController@result']);
 
-        resource('panel', 'PanelController', ['only' => ['index', 'show', 'update']]);
+        Route::group(['prefix' => 'panel', 'middleware' => 'auth:examPanel'], function()
+        {
+            get('/', ['as' => 'exam.panel.index', 'uses' => 'PanelController@index']);
+            Route::group(['prefix' => '{ssn}'], function()
+            {
+                get('/', ['as' => 'exam.panel.show', 'uses' => 'PanelController@show']);
+                patch('/', ['as' => 'exam.panel.update', 'uses' => 'PanelController@update']);
+                get('list-users', ['as' => 'exam.panel.listUsers', 'uses' => 'PanelController@listUsers']);
+                patch('list-users/{user}', ['as' => 'exam.panel.updateUser', 'uses' => 'PanelController@updateUser']);
+            });
+        });
     });
 });
 
@@ -115,6 +126,7 @@ Route::group(['prefix' => 'admin', 'namespace' => 'Admin'], function()
             get('apply', ['as' => 'apply', 'uses' => 'TestListsController@apply']);
             post('apply', ['as' => 'apply.store', 'uses' => 'TestListsController@apply_store']);
             delete('{apply_ssn}', ['as' => 'apply.destroy', 'uses' => 'TestListsController@destroy_apply']);
+            get('download-pc2-list', ['as' => 'dl-pc2-list', 'uses' => 'TestListsController@downloadPc2List']);
         });
         patch('test-lists', ['as' => 'admin.test-lists.update.all', 'uses' => 'TestListsController@update']);
         resource('test-lists', 'TestListsController', ['except' => ['edit']]);

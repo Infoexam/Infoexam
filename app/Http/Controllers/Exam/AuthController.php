@@ -17,6 +17,8 @@ class AuthController extends Controller
 
         $recaptcha = $auth->needRecaptcha();
 
+        session()->forget('examUser');
+
         Auth::logout();
 
         return view('exam.login', compact('title', 'recaptcha'));
@@ -38,6 +40,8 @@ class AuthController extends Controller
     {
         if (Auth::check())
         {
+            session()->forget('examUser');
+
             Auth::logout();
 
             flash()->success(trans('general.logout.success'));

@@ -11,7 +11,7 @@ class TestResult extends Entity
      *
      * @var array
      */
-    protected $fillable = ['test_apply_id', 'score'];
+    protected $fillable = ['test_apply_id', 'record', 'score', 'allow_relogin', 'exam_time_extends'];
 
     /**
      * Indicates whether show the flash message.

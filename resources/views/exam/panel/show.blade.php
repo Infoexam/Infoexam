@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>{{ $test->ssn }}</td>
+                    <td>{!! HTML::linkRoute('exam.panel.listUsers', $test->ssn, ['ssn' => $test->ssn]) !!}</td>
                     <td>{{ $test->room }}</td>
                     <td>{{ $test->std_real_test_num . ' / ' . $test->std_apply_num }}</td>
                     <td>
@@ -74,7 +74,7 @@
     <script>
         $(function()
         {
-            $('input[data-checkbox-switch]').on('switchChange.bootstrapSwitch', function(event, state) {
+            $('input[data-checkbox-switch]').on('switchChange.bootstrapSwitch', function() {
                 $(this).bootstrapSwitch('toggleReadonly', true);
 
                 $(this).closest('form').submit();

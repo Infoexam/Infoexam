@@ -33,17 +33,20 @@ class AuthenticateUserIdentity
         {
             if ( ! (Account::isStudent() || Account::isInvigilator() || Account::isAdmin()))
             {
-                return ('exam' === $domain) ? redirect()->route('exam.login') : redirect()->route('student.login');
+                return ('exam' === $domain || 'examPanel' === $domain) ? redirect()->route('exam.login') : redirect()->route('student.login');
             }
 
             if ('exam' === $domain)
             {
-                $exam_check = new ExamAuth();
-
-                if ( ! $exam_check->ensureHasExam())
+                if (null === session('examUser'))
                 {
                     return redirect()->route('exam.login');
                 }
+            }
+
+            if (('examPanel' === $domain) &&  ! (Account::isInvigilator() || Account::isAdmin()))
+            {
+                return redirect()->route('exam.login');
             }
         }
 

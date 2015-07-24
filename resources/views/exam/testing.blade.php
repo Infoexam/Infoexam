@@ -54,13 +54,32 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    <div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="warning-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="warning-modal-label">{{ trans('exam.warning.questionsNotChoose') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{ trans('exam.warning.stillSubmit') }}</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="sub">{{ trans('general.yes') }}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('general.no') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
+    <script>var time_difference = {{ max($examTime, 1) }};</script>
     <script>
         function dosomething()
         {
-            alert('time up');
+            $('form').submit();
         }
 
         function time(day, hour, minute, second)
@@ -102,14 +121,61 @@
 
         $(function()
         {
-            var time_difference = {{ ($diff = $test_data->end_time->timestamp - Carbon\Carbon::now()->timestamp) ? $diff : 0 }};
-
             time(parseInt(time_difference / 86400), parseInt(time_difference / 3600 % 24), parseInt(time_difference / 60 % 60), parseInt(time_difference % 60));
 
             $('[id$=page] a').click(function(e)
             {
                 e.preventDefault();
                 $(this).tab('show');
+            });
+
+            var c = $('input[type="radio"]').size() / 4;
+
+            $(window).bind('beforeunload', function()
+            {
+                $('form').submit();
+            });
+
+            $(window).on('blur' , function()
+            {
+                $('form').submit();
+            });
+
+            $(document).keydown(function(e)
+            {
+                if (e.ctrlKey || e.altKey || e.shiftKey || e.which === 8)
+                {
+                    e.preventDefault();
+                }
+            });
+
+            $('.form-group').click(function(e)
+            {
+                var count = 0;
+
+                $('input[type="radio"]').each(function ()
+                {
+                    if($(this).prop('checked'))
+                    {
+                        count++;
+                    }
+                });
+
+                if (count >= c)
+                {
+                    $('form').submit();
+                }
+                else
+                {
+                    e.preventDefault();
+
+                    $('#warning-modal').modal('show');
+
+                    $('#sub').click(function ()
+                    {
+                        $('form').submit();
+                    });
+                }
             });
         });
     </script>

@@ -8,6 +8,7 @@ use App\Infoexam\Test\TestApply;
 use App\Infoexam\Test\TestListRepository;
 use App\Infoexam\Test\TestResult;
 use Auth;
+use Carbon\Carbon;
 
 class ExamAuth
 {
@@ -31,6 +32,13 @@ class ExamAuth
      * @var bool
      */
     protected $login;
+
+    /**
+     * Indicates if the user is reLogin or not.
+     *
+     * @var bool
+     */
+    protected $reLogin = false;
 
     /**
      * Create a new ExamAuth instance.
@@ -64,11 +72,13 @@ class ExamAuth
         {
             $this->setAccount(Auth::user());
 
-            if ($this->account->isInvigilator() || ($this->existExam() && $this->isExamStarted() /*&& $this->nonMultiLogin() && $this->initializeTestResult()*/))
+            if ($this->account->isInvigilator() || ($this->existExam() && $this->isExamStarted() && $this->nonMultiLogin() && $this->initializeTestResult()))
             {
                 $this->login = true;
 
                 $auth->logging();
+
+                session()->put('examUser', true);
 
                 return true;
             }
@@ -123,7 +133,7 @@ class ExamAuth
      */
     public function isExamStarted()
     {
-        if ($this->apply->test_list->test_started)
+        if ($this->apply->test_list->test_started && $this->apply->test_list->start_time < Carbon::now())
         {
             return true;
         }
@@ -145,22 +155,18 @@ class ExamAuth
             return true;
         }
 
-        flash()->error(trans('exam.error.multiSignIn'));
-
-        return false;
-    }
-
-    /**
-     * Check the user already has exam data in session.
-     *
-     * @return bool
-     */
-    public function ensureHasExam()
-    {
-        if ($this->login /*&& (null !== session('test_ssn'))*/)
+        if (true === (bool) $this->apply->test_result->allow_relogin)
         {
+            $this->apply->test_result->allow_relogin = false;
+
+            $this->apply->test_result->save();
+
+            $this->reLogin = true;
+
             return true;
         }
+
+        flash()->error(trans('exam.error.multiSignIn'));
 
         return false;
     }
@@ -193,6 +199,16 @@ class ExamAuth
      */
     public function initializeTestResult()
     {
+        if ($this->reLogin)
+        {
+            if ((null !== $this->apply) && (null !== $this->apply->test_result_id))
+            {
+                session()->flash('exam_time_extends', $this->apply->test_result->exam_time_extends);
+            }
+
+            return true;
+        }
+
         $test_result = TestResult::create(['test_apply_id' => $this->apply->id]);
 
         if ($test_result->exists)
@@ -200,6 +216,20 @@ class ExamAuth
             $this->apply->test_result_id = $test_result->id;
 
             $this->apply->save();
+
+            $this->apply->test_list->increment('std_real_test_num');
+
+            if ( ! starts_with($this->apply->test_list->apply_type, '2'))
+            {
+                if (ends_with($this->apply->test_list->test_type, '1'))
+                {
+                    $this->apply->account->accreditedData->decrement('free_acad');
+                }
+                else
+                {
+                    $this->apply->account->accreditedData->decrement('free_tech');
+                }
+            }
 
             return true;
         }

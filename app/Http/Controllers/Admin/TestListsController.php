@@ -209,4 +209,29 @@ class TestListsController extends Controller
 
         return redirect()->route('admin.test-lists.show', ['ssn' => $test_ssn]);
     }
+
+    public function downloadPc2List($ssn)
+    {
+        if (null === ($test = TestList::with(['applies', 'applies.account'])->ssn($ssn)->first()))
+        {
+            return http_404('admin.test-lists.index');
+        }
+
+        $fp = fopen(($filename = storage_path('temp/' . $ssn)), "w+");
+
+        fwrite($fp, "site\taccount\tpassword\tdisplayname\tpermdisplay\r\n");
+
+        $i = 1;
+
+        foreach ($test->applies as $apply)
+        {
+            $password = str_random(6);
+
+            fwrite($fp, "1\tteam{$i}\t{$password}\t{$apply->account->username}\ttrue\r\n");
+
+            ++$i;
+        }
+
+        return response()->download($filename, $ssn . '.txt');
+    }
 }

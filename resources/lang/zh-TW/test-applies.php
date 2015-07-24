@@ -7,6 +7,7 @@ return [
     'history' => '歷史測驗',
     'manage' => '查詢預約',
     'manage_unite' => '統一預約管理',
+    'dlPc2List' => '下載 PC^2 名單',
 
     'apply' => '預約',
     'applies' => '預約列表',

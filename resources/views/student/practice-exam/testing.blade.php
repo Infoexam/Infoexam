@@ -9,7 +9,11 @@
                         <h3>{!! HTML::nl2br($queustion->topic) !!}</h3>
                         @include('partials.image', ['image_ssn' => $queustion->image_ssn])
                     </div>
-                    <div>
+                    @if ($queustion->multiple)
+                        <div>
+                    @else
+                        <div data-single>
+                    @endif
                         @foreach ($queustion->options as $option)
                             <div class="radio checkbox">
                                 <label>
@@ -37,14 +41,32 @@
             </div>
         {!! Form::close() !!}
     </div>
+
+    <div class="modal fade" id="warning-modal" tabindex="-1" role="dialog" aria-labelledby="warning-modal-label">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="warning-modal-label">{{ trans('exam.warning.questionsNotChoose') }}</h4>
+                </div>
+                <div class="modal-body">
+                    <span>{{ trans('exam.warning.stillSubmit') }}</span>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="sub">{{ trans('general.yes') }}</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{ trans('general.no') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 
 @section('scripts')
     <script>
         $(function()
         {
-            var click_times = 0;
-
+            var c = $('input[type="radio"]').size() / 4;
+            
             $(window).bind('beforeunload', function()
             {
                 $('form').submit();
@@ -65,31 +87,31 @@
             
             $('.form-group').click(function(e)
             {
-                e.preventDefault();
+                var count = 0;
 
-                $('#delete-confirm').modal('show');
-                
-                /*var count = 0;
-                $('input[type="radio"]').each(function () {
-                    if( $(this).prop('checked'))
+                $('input[type="radio"]').each(function ()
+                {
+                    if($(this).prop('checked'))
                     {
                         count++;
                     }
-                })
-                if(count >= 3) {
+                });
+            
+                if (count >= 4)
+                {
                     $('form').submit();
-                } else if( click_times >= 1) {
-                    $('form').submit();
-                } else {
-                    $('.form-group').append('似乎還有題目尚未作答，若要送出請再按一次送出鍵');
-                    click_times++;
+                }
+                else
+                {
                     e.preventDefault();
-                }*/
-                
-                
-                /*$('#delete-confirm').on('shown.bs.modal', function () {
-                  $('#delete-confirm').focus()
-                })*/
+
+                    $('#warning-modal').modal('show');
+                    
+                    $('#sub').click(function ()
+                    {
+                        $('form').submit();
+                    });
+                }
             });
         });
     </script>

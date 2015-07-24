@@ -11,6 +11,9 @@
             <li>
                 {!! HTML::link_button(route('admin.test-lists.apply', ['ssn' => $ssn]), trans('test-applies.apply')) !!}
             </li>
+            <li>
+                <a href="{{ route('admin.test-lists.dl-pc2-list', ['ssn' => $ssn]) }}" data-no-pjax><button class="btn btn-primary">{{ trans('test-applies.dlPc2List') }}</button></a>
+            </li>
         </ul>
     </div>
     <br>
